@@ -1,7 +1,7 @@
 <template>
   <div class="patients">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key"></el-tab-pane>
+      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
     </el-tabs>
     <life-style v-if="activeName === 'lifeStyle'"></life-style>
     <history v-if="activeName === 'bs'"></history>
@@ -10,6 +10,7 @@
     <yyjl v-if="activeName === 'yyjl'"></yyjl>
     <ywzlwt v-if="activeName === 'ywzlwt'"></ywzlwt>
     <pglb v-if="activeName === 'pglb'"></pglb>
+    <jyjc v-if="activeName === 'jyjc'"></jyjc>
   </div>
 </template>
 
@@ -24,9 +25,10 @@ import ywpgjl from '../components/ywpgjl'
 import yyjl from '../components/yyjl'
 import ywzlwt from '../components/ywzlwt'
 import pglb from '../components/pglb'
+import jyjc from '../components/jyjc'
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb},
+  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc},
   data () {
     return {
       tabList: [{
@@ -54,7 +56,7 @@ export default {
         name: '评估量表',
         key: 'pglb'
       }],
-      activeName: 'ywzlwt',
+      activeName: 'jyjc',
       reportInfo: {}
     }
   },

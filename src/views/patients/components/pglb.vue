@@ -66,23 +66,49 @@
         </el-table-column>
       </el-table>
     </div>
-    <div v-if="curList.type === 'ruler' && curList.name !== 'cat'">{{curList.list[0].min}}
-      <!-- <slider :min="curList.list[0].min" :step="curList.list[0].step" :max="curList.list[0].max / curList.list[0].step" :value="form.vasId" v-model="form.vasId"></slider>
-      <div class="step-wrap">
-        <div class="count-item" v-for="()"></div>
-      </div> -->
-      <el-slider
-            v-model="form.vasScore"
-            show-stops
-            :step="curList.list[0].step"
-            :min="curList.list[0].min"
-            :max="curList.list[0].max"
-            :marks="marks">
-          </el-slider>
+    <div v-if="curList.type === 'ruler' && curList.name !== 'cat'">
+      <div class="slider-wrap">
+        <div class="icon-wrap">
+          <!-- <div class="icon-item"  v-for="item in ((curList.list[0].max / curList.list[0].step) + 1)">
+            {{item}}
+            <img :src="'../../../assets/icons/svg/vas1.svg'" />
+          </div> -->
+          <div class="el-slider__marks img-marks">
+            <div class="el-slider__marks-text" style="left: 0%;">
+              <img src="../../../assets/icons/vas1.png" />
+            </div>
+            <div class="el-slider__marks-text" style="left: 20%;">
+              <img src="../../../assets/icons/vas2.png" />
+            </div>
+            <div class="el-slider__marks-text" style="left: 40%;">
+              <img src="../../../assets/icons/vas3.png" />
+            </div>
+            <div class="el-slider__marks-text" style="left: 60%;">
+              <img src="../../../assets/icons/vas4.png" />
+            </div>
+            <div class="el-slider__marks-text" style="left: 80%;">
+              <img src="../../../assets/icons/vas5.png" />
+            </div>
+            <div class="el-slider__marks-text" style="left: 100%;">
+              <img src="../../../assets/icons/vas6.png" />
+            </div>
+          </div>
+        </div>
+        <el-slider
+              v-model="form.vasScore"
+              show-stops
+              :show-tooltip="showTooltip"
+              :step="curList.list[0].step"
+              :min="curList.list[0].min"
+              :max="curList.list[0].max"
+              :marks="marks">
+            </el-slider>
+      </div>
     </div>
     <div class="has-heard" v-if="curList.type === 'table' && (curList.name === 'chads'|| curList.name === 'acr' || curList.name === 'essen')">
       <el-table
           :data="curList.list"
+          :header-cell-style="{background:'#1e3f7c',color:'white', 'border-raduis': '4px'}"
           style="width: 100%">
           <el-table-column
           v-if="curList.name === 'chads'"
@@ -156,18 +182,26 @@
           </el-table>
     </div>
     <div class="ruler-wrap" v-if="curList.type === 'ruler' && curList.name === 'cat'">
-      <el-timeline>
-        <el-timeline-item v-for="item in curList.list" :timestamp="item.startName" placement="top">
-          <el-slider
-              v-model="form[item.value]"
-              show-stops
-              :step="item.step"
-              :min="item.min"
-              :max="item.max"
-              :marks="marksRuler">
-            </el-slider>
-        </el-timeline-item>
-      </el-timeline>
+      <div class="slider-wrap">
+          <div class="flex" v-for="(item, index) in curList.list">
+            <div class="time-item">{{index}}</div>
+            <div class="flex-one">
+              <div class="text-wrap">
+                <span>{{item.startName}}</span>
+                <span style="float: right;">{{item.endName}}</span>
+              </div>
+              <el-slider
+                  v-model="form[item.value]"
+                  show-stops
+                  :show-tooltip="showTooltip"
+                  :step="item.step"
+                  :min="item.min"
+                  :max="item.max"
+                  :marks="marksRuler">
+                </el-slider>
+            </div>
+          </div>
+        </div>
     </div>
     <div class="checkbox-wrap" v-if="curList.name === 'caprini'">
 
@@ -235,7 +269,8 @@
         scord:  0,
         tableData: [],
         marks: {0:"0",2:"2",4:"4",6:"6",8:"8",10:"10"},
-        marksRuler: {1:"1",2:"2",3:"3",4:"4",5:"5"}
+        marksRuler: {1:"1",2:"2",3:"3",4:"4",5:"5"},
+        showTooltip: false
       }
     },
     created () {
@@ -607,20 +642,81 @@
   }
 }
 .has-heard{
-  // table thead>tr th:nth-child(1){
-  //   display: none;
-  // }
+  margin-top: 40px;
   .el-table thead{
     display: contents;
   }
 }
+.slider-wrap{
+    .el-slider__runway,.el-slider__bar{
+      height: 30px;
+      border-radius: 25px;
+    }
+    .el-slider__stop{
+      display: none;
+    }
+    .el-slider__button-wrapper{
+      top: -6px;
+    }
+    .el-slider__button{
+      height: 40px;
+      width: 40px;
+    }
+    .el-slider__marks-text{
+      margin-top: 45px;
+    }
+    .img-marks {
+      .el-slider__marks-text{
+        left: 20%;
+        margin-top: -40px;
+        margin-left: 5px;
+      }
+    }
+  }
 </style>
 <style scoped lang="scss">
   .table-all{
     padding: 20px;
+    margin-bottom: 40px;
     background: #e8e8e8;
     .el-tag{
       cursor: pointer;
+    }
+  }
+  .flex-one{
+    flex: 1;
+    -webkit-flex: 1;
+    -o-flex: 1;
+  }
+  .time-item{
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background: #e1eaf9;
+    color: #1890FF;
+    margin-right: 40px;
+    position: relative;
+    &::before{
+      height: 41px;
+      width: 1px;
+      border-left: 1px dotted #1890FF;
+      content: '';
+      display: block;
+      position: absolute;
+      top: -41px;
+      left:20px
+    }
+    &::after{
+      height: 41px;
+      width: 1px;
+      border-left: 1px dotted #1890FF;
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: -41px;
+      left:20px
     }
   }
   .form-wrap{
@@ -651,7 +747,75 @@
     font-size: 12px;
     color: #1890FF;
   }
+  .result-wrap{
+    margin-top: 40px;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 40px;
+    padding: 0 10px;
+    background: #eaf1fd;
+    color: #1890FF;
+    &.warning{
+      background-color: #fde299;
+      color: #FFBA00;
+    }
+    &.danger{
+      background-color: #fcc2c2;
+      color: #FF4949;
+    }
+  }
+  .slider-wrap{
+    width: 60%;
+    margin: 80px auto;
+    .flex{
+      margin-bottom: 40px;
+      &:first-child{
+        .time-item::before{
+          height: 0;
+        }
+      }
+      &:last-child{
+        .time-item::after{
+          height: 0;
+        }
+      }
+    }
+    .el-slider__runway{
+      height: 30px;
+      border-radius: 25px;
+    }
+    .icon-item{
+      display: inline-block;
+      vertical-align: top;
+      flex: 1;
+      -webkit-flex: 1;
+    }
+    .icon-wrap{
+      position: relative;
+    }
+  }
+  .quest-item{
+    .el-checkbox{
+      margin-bottom: 8px;
+    }
+    .title{
+      height: 40px;
+      line-height: 40px;
+      color: #1890FF;
+      position: relative;
+      padding-left: 10px;
+      &::before{
+        height: 20px;
+        width: 4px;
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 8px;
+        background-color: #1890FF;
+      }
+    }
+  }
 
-</style>
-<style lang="scss">
+
 </style>

@@ -126,13 +126,13 @@ export const constantRoutes = [
         name: 'patients',
         meta: { title: '患者管理', icon: '' }
       },
-      // {
-      //   path: 'pgSet/:id/:assessmentId',
-      //   component: (resolve) => require(['@/views/patients/list/pgSet'], resolve),
-      //   name: 'pgSet',
-      //   hidden: true,
-      //   meta: { title: '评估量表', icon: '' }
-      // },
+      {
+        path: 'pgSet/:id/:assessmentId',
+        component: (resolve) => require(['@/views/patients/list/pgSet'], resolve),
+        name: 'pgSet',
+        hidden: true,
+        meta: { title: '评估量表', icon: '' }
+      },
       {
         path: 'patientsDetail/:id',
         component: (resolve) => require(['@/views/patients/detail/index'], resolve),

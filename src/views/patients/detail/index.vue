@@ -29,7 +29,7 @@
       </el-col>
     </el-row>
     <el-tabs type="border-card" v-model="activeTab" @tab-click="changeTab">
-      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key">
+      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key">
       </el-tab-pane>
       <ve-line :data="tabData"></ve-line>
     </el-tabs>
