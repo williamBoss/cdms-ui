@@ -64,12 +64,14 @@
       border: none;
       height: 100%;
       width: 100% !important;
+      background: inherit;
     }
 
     .el-menu-item, .el-submenu__title {
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
+      color: #B6BECD;
     }
 
     // menu hover
@@ -87,7 +89,7 @@
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-
+      color: #B6BECD;
       &:hover {
         background-color: rgba(0, 0, 0, 0.06) !important;
       }

@@ -1,19 +1,17 @@
 <template>
-    <div :class="{'has-logo':showLogo}" :style="{ backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
+    <div :class="{'has-logo':showLogo}">
         <logo v-if="showLogo" :collapse="isCollapse" />
         <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
             <el-menu
                 :default-active="activeMenu"
                 :collapse="isCollapse"
-                :background-color="settings.sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg"
-                :text-color="settings.sideTheme === 'theme-dark' ? variables.menuText : 'rgba(0,0,0,.65)'"
                 :unique-opened="true"
                 :active-text-color="settings.theme"
                 :collapse-transition="false"
                 mode="vertical"
             >
                 <sidebar-item
-                    v-for="(route, index) in sidebarRouters"
+                    v-for="(route, index) in sideBarNav"
                     :key="route.path  + index"
                     :item="route"
                     :base-path="route.path"
@@ -27,9 +25,11 @@
 import { mapGetters, mapState } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
-import variables from "@/assets/styles/variables.scss";
 
 export default {
+    mounted () {
+        console.log('sideBarNav', this.sideBarNav);
+    },
     components: { SidebarItem, Logo },
     computed: {
         ...mapState(["settings"]),
@@ -46,11 +46,25 @@ export default {
         showLogo() {
             return this.$store.state.settings.sidebarLogo;
         },
-        variables() {
-            return variables;
-        },
         isCollapse() {
             return !this.sidebar.opened;
+        },
+        sideBarNav () {
+            let _result = []
+            this.sidebarRouters.map(route => {
+                if (route.unfold) {
+                   _result.push(...route.children) 
+                } else {
+                    _result.push(route)
+                }
+            })
+            // console.log('筛选结果：', _result)
+            return _result
+        }
+    },
+    watch: {
+        sidebarRouters: (val) => {
+            console.log('sidebarRouters: ', sidebarRouters)
         }
     }
 };

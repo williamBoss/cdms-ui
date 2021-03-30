@@ -23,21 +23,11 @@ import ParentView from '@/components/ParentView';
     icon: 'svg-name'             // 设置该路由的图标，对应路径src/assets/icons/svg
     breadcrumb: false            // 如果设置为false，则不会在breadcrumb面包屑中显示
   }
+  unfold: true,                  // 将二级菜单在第一级展示
  */
 
 // 公共路由
 export const constantRoutes = [
-  {
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: (resolve) => require(['@/views/redirect'], resolve)
-      }
-    ]
-  },
   {
     path: '/login',
     component: (resolve) => require(['@/views/login'], resolve),
@@ -55,7 +45,8 @@ export const constantRoutes = [
   },
   {
     path: '',
-    component: Layout,
+    // component: Layout,
+    component: (resolve) => require(['@/views/index'], resolve),
     redirect: 'index',
     children: [
       {
@@ -63,20 +54,6 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/index'], resolve),
         name: '首页',
         meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: Layout,
-    hidden: true,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'profile',
-        component: (resolve) => require(['@/views/system/user/profile/index'], resolve),
-        name: 'Profile',
-        meta: { title: '个人中心', icon: 'user' }
       }
     ]
   },
@@ -118,8 +95,91 @@ export const constantRoutes = [
         meta: { title: '修改生成配置' }
       }
     ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    unfold: true,
+    children: [
+      {
+        path: 'outpatient',
+        component: (resolve) => require(['@/views/outpatient/index'], resolve),
+        name: 'outpatient',
+        meta: { title: '药学门诊', icon: '' }
+      },
+      {
+        path: 'outpatientList',
+        component: (resolve) => require(['@/views/outpatient/list/index'], resolve),
+        name: 'outpatientList',
+        hidden: true,
+        meta: { title: '药学门诊', icon: '' }
+      },
+      {
+        path: 'analysis',
+        component: (resolve) => require(['@/views/analysis/index'], resolve),
+        name: 'analysis',
+        meta: { title: '数据分析', icon: '' }
+      },
+      {
+        path: 'patients',
+        component: (resolve) => require(['@/views/patients/list/index'], resolve),
+        name: 'patients',
+        meta: { title: '患者管理', icon: '' }
+      },
+      // {
+      //   path: 'pgSet/:id/:assessmentId',
+      //   component: (resolve) => require(['@/views/patients/list/pgSet'], resolve),
+      //   name: 'pgSet',
+      //   hidden: true,
+      //   meta: { title: '评估量表', icon: '' }
+      // },
+      {
+        path: 'patientsDetail/:id',
+        component: (resolve) => require(['@/views/patients/detail/index'], resolve),
+        name: 'patientsDetail',
+        hidden: true,
+        meta: { title: '患者评估', icon: '' }
+      },
+      {
+        path: 'patientsForm/:id/:assessmentId',
+        component: (resolve) => require(['@/views/patients/form/index'], resolve),
+        name: 'patientsForm',
+        hidden: true,
+        meta: { title: '患者评估', icon: '' }
+      },
+      {
+        path: 'patientsEdit',
+        component: (resolve) => require(['@/views/patients/editForm/index'], resolve),
+        name: 'patientsEdit',
+        hidden: true,
+        meta: { title: '患者信息', icon: '' }
+      },
+      {
+        path: 'knowledge',
+        component: (resolve) => require(['@/views/knowledge/index'], resolve),
+        name: 'knowledge',
+        meta: { title: '知识库', icon: '' }
+      },
+      {
+        path: 'followup',
+        component: (resolve) => require(['@/views/followup/index'], resolve),
+        name: 'followup',
+        meta: { title: '随访管理', icon: '' }
+      },
+      {
+        path: 'diseases',
+        component: (resolve) => require(['@/views/followup/index'], resolve),
+        name: 'diseases',
+        meta: { title: '病种管理', icon: '' }
+      }
+    ]
   }
 ]
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 export default new Router({
   mode: 'history', // 去掉url中的#

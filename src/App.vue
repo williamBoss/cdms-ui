@@ -5,7 +5,12 @@
 </template>
 
 <script>
+import '@/scss/reset.scss'
+
 export default  {
-  name:  'App'
+  name:  'App',
+  created () {
+    
+  }
 }
 </script>

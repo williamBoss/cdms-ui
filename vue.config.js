@@ -6,10 +6,17 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || '若依管理系统' // 标题
+const name = defaultSettings.title || 'MTM系统' // 标题
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 
+// 配置vue本地json数据
+const express = require('express')
+const app = express()
+const appData = require('./static/question.json')
+const questionList = appData
+const apiRoutes = express.Router()
+app.use('/api',apiRoutes)
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
@@ -41,7 +48,15 @@ module.exports = {
         }
       }
     },
-    disableHostCheck: true
+    disableHostCheck: true,
+    before (app) {
+  　　app.get('/api/questionList',(req, res) => {
+　　　　res.json({
+　　　　　　erron:0,
+　　　　　　data: questionList
+　　　　})
+  　　})
+    }
   },
   configureWebpack: {
     name: name,

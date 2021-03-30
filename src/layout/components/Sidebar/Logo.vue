@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '若依管理系统',
+      title: 'MTM系统',
       logo: logoImg
     }
   }
@@ -55,11 +55,12 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 70px;
+  line-height: 70px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;
+  border-bottom: 1px solid #2b2f3a;
 
   & .sidebar-logo-link {
     height: 100%;

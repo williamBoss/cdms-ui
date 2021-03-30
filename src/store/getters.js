@@ -12,5 +12,6 @@ const getters = {
   permissions: state => state.user.permissions,
   permission_routes: state => state.permission.routes,
   sidebarRouters:state => state.permission.sidebarRouters,
+  addressList: state => state.address.addressList
 }
 export default getters

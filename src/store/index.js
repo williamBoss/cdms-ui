@@ -6,6 +6,7 @@ import tagsView from './modules/tagsView'
 import permission from './modules/permission'
 import settings from './modules/settings'
 import getters from './getters'
+import patients from './modules/patients'
 
 Vue.use(Vuex)
 
