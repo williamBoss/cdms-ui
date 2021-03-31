@@ -1,4 +1,7 @@
 .home {
+  .navbar{
+    height: 70px;
+  }
   .main {
     width: 1140px;
     margin: 0 auto;
@@ -45,8 +48,10 @@
         background: #2F6AD3;
       }
       .title {
-        font-size: 24px;
+        font-size: 20px;
         margin: 0;
+        color: #fff;
+        text-align: left;
       }
     }
     .last_card {

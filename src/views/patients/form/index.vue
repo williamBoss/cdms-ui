@@ -3,14 +3,14 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
     </el-tabs>
-    <life-style v-if="activeName === 'lifeStyle'"></life-style>
-    <history v-if="activeName === 'bs'"></history>
-    <cur-sym v-if="activeName === 'curSym'"></cur-sym>
-    <ywpgjl v-if="activeName === 'ywpgjl'"></ywpgjl>
-    <yyjl v-if="activeName === 'yyjl'"></yyjl>
-    <ywzlwt v-if="activeName === 'ywzlwt'"></ywzlwt>
+    <life-style :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
+    <history :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
+    <cur-sym :activeName.sync="activeName" v-if="activeName === 'curSym'"></cur-sym>
+    <ywpgjl :activeName.sync="activeName" v-if="activeName === 'ywpgjl'"></ywpgjl>
+    <yyjl :activeName.sync="activeName" v-if="activeName === 'yyjl'"></yyjl>
+    <ywzlwt :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
     <pglb v-if="activeName === 'pglb'"></pglb>
-    <jyjc v-if="activeName === 'jyjc'"></jyjc>
+    <jyjc :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
   </div>
 </template>
 
@@ -56,7 +56,7 @@ export default {
         name: '评估量表',
         key: 'pglb'
       }],
-      activeName: 'jyjc',
+      activeName: 'ywpgjl',
       reportInfo: {}
     }
   },

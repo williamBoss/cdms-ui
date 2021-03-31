@@ -11,7 +11,7 @@
               <el-col class="content-item" :span="21">
                <el-form-item label="描述" label-width="40px">
                  <el-input type="textarea" v-model="consult.mainConsult"></el-input>
-                 <el-button class="card-btn" type="primary" size="mini" @click="onSubmit">保存</el-button>
+                 <el-button class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
                </el-form-item>
               </el-col>
             </el-row>
@@ -127,6 +127,12 @@
    saveSymptom
  } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {
@@ -196,7 +202,7 @@
           "patientId": this.$route.params.id
         }
         getConsult(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.consult = res.data
           }
         })
@@ -223,7 +229,6 @@
         })
         .then(function (response) {
           _this.checkList = response.data.data.diagnose
-          console.log(_this.checkList)
         })
         .catch(function (error) {
             console.log(error);
@@ -235,7 +240,7 @@
           "patientId": this.$route.params.id
         }
         getSymptom(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.curSym = res.data
             this.curSym.list = this.curSym[this.checkList[this.page.curPage - 1].name]
           }
@@ -253,7 +258,21 @@
 
       },
       goNext () {
-
+        this.$emit('update:activeName', 'bs');
+      },
+      saveConsult () {
+        let param = {
+          "assessmentId": this.$route.params.assessmentId,
+          "patientId": this.$route.params.id
+        }
+        param.mainConsult = this.consult.mainConsult
+        saveConsult(param).then((res) => {
+          if (res.code === 200) {
+              this.$message.success('保存成功')
+            } else {
+              this.$message.error(res.errorMessage)
+            }
+        })
       },
       onSubmit () {
         this.curSym[this.checkList[this.page.curPage - 1].name] = this.curSym.list

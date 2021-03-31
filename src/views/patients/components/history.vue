@@ -362,6 +362,12 @@
    delMedSideList
  } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {
@@ -409,19 +415,19 @@
     methods: {
       getDisease () {
         getDisease().then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200  && res.data) {
             this.diseaseList = res.data
             this.curDiseaseList = res.data
           }
         })
         getSurgical().then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200  && res.data) {
             this.surgicalList = res.data
             this.curSurgicalList = res.data
           }
         })
         getMedList().then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200  && res.data) {
             this.medList = res.data.records
           }
         })
@@ -432,7 +438,7 @@
           "patientId": this.$route.params.id
         }
         getFamilyHistory(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.familyHistory = res.data
             res.data.forEach((vv) => {
               this.form.familyHistoryIds.push(vv.diseaseId)
@@ -440,7 +446,7 @@
           }
         })
         getOldHistory(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.oldHistory = res.data
             res.data.forEach((vv) => {
               this.form.oldHistoryIds.push(vv.diseaseId)
@@ -448,7 +454,7 @@
           }
         })
         getSurgicalHistory(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.surgicalHistory = res.data
             res.data.forEach((vv) => {
               this.form.surgicalIds.push(vv.pastSurgicalHistoryId)
@@ -456,7 +462,7 @@
           }
         })
         getDiabetesHistory(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.diabetesHistory = res.data
             let diff = ''
             res.data.forEach((vv) => {
@@ -468,13 +474,13 @@
           }
         })
         getLiverInfo(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.liverInfo = res.data
             this.form.liverInfo = res.data.liverDamageDesc
           }
         })
         getKidneyInfo(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.kidneyInfo = res.data
             this.form.kidneyInfo = res.data.kidneyDamageDesc
           }
@@ -492,7 +498,7 @@
         param.pageNum = 1
         param.pageSize = 20
         getAllergyHistory(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.allergenHistory = res.data.records
             // this.form.kidneyInfo = res.data.kidneyDamageDesc
           }
@@ -649,7 +655,6 @@
             param.allergyDatetime = this.form.allergyDatetime
             param.allergySymptoms = this.form.allergySymptoms
             saveAllergyHistory(param).then((res) => {
-              console.log(res)
               this.gmEdit = false
               this.$message.success('保存成功')
               this.getHistory()
@@ -730,7 +735,7 @@
 
       },
       goNext () {
-
+        this.$emit('update:activeName', 'lifeStyle');
       },
       onSubmit () {
 

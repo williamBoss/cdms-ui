@@ -111,16 +111,16 @@
           <el-col>
             <div class="table-title">生存质量分析</div>
             <el-table
-                :data="tableData"
+                :data="form.scaleList"
                 stripe
                 style="width: 100%">
                 <el-table-column
                   label="Date"
-                  prop="date">
+                  prop="key">
                 </el-table-column>
                 <el-table-column
                   label="Name"
-                  prop="name">
+                  prop="value">
                 </el-table-column>
               </el-table>
           </el-col>
@@ -131,16 +131,16 @@
           <el-col>
             <div class="table-title">药物不良反应史</div>
             <el-table
-                :data="tableData"
+                :data="form.medSideEffectVOList"
                 stripe
                 style="width: 100%">
                 <el-table-column
                   label="Date"
-                  prop="date">
+                  prop="medName">
                 </el-table-column>
                 <el-table-column
                   label="Name"
-                  prop="name">
+                  prop="adverseReactionsSymptoms">
                 </el-table-column>
               </el-table>
           </el-col>
@@ -227,15 +227,15 @@
       <el-row class="form-wrap" :gutter="20">
         <el-col :span="12">
           <div class="title-item">问题及干预</div>
-          <el-input type="textarea" placeholder="请描述患者的问题">
+          <el-input type="textarea" v-model="obj1.problemsInterventions" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info">保存</el-button>
+          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('problemsInterventions')">保存</el-button>
         </el-col>
         <el-col :span="12">
           <div class="title-item">转归</div>
-          <el-input type="textarea" placeholder="请描述患者的问题">
+          <el-input type="textarea" v-model="obj2.sequelae" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info">保存</el-button>
+          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('sequelae')">保存</el-button>
         </el-col>
       </el-row>
       <el-form-item>
@@ -247,8 +247,14 @@
 </template>
 
 <script>
-  import { getReportInfo } from '@/api/patients'
+  import { getReportInfo, saveReportProblem, saveReportSequelae, getReportProblem, getReportSequelae } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {
@@ -256,9 +262,13 @@
           pastHistoryVO: [],
           curSysVO: [],
           costVO: [],
-          lifestyleVO: []
+          lifestyleVO: [],
+          medSideEffectVOList: [],
+          scaleList: []
         },
         tableData: [],
+        obj1: {},
+        obj2: {}
       }
     },
     created () {
@@ -271,10 +281,25 @@
           "patientId": this.$route.params.id
         }
         getReportInfo(param).then((res) => {
-          if (res.code) {
-            this.form = res.data
+          if (res.code === 200) {
+            // this.form = res.data
             this.hanldeData(res.data)
-            console.log(this.form)
+          } else {
+            this.$message.error(res.errorMessage)
+          }
+        })
+        getReportProblem(param).then((res) => {
+          if (res.code === 200) {
+            this.obj1 = res.data ? res.data : {}
+          } else {
+            this.$message.error(res.errorMessage)
+          }
+        })
+        getReportSequelae(param).then((res) => {
+          if (res.code === 200) {
+            this.obj2 = res.data ? res.data : {}
+          } else {
+            this.$message.error(res.errorMessage)
           }
         })
       },
@@ -337,7 +362,7 @@
           newList.push({
             name: '主述',
             value: 'mainConsultVO',
-            data: data.mainConsultVO.mainConsult
+            data: data.mainConsultVO && data.mainConsultVO.mainConsult
           })
           newList.push({
             name: '诊断',
@@ -378,6 +403,7 @@
         }
         if (data.patientInfoVO) {
           let newList = []
+          this.form.patientInfoVO = data.patientInfoVO
           newList.push({
             name1: '身高',
             value1: data.patientInfoVO.height + 'cm',
@@ -388,25 +414,69 @@
             name1: 'BMI',
             value1: data.patientInfoVO.bmi + 'cm',
             name2: '过去一年体重变化',
-            value2: data.lifestyleVO.weightLossValue ? data.lifestyleVO.weightLossValue + 'kg' : data.lifestyleVO.weightGainValue + 'kg'
+            value2: data.lifestyleVO && (data.lifestyleVO.weightLossValue ? data.lifestyleVO.weightLossValue + 'kg' : data.lifestyleVO.weightGainValue + 'kg')
           })
           newList.push({
             name1: '每日主食',
-            value1: data.lifestyleVO.dailyBasicFoodAmount + '两',
+            value1: data.lifestyleVO && data.lifestyleVO.dailyBasicFoodAmount + '两',
             name2: '摄盐量',
-            value2: data.lifestyleVO.dailySaltAmount
+            value2: data.lifestyleVO && data.lifestyleVO.dailySaltAmount
           })
           newList.push({
             name1: '油脂',
-            value1: data.lifestyleVO.dailyFatAmount,
+            value1: data.lifestyleVO && data.lifestyleVO.dailyFatAmount,
             name2: '蔬菜水果',
-            value2: data.lifestyleVO.dailyVegetableFruitAmount
+            value2: data.lifestyleVO && data.lifestyleVO.dailyVegetableFruitAmount
           })
           this.form.lifestyleVO = newList
         }
+        if (data.medSideEffectVOList) {
+          this.form.medSideEffectVOList = data.medSideEffectVOList
+        }
+        if (data.scale) {
+          let newList = []
+          Object.keys(data.scale).forEach((vv) => {
+            newList.push({
+              key: vv,
+              value: data.scale[vv]
+            })
+          })
+          this.form.scaleList = newList
+        }
       },
-      goNext () {},
-      saveInfo () {}
+      saveProblem (type) {
+        let param = {
+          "assessmentId": this.$route.params.assessmentId,
+          "patientId": this.$route.params.id
+        }
+        if (type === 'problemsInterventions') {
+          param[type] = this.obj1.problemsInterventions
+          param.id = this.obj1.id
+          saveReportProblem(param).then((res) => {
+            if (res.code === 200) {
+              this.$message.success('保存成功')
+            } else {
+              this.$message.error(res.errorMessage)
+            }
+          })
+        } else {
+          param[type] = this.obj2.sequelae
+          param.id = this.obj2.id
+          saveReportSequelae(param).then((res) => {
+            if (res.code === 200) {
+              this.$message.success('保存成功')
+            } else {
+              this.$message.error(res.errorMessage)
+            }
+          })
+        }
+      },
+      goNext () {
+        this.$router.push({name: 'patients'})
+      },
+      saveInfo () {
+        this.$emit('update:activeName', 'pglb');
+      }
     }
   }
 </script>

@@ -145,6 +145,12 @@
     delRecord
   } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {},
@@ -247,7 +253,7 @@
         this.tableData.push({})
       },
       saveInfo () {
-        console.log()
+        this.$emit('update:activeName', 'jyjc');
       }
     }
   }

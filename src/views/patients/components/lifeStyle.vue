@@ -219,6 +219,12 @@
     saveLifestyle
   } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {},
@@ -237,6 +243,7 @@
         saveLifestyle(this.form).then((res) => {
           if (res.code === 200) {
             this.$message.success('保存成功')
+            this.$emit('update:activeName', 'yyjl');
           } else {
             this.$message.error(res.errorMessage)
           }
@@ -249,16 +256,17 @@
         }
         getLifestyle(param).then((res) => {
           if (res.code === 200) {
-            console.log(res)
-            res.data.dailyFatAmount = res.data.dailyFatAmount.toString()
-            res.data.dailySaltAmount = res.data.dailySaltAmount.toString()
-            res.data.dailyVegetableFruitAmount = res.data.dailyVegetableFruitAmount.toString()
-            res.data.isDrinking = res.data.isDrinking.toString()
-            res.data.isExercise = res.data.isExercise.toString()
-            res.data.isFall = res.data.isFall.toString()
-            res.data.isSleepDisorder = res.data.isSleepDisorder.toString()
-            res.data.isSmoke = res.data.isSmoke.toString()
-            this.form = res.data
+            if (res.data) {
+              res.data.dailyFatAmount = res.data.dailyFatAmount.toString()
+              res.data.dailySaltAmount = res.data.dailySaltAmount.toString()
+              res.data.dailyVegetableFruitAmount = res.data.dailyVegetableFruitAmount.toString()
+              res.data.isDrinking = res.data.isDrinking.toString()
+              res.data.isExercise = res.data.isExercise.toString()
+              res.data.isFall = res.data.isFall.toString()
+              res.data.isSleepDisorder = res.data.isSleepDisorder.toString()
+              res.data.isSmoke = res.data.isSmoke.toString()
+              this.form = res.data
+            }
           } else {
             this.$message.error(res.errorMessage)
           }
@@ -266,7 +274,7 @@
       },
       getPatientInfo () {
         getPatientInfo(this.$route.params.id).then((res) => {
-          if (res.code) {
+          if (res.code === 200) {
             this.userInfo = res.data
             if (res.data.gender === 1) {
               res.data.sexName = '男'

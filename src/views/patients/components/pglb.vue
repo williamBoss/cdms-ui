@@ -216,7 +216,7 @@
       {{curList.nickName}}得分：{{scord}}
       <span v-for="rr in curList.rule" v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{rr.name}}</span>
     </div>
-    <div class="btn-wrap">
+    <div class="btn-wrap" v-if="curTag.id">
       <el-button type="primary" @click="saveInfo">下一步</el-button>
     </div>
   </div>
@@ -682,6 +682,9 @@
     .el-tag{
       cursor: pointer;
     }
+  }
+  .btn-wrap{
+    margin: 10px 0;
   }
   .flex-one{
     flex: 1;

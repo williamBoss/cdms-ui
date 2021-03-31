@@ -77,6 +77,12 @@ import baseDrawer from './baseDrawer.vue'
 import lineCharts from '@/views/components/echarts/lineCharts'
 import chartList from '../config/jyjcCharts'
 export default {
+  props: {
+    activeName: {
+      type: String,
+      default: '',
+    },
+  },
   data(){
     return {
       chartList: chartList,

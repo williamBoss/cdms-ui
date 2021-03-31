@@ -135,6 +135,12 @@
     getMedProblems
   } from '@/api/patients'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
         form: {},
@@ -271,7 +277,9 @@
         item.edit = true
         this.newForm = item
       },
-      goNext () {},
+      goNext () {
+        this.$emit('update:activeName', 'pglb');
+      },
       saveInfo (item) {
         this.newForm.assessmentId = this.$route.params.assessmentId
         this.newForm.patientId = this.$route.params.id

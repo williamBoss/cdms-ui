@@ -48,12 +48,14 @@ export const constantRoutes = [
     // component: Layout,
     component: (resolve) => require(['@/views/index'], resolve),
     redirect: 'index',
+    hidden: true,
     children: [
       {
         path: 'index',
         component: (resolve) => require(['@/views/index'], resolve),
         name: '首页',
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
+        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true },
+        hidden: true
       }
     ]
   },
@@ -105,26 +107,26 @@ export const constantRoutes = [
         path: 'outpatient',
         component: (resolve) => require(['@/views/outpatient/index'], resolve),
         name: 'outpatient',
-        meta: { title: '药学门诊', icon: '' }
+        meta: { title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png') }
       },
       {
         path: 'outpatientList',
         component: (resolve) => require(['@/views/outpatient/list/index'], resolve),
         name: 'outpatientList',
         hidden: true,
-        meta: { title: '药学门诊', icon: '' }
+        meta: { title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png') }
       },
       {
-        path: 'analysis',
+        path: 'analysis',  // require('@/assets/icons/menu/sjfx.png')
         component: (resolve) => require(['@/views/analysis/index'], resolve),
         name: 'analysis',
-        meta: { title: '数据分析', icon: '' }
+        meta: { title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png') }
       },
       {
         path: 'patients',
         component: (resolve) => require(['@/views/patients/list/index'], resolve),
         name: 'patients',
-        meta: { title: '患者管理', icon: '' }
+        meta: { title: '患者管理', icon: require('@/assets/icons/menu/hzgl.png') }
       },
       {
         path: 'pgSet/:id/:assessmentId',
@@ -138,39 +140,45 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/patients/detail/index'], resolve),
         name: 'patientsDetail',
         hidden: true,
-        meta: { title: '患者评估', icon: '' }
+        meta: { title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png') }
       },
       {
         path: 'patientsForm/:id/:assessmentId',
         component: (resolve) => require(['@/views/patients/form/index'], resolve),
         name: 'patientsForm',
         hidden: true,
-        meta: { title: '患者评估', icon: '' }
+        meta: { title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png') }
       },
       {
         path: 'patientsEdit',
         component: (resolve) => require(['@/views/patients/editForm/index'], resolve),
         name: 'patientsEdit',
         hidden: true,
-        meta: { title: '患者信息', icon: '' }
+        meta: { title: '患者信息', icon: require('@/assets/icons/menu/hzgl.png') }
       },
       {
         path: 'knowledge',
         component: (resolve) => require(['@/views/knowledge/index'], resolve),
         name: 'knowledge',
-        meta: { title: '知识库', icon: '' }
+        meta: { title: '知识库', icon: require('@/assets/icons/menu/zsk.png') }
       },
       {
         path: 'followup',
         component: (resolve) => require(['@/views/followup/index'], resolve),
         name: 'followup',
-        meta: { title: '随访管理', icon: '' }
+        meta: { title: '随访管理', icon: require('@/assets/icons/menu/sfgl.png') }
       },
+      // {
+      //   path: 'diseases',
+      //   component: (resolve) => require(['@/views/followup/index'], resolve),
+      //   name: 'diseases',
+      //   meta: { title: '病种管理', icon: '' }
+      // },
       {
         path: 'diseases',
-        component: (resolve) => require(['@/views/followup/index'], resolve),
+        component: (resolve) => require(['@/views/diseases/list'], resolve),
         name: 'diseases',
-        meta: { title: '病种管理', icon: '' }
+        meta: { title: '病种管理', icon: require('@/assets/icons/menu/bzgl.png') }
       }
     ]
   }

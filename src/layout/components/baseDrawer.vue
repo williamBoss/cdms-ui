@@ -7,7 +7,7 @@
     <el-tabs type="border-card" v-if="drawer">
       <el-tab-pane label="患者信息">
         <div class="cart-title">电话</div>
-        <el-input v-model="patientInfoVO.phone" @input="searchUser()" placeholder="请输入内容"></el-input>
+        <el-input v-model="patientInfoVO.phone" @change="searchUser()" placeholder="请输入内容"></el-input>
         <div class="cart-title">姓名</div>
         <el-input v-model="patientInfoVO.patientName" placeholder="请输入内容"></el-input>
         <div class="cart-title">出生日期(年/月/日)</div>
@@ -34,8 +34,8 @@
           <el-button type="primary" @click="savePatient()">保存</el-button>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+      <!-- <el-tab-pane label="配置管理">配置管理</el-tab-pane>
+      <el-tab-pane label="角色管理">角色管理</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -49,7 +49,7 @@ import {
 export default {
   data() {
     return {
-      drawer: false,
+      drawer: true,
       patientInfoVO: {
         phone: '',
         patientName: '',
@@ -66,7 +66,7 @@ export default {
       this.drawer = !this.drawer
     },
     async searchUser () {
-      
+
       if (/^1[34578]\d{9}$/.test(this.patientInfoVO.phone)) {
         let res = await getPatientPhone(this.patientInfoVO.phone);
         console.log('用户信息：', res);

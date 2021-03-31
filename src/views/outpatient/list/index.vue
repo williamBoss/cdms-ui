@@ -1,6 +1,6 @@
 <template>
   <div class="outpatient-list">
-    <el-button class="back-btn" size="mini" type="primary">返回</el-button>
+    <el-button class="back-btn" size="mini" type="primary" @click="goBack">返回</el-button>
     <div class="flex-wrap">
       <div class="search-wrap">
         <el-input placeholder="请输入内容" v-model="searchName" class="input-with-select">
@@ -47,7 +47,7 @@
         <el-table-column
           prop="age"
           label="年龄"
-          width="120">
+          width="60">
         </el-table-column>
         <el-table-column
           prop="medNames"
@@ -56,18 +56,16 @@
         </el-table-column>
         <el-table-column
           prop="consultContext"
-          label="问题"
-          width="120">
+          label="问题">
         </el-table-column>
         <el-table-column
           prop="consultReply"
-          label="解答"
-          width="120">
+          label="解答">
         </el-table-column>
         <el-table-column
           prop="questionTypes"
           label="问题类型"
-          width="120">
+          width="200">
           <template slot-scope="scope">
           <el-cascader
               :options="options"
@@ -148,19 +146,19 @@ export default {
       var d = new Date(birYear, birMonth - 1, birDay);
       if (d.getFullYear() == birYear && (d.getMonth() + 1) == birMonth && d.getDate() == birDay) {
         if (nowYear == birYear) {
-          returnAge = 0; // 
+          returnAge = 0; //
         } else {
-          var ageDiff = nowYear - birYear; // 
+          var ageDiff = nowYear - birYear; //
           if (ageDiff > 0) {
             if (nowMonth == birMonth) {
-              var dayDiff = nowDay - birDay; // 
+              var dayDiff = nowDay - birDay; //
               if (dayDiff < 0) {
                 returnAge = ageDiff - 1;
               } else {
                 returnAge = ageDiff;
               }
             } else {
-              var monthDiff = nowMonth - birMonth; // 
+              var monthDiff = nowMonth - birMonth; //
               if (monthDiff < 0) {
                 returnAge = ageDiff - 1;
               } else {
@@ -207,6 +205,9 @@ export default {
     handleClick(v){
       console.log(v)
     },
+    goBack () {
+      this.$router.push({name: 'outpatient'})
+    },
     async deleteData(data) {
       let res = await deleteData(data.id)
       if (res.code === 200 && res.success === true) {
@@ -224,9 +225,9 @@ export default {
   .back-btn{
     margin: 20px 0;
   }
-  .search-wrap{
-    width: 900px;
-  }
+  // .search-wrap{
+  //   width: 900px;
+  // }
   .select-wrap{
     padding: 17px 0 35px;
     .el-select{
@@ -234,35 +235,4 @@ export default {
     }
   }
 }
-// .outpatient{
-//   padding: 54px 0 0 40px;
-//   .search-wrap{
-//     width: 750px;
-//     display: inline-block;
-//   }
-//   .main-wrap{
-//     width: 750px;
-//     padding-top: 25px;
-//     .tag-wrap{
-//       margin-bottom: 13px;
-//       margin: 0 11px 33px;
-//       border-radius: 25px;
-//     }
-//   }
-//   .select-wrap{
-//     padding: 15px 0;
-//     text-align: right;
-//     .el-select{
-//       margin-left: 8px;
-//     }
-//   }
-//   .btn-wrap{
-//     padding: 20px 0;
-//     text-align: right;
-//   }
-//   .btn-item{
-//     display: inline-block;
-//   }
-// }
-
 </style>

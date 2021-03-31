@@ -5,3 +5,6 @@
 #app .sidebar-container .el-menu-item.is-active{
   color: #fff!important;
 }
+.el-menu-item:hover, .el-menu-item:focus{
+  background-color: transparent;
+}

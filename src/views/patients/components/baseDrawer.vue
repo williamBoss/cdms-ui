@@ -108,7 +108,6 @@ export default {
         this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: item.assessmentId}})
       } else {
         getAssessment({patientId: this.$route.params.id}).then((res) => {
-          console.log(res)
           if (res.code === 200) {
             this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: res.data.assessmentId}})
           }

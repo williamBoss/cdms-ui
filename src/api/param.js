@@ -16,6 +16,40 @@ export const getDisease = () => {
   })
 }
 
+// 新增病种
+export const AddDisease = (param) => {
+  if (param.diseaseId) {
+    return request({
+      url: '/cdms/config/disease/' + param.diseaseId,
+      method: 'PUT',
+      data: param
+    })
+  } else {
+    return request({
+      url: '/cdms/config/disease/',
+      method: 'post',
+      data: param
+    })
+  }
+}
+
+//删除病种
+export const delDisease = (param) => {
+  return request({
+    url: '/cdms/config/disease/' + param.diseaseId,
+    method: 'DELETE'
+  })
+}
+
+// 获取病种列表
+export const getDiseaseList = (param) => {
+  return request({
+    url: '/cdms/config/disease/list',
+    method: 'get',
+    params: param
+  })
+}
+
 // 获取问卷列表
 export const getQuestionList = () => {
   return request({

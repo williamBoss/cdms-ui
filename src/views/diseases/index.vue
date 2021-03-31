@@ -1,5 +1,5 @@
 <template>
-  <div class="diseases"></div>
+  <div class="diseases">222</div>
 </template>
 
 <script>

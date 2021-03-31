@@ -1,10 +1,10 @@
 <template>
-  <div class="patients">
+  <div class="patients new-patients">
     <el-button type="primary" size="small" @click="back">返回</el-button>
     <el-form ref="form" :rules="rules" :model="form">
       <el-form-item prop="phone">
         <label>电话</label>
-        <el-input v-model="form.phone" placeholder="*建议填写患者手机号"></el-input>
+        <el-input v-model="form.phone" @change="searchUser()" placeholder="*建议填写患者手机号"></el-input>
       </el-form-item>
       <el-form-item prop="patientName">
         <label>姓名</label>
@@ -30,15 +30,15 @@
       </el-form-item>
       <el-form-item prop="height">
         <label>身高(cm)</label>
-        <el-input type="number" v-model="form.height"></el-input>
+        <el-input type="number" v-model="form.height" @change="getBmi"></el-input>
       </el-form-item>
       <el-form-item prop="weight">
         <label>体重(kg)</label>
-        <el-input type="number" v-model="form.weight"></el-input>
+        <el-input type="number" v-model="form.weight" @change="getBmi"></el-input>
       </el-form-item>
       <el-form-item prop="bmi">
-        <label>bim</label>
-        <el-input type="number" v-model="form.bmi"></el-input>
+        <label>bmi</label>
+        <el-input type="number" disabled v-model="form.bmi"></el-input>
       </el-form-item>
       <el-form-item prop="idCard">
         <label>身份证号</label>
@@ -95,7 +95,7 @@
         <label>住院次数</label>
         <el-input type="number" v-model="form.hospitalizationNum"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item class="btn-wrap">
         <el-button type="primary" @click="goNext">开始评估</el-button>
         <el-button type="primary" @click="saveInfo">保存信息</el-button>
         <el-button @click="clearDate">清空</el-button>
@@ -106,16 +106,22 @@
 
 <script>
   import {
-    savePatient
+    savePatient,
+    getAssessment
   } from '@/api/patients'
   import {
     getAddress
   } from '@/api/param'
+  import {
+    getPatientPhone,
+  } from '@/api/outpatient'
   export default {
     name: 'patientsEdit', // 患者管理详情
     data() {
       return {
-        form: {},
+        form: {
+          bmi: 0
+        },
         options: [],
         rules: {
           phone: [{
@@ -128,31 +134,31 @@
             message: '请选择出生日期',
             trigger: 'blur'
           }],
-          bmi: [{
-            required: true,
-            message: '请输入bmi',
-            trigger: 'blur'
-          }],
-          company: [{
-            required: true,
-            message: '请输入工作单位',
-            trigger: 'blur'
-          }],
-          downtownAddress: [{
-            required: true,
-            message: '请选择入家庭住址',
-            trigger: 'blur'
-          }],
-          eduLevel: [{
-            required: true,
-            message: '请选择受教育程度',
-            trigger: 'blur'
-          }],
-          emergencyInfusionNum: [{
-            required: true,
-            message: '请输入就诊后一年急诊/输液次数',
-            trigger: 'blur'
-          }],
+          // bmi: [{
+          //   required: true,
+          //   message: '请输入bmi',
+          //   trigger: 'blur'
+          // }],
+          // company: [{
+          //   required: true,
+          //   message: '请输入工作单位',
+          //   trigger: 'blur'
+          // }],
+          // downtownAddress: [{
+          //   required: true,
+          //   message: '请选择入家庭住址',
+          //   trigger: 'blur'
+          // }],
+          // eduLevel: [{
+          //   required: true,
+          //   message: '请选择受教育程度',
+          //   trigger: 'blur'
+          // }],
+          // emergencyInfusionNum: [{
+          //   required: true,
+          //   message: '请输入就诊后一年急诊/输液次数',
+          //   trigger: 'blur'
+          // }],
           gender: [{
             required: true,
             message: '请选择性别',
@@ -163,26 +169,26 @@
             message: '请输入身高',
             trigger: 'blur'
           }],
-          homeAddress: [{
-            required: true,
-            message: '请输入家庭详细地址',
-            trigger: 'blur'
-          }],
-          hospitalizationNum: [{
-            required: true,
-            message: '请输入就诊后一年住院次数',
-            trigger: 'blur'
-          }],
+          // homeAddress: [{
+          //   required: true,
+          //   message: '请输入家庭详细地址',
+          //   trigger: 'blur'
+          // }],
+          // hospitalizationNum: [{
+          //   required: true,
+          //   message: '请输入就诊后一年住院次数',
+          //   trigger: 'blur'
+          // }],
           idCard: [{
             required: true,
             message: '请输入身份证号码',
             trigger: 'blur'
           }],
-          medType: [{
-            required: true,
-            message: '请选择医保类型',
-            trigger: 'blur'
-          }],
+          // medType: [{
+          //   required: true,
+          //   message: '请选择医保类型',
+          //   trigger: 'blur'
+          // }],
           patId: [{
             required: true,
             message: '请输入患者ID',
@@ -191,6 +197,11 @@
           patientName: [{
             required: true,
             message: '请输入姓名',
+            trigger: 'blur'
+          }],
+          phone: [{
+            required: true,
+            message: '请输入手机号',
             trigger: 'blur'
           }],
           weight: [{
@@ -223,19 +234,52 @@
         }
         return data;
       },
+      async searchUser () {
+
+        if (/^1[34578]\d{9}$/.test(this.form.phone)) {
+          let res = await getPatientPhone(this.form.phone);
+          console.log('用户信息：', res);
+          let {data} = res;
+          if (data) {
+            data.gender = data.gender.toString()
+            data.medType = data.medType.toString()
+            data.eduLevel = data.eduLevel.toString()
+            if (data.downtownAddress.length > 0) {
+              let newList = []
+              data.downtownAddress.forEach((vv) => {
+                newList.push(parseInt(vv))
+              })
+              data.downtownAddress = newList
+            }
+            this.form = data
+          }
+        } else {
+          this.form = {
+            phone: '',
+            patientName: '',
+            birthday: '',
+            gender: '',
+            height: '',
+            homeAddress: '',
+            hospitalizationNum: '',
+            idCard: '',
+            medType: '',
+            patId: '',
+            weight: '',
+            bmi: 0
+          }
+        }
+      },
       saveInfo() {
-        this.form.downtownAddress = JSON.stringify(this.form.downtownAddress)
+        // this.form.downtownAddress = JSON.stringify(this.form.downtownAddress)
         this.$refs.form.validate((valid) => {
           if (valid) {
             savePatient(this.form).then((res) => {
               if (res.code === 200) {
                 this.$message({
-                  message: '新增成功',
+                  message: '保存成功',
                   type: 'success'
                 });
-                setTimeout(() => {
-                  this.$router.push({name: 'patients'})
-                }, 1000)
               }
             })
           } else {
@@ -255,8 +299,21 @@
           name: 'patients'
         })
       },
+      getBmi () {
+        if (this.form.weight && this.form.height) {
+          this.form.bmi = Number((Number(this.form.weight) / ((Number(this.form.height) / 100) * (Number(this.form.height) / 100))).toFixed(2))
+        }
+      },
       goNext() {
-
+        if (!this.form.patientId) {
+          this.$message.error('用户信息不存在')
+          return false
+        }
+        getAssessment({patientId: this.form.patientId}).then((res) => {
+          if (res.code === 200) {
+            this.$router.push({name: 'patientsForm', params: {id: this.form.patientId, assessmentId: res.data.assessmentId}})
+          }
+        })
       },
       handleClick() {
 
@@ -266,13 +323,15 @@
 </script>
 
 <style lang="scss">
-  .patients {
+  .new-patients {
     padding: 28px 20px 0 40px;
 
     .el-form {
       margin-top: 10px;
     }
-
+    .btn-wrap{
+      text-align: right;
+    }
     label {
       height: 40px;
       line-height: 40px;

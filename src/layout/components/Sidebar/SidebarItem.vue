@@ -3,7 +3,11 @@
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+          <!-- <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" /> -->
+          <div class="img_box">
+            <img :src="onlyOneChild.meta.icon" alt="">
+          </div>
+          <span slot='title'>{{onlyOneChild.meta.title}}</span>
         </el-menu-item>
       </app-link>
     </template>
@@ -62,6 +66,7 @@ export default {
         } else {
           // Temp set(will be used if only has one showing child)
           this.onlyOneChild = item
+          console.log('数据：', this.onlyOneChild)
           return true
         }
       })
@@ -74,6 +79,7 @@ export default {
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
         this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        console.log('数据：', this.onlyOneChild)
         return true
       }
 
@@ -87,7 +93,30 @@ export default {
         return this.basePath
       }
       return path.resolve(this.basePath, routePath)
+    },
+    getIcon(data) {
+      console.log(data)
+      return require(data)
     }
   }
 }
 </script>
+<style lang="scss" scope>
+  .el-menu-item.is-active {
+    .img_box{
+      background: #498AFD;
+    }
+  }
+  .img_box{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    margin-right: 8px;
+    img{
+      height: 15px;
+    }
+  }
+</style>

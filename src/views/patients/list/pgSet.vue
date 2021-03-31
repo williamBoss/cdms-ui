@@ -110,16 +110,16 @@ export default {
 
 <style lang="scss" >
 .outpatient{
-  padding: 28px 0 0 24px;
+  padding: 28px 24px 0;
   .search-wrap{
-    width: 750px;
-    display: inline-block;
+    // width: 750px;
+    // display: inline-block;
     .el-autocomplete{
       width: 100%;
     }
   }
   .main-wrap{
-    width: 750px;
+    // width: 750px;
     padding-top: 25px;
     .tag-wrap{
       margin-bottom: 13px;

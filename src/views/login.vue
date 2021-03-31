@@ -3,7 +3,7 @@
     <div class="content">
       <div class="title">MTM</div>
       <p>
-        Medical <br>
+        Medical  <br>
         Diagnosis <br>
         System
       </p>
@@ -56,7 +56,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2021</span>
+      <span>Copyright © 2018-2021 ruoyi.vip All Rights Reserved.</span>
     </div>
   </div>
 </template>
