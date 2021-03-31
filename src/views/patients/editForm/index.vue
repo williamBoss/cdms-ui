@@ -193,11 +193,6 @@
             message: '请输入姓名',
             trigger: 'blur'
           }],
-          phone: [{
-            required: true,
-            message: '请输入手机号',
-            trigger: 'blur'
-          }],
           weight: [{
             required: true,
             message: '请输入体重',
