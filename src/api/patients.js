@@ -197,6 +197,41 @@ export function delFamilyHistory(id) {
   })
 }
 
+// 查询问题及干预
+export function getReportProblem(param) {
+  return request({
+    url: '/cdms/assessment/assessment-report/assessment-report-problem-info',
+    method: 'get',
+    params: param
+  })
+}
+
+// 保存问题及干预
+export function saveReportProblem(param) {
+  return request({
+    url: '/cdms/assessment/assessment-report/add-assessment-report-problem',
+    method: 'post',
+    data: param
+  })
+}
+// 查询转归
+export function getReportSequelae(param) {
+  return request({
+    url: '/cdms/assessment/assessment-report/assessment-report-sequelae-info',
+    method: 'get',
+    params: param
+  })
+}
+
+// 保存既往史
+export function saveReportSequelae(param) {
+  return request({
+    url: '/cdms/assessment/assessment-report/add-assessment-report-sequelae',
+    method: 'post',
+    data: param
+  })
+}
+
 // 获取既往史列表
 export function getOldHistory(param) {
   return request({

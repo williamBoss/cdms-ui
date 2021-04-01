@@ -11,10 +11,12 @@
     <ywzlwt :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
     <pglb v-if="activeName === 'pglb'"></pglb>
     <jyjc :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
+    <baseDrawer></baseDrawer>
   </div>
 </template>
 
 <script>
+  import baseDrawer from '../components/baseDrawer.vue'
 import {
   getReportInfo
 } from '@/api/patients'
@@ -28,7 +30,7 @@ import pglb from '../components/pglb'
 import jyjc from '../components/jyjc'
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc},
+  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer},
   data () {
     return {
       tabList: [{

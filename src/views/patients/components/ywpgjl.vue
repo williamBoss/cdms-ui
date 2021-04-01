@@ -39,6 +39,7 @@
             <el-table
                 :data="form.pastHistoryVO"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="name"
@@ -62,6 +63,7 @@
             <el-table
                 :data="form.curSysVO"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
@@ -85,6 +87,7 @@
             <el-table
                 :data="form.costVO"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
@@ -113,6 +116,7 @@
             <el-table
                 :data="form.scaleList"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
@@ -133,6 +137,7 @@
             <el-table
                 :data="form.medSideEffectVOList"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
@@ -149,6 +154,7 @@
               <el-table
                 :data="form.lifestyleVO"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
@@ -188,19 +194,49 @@
                   </template>
                 </el-table-column>
               </el-table>
-            <!-- <el-table
-                :data="tableData"
+              <el-table
+                :data="form.smokeList"
                 stripe
+                border
                 style="width: 100%">
                 <el-table-column
                   label="Date"
-                  prop="date">
+                  width="100px"
+                  prop="name">
                 </el-table-column>
                 <el-table-column
                   label="Name"
+                  prop="value1">
+                </el-table-column>
+                <el-table-column
+                  label="Name"
+                  prop="value2">
+                </el-table-column>
+                <el-table-column
+                  label="Name"
+                  prop="value3">
+                </el-table-column>
+              </el-table>
+              <el-table
+                :data="form.drinkList"
+                :span-method="objectSpanMethod"
+                stripe
+                border
+                style="width: 100%">
+                <el-table-column
+                  label="Date"
+                  width="100px"
                   prop="name">
                 </el-table-column>
-              </el-table> -->
+                <el-table-column
+                  label="Name"
+                  prop="value1">
+                </el-table-column>
+                <el-table-column
+                  label="Name"
+                  prop="value2">
+                </el-table-column>
+              </el-table>
           </el-col>
         </el-row>
       </el-col>
@@ -209,16 +245,37 @@
       <el-col>
         <div class="table-title">药物治疗相关处理建议</div>
         <el-table
-            :data="tableData"
+            :data="form.medProblemsVOList"
             stripe
             style="width: 100%">
             <el-table-column
-              label="Date"
-              prop="date">
+              label="序号"
+              type="index"
+              width="80px">
             </el-table-column>
             <el-table-column
-              label="Name"
-              prop="name">
+              label="相关疾病"
+              prop="diseaseName">
+            </el-table-column>
+            <el-table-column
+              label="相关药物"
+              prop="medName">
+            </el-table-column>
+            <el-table-column
+              label="适应性"
+              prop="questionType">
+            </el-table-column>
+            <el-table-column
+              label="具体问题"
+              prop="problem">
+            </el-table-column>
+            <el-table-column
+              label="处理建议"
+              prop="treatmentSuggestion">
+            </el-table-column>
+            <el-table-column
+              label="改善详情"
+              prop="improvementDetails">
             </el-table-column>
           </el-table>
       </el-col>
@@ -263,8 +320,12 @@
           curSysVO: [],
           costVO: [],
           lifestyleVO: [],
+          lifestyle2VO: [],
           medSideEffectVOList: [],
-          scaleList: []
+          scaleList: [],
+          medProblemsVOList: [],
+          smokeList: [],
+          drinkList: []
         },
         tableData: [],
         obj1: {},
@@ -430,6 +491,43 @@
           })
           this.form.lifestyleVO = newList
         }
+        if (data.lifestyleVO) {
+          let newList = []
+            newList.push({
+              name: '吸烟',
+              value1: '吸烟量' + data.lifestyleVO.smokingNum + '支/天',
+              value2: '吸烟年限' + data.lifestyleVO.smokingYear + '年',
+              value3: '戒烟年限' + data.lifestyleVO.smokingYear + '年'
+            })
+            this.form.smokeList = newList
+            let otherList = []
+            otherList.push({
+              name: '饮酒',
+              value1: '饮酒量' + data.lifestyleVO.drinkingNum + '两/天',
+              value2: '饮酒年限' + data.lifestyleVO.drinkingYear + '年',
+            })
+            otherList.push({
+              name: '运动',
+              value1: '运动项目' + data.lifestyleVO.usualSports,
+              value2: '每周运动时间' + data.lifestyleVO.weeklyExerciseTime + '年',
+            })
+            otherList.push({
+              name: '睡眠/跌倒',
+              value1: '睡眠障碍' + data.lifestyleVO.sleepDisorderAmount + '次/周',
+              value2: '跌倒原因' + data.lifestyleVO.fallReason
+            })
+            otherList.push({
+              name: '建议',
+              value1: data.lifestyleVO.lifestyleSummary,
+            })
+            this.form.drinkList = otherList
+          // Object.keys(data.lifestyleVO).forEach((vv) => {
+          //   newList.push({
+          //     name: '吸烟',
+          //     value1: '吸烟量<br>' + data.
+          //   })
+          // })
+        }
         if (data.medSideEffectVOList) {
           this.form.medSideEffectVOList = data.medSideEffectVOList
         }
@@ -442,6 +540,9 @@
             })
           })
           this.form.scaleList = newList
+        }
+        if (data.medProblemsVOList) {
+          this.form.medProblemsVOList = data.medProblemsVOList
         }
       },
       saveProblem (type) {
@@ -469,6 +570,11 @@
               this.$message.error(res.errorMessage)
             }
           })
+        }
+      },
+      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 1 && rowIndex === 3) {
+          return [1, 2];
         }
       },
       goNext () {
@@ -601,6 +707,11 @@
 .ywp-wrap{
   .el-table__header-wrapper{
     display: none;
+  }
+  .big-table{
+    .el-table__header-wrapper{
+      display: block;
+    }
   }
   .el-textarea__inner{
     height: 144px;
