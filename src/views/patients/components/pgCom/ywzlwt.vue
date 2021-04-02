@@ -1,13 +1,5 @@
 <template>
   <div class="life-style yyjl-wrap">
-    <el-row>
-      <el-col :span="12" >
-        <el-button class="add-btn" type="primary" @click="addRecord">添加记录</el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-button type="primary" class="right-btn" @click="goPg">评估量表</el-button>
-      </el-col>
-    </el-row>
     <el-form>
     <el-table
       :data="tableData"
@@ -39,7 +31,6 @@
         <template slot-scope="scope">
           <el-form-item v-for="item in proDict" :label="item.medicationProblems">
             <span v-show="scope.row.id && !scope.row.edit">{{scope.row[item.type + 'Text']}}</span>
-            <el-cascader v-show="!scope.row.id || scope.row.edit" v-model="scope.row[item.type]" :options="item.childList" :props="props"></el-cascader>
           </el-form-item>
         </template>
       </el-table-column>
@@ -49,7 +40,6 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id && !scope.row.edit">{{scope.row.problem}}</span>
-          <el-input v-show="!scope.row.id || scope.row.edit" v-model="scope.row.problem"></el-input>
         </template>
       </el-table-column>
       <el-table-column
@@ -58,7 +48,6 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id && !scope.row.edit">{{scope.row.treatmentSuggestion}}</span>
-          <el-input v-show="!scope.row.id || scope.row.edit" v-model="scope.row.treatmentSuggestion"></el-input>
         </template>
       </el-table-column>
       <el-table-column
@@ -67,9 +56,6 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id && !scope.row.edit">{{scope.row.isResolvedText}}</span>
-          <el-select v-show="!scope.row.id || scope.row.edit" v-model="scope.row.isResolved">
-            <el-option v-for="item in options" :label="item.label" :value="item.value">{{item.label}}</el-option>
-          </el-select>
         </template>
       </el-table-column>
       <el-table-column
@@ -78,64 +64,10 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id && !scope.row.edit">{{scope.row.improvementDetails}}</span>
-          <el-input v-show="!scope.row.id || scope.row.edit" v-model="scope.row.improvementDetails"></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="操作">
-        <template slot-scope="scope">
-          <div class="flex">
-            <el-button type="text" v-if="scope.row.edit" @click="saveInfo(scope.row)">保存</el-button>
-            <el-button type="text" v-if="!scope.row.edit" @click="editForm(scope.row)">编辑</el-button>
-          </div>
         </template>
       </el-table-column>
     </el-table>
-      <el-form-item style="margin-top: 20px;float: right;">
-        <el-button type="primary" style="margin-right: 10px;" @click="goNext">下一步</el-button>
-      </el-form-item>
     </el-form>
-    <el-dialog
-      title="选择"
-      :visible.sync="dialogVisible"
-      width="50%">
-      <span>
-        <el-form>
-          <el-form-item label="选择病种">
-            <el-autocomplete
-              v-model="searchDiseaseName"
-              :fetch-suggestions="queryDisease"
-              :trigger-on-focus="false"
-              placeholder="输入适应症"
-              @select="handleDisease"
-            ></el-autocomplete>
-            <!-- <el-select v-model="newForm.diseaseId">
-              <el-option v-for="item in diseaseList" :value="item.diseaseId" :label="item.diseaseName">{{item.diseaseName}}</el-option>
-            </el-select> -->
-          </el-form-item>
-          <el-form-item label="选择药物">
-            <el-autocomplete
-              v-model="searchName"
-              :fetch-suggestions="querySearch"
-              :trigger-on-focus="false"
-              placeholder="输入药品名"
-              @select="handleSelect"
-            ></el-autocomplete>
-            <!-- <el-checkbox-group v-model="newForm.indicationsList">
-              <el-checkbox v-for="item in medList" :label="item.medName"></el-checkbox>
-            </el-checkbox-group> -->
-            <!-- <el-select v-model="newForm.medId">
-              <el-option v-for="item in medList" :value="item.medId" :label="item.medName">{{item.medName}}</el-option>
-            </el-select> -->
-          </el-form-item>
-        </el-form>
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button  @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveNewPro">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -145,13 +77,16 @@
   } from '@/api/outpatient'
   import {
     getProblemsDict,
-    saveMedProblems,
     getMedProblems,
     getDiseaseList
   } from '@/api/patients'
   export default {
     props: {
       activeName: {
+        type: String,
+        default: '',
+      },
+      assessmentId: {
         type: String,
         default: '',
       }
@@ -192,6 +127,14 @@
         curDisease: {}
       }
     },
+    watch: {
+      'assessmentId': function (val) {
+        if (val) {
+          this.assessmentId = val
+          this.getList()
+        }
+      }
+    },
     created () {
       this.getList()
     },
@@ -218,59 +161,9 @@
           }
         })
       },
-      querySearch(queryString, cb) {
-        this.searchMed(cb)
-      },
-      queryDisease(queryString, cb) {
-        this.searchDisease(cb)
-      },
-      async searchMed (cb) {
-        let result = []
-        const res = await getMed({
-          medName: this.searchName
-        })
-        let {data} = res
-        if (data) {
-          data.forEach(el => {
-            result.push({
-              value: el.medName,
-              medId: el.medId
-            })
-          });
-        }
-        this.restaurants = result
-        if (cb) {
-          cb(this.restaurants)
-        }
-      },
-      searchDisease (cb) {
-        let param = {
-          diseaseName: this.searchDiseaseName
-        }
-        getDiseaseList(param).then((res) => {
-          if (res.code === 200) {
-            if (res.data && res.data.records) {
-              let newList = []
-              res.data.records.forEach((vv) => {
-                newList.push({
-                  value: vv.diseaseName,
-                  diseaseId: vv.diseaseId
-                })
-              })
-              cb(newList)
-            }
-          }
-        })
-      },
-      handleSelect (item) {
-        this.curMed = item
-      },
-      handleDisease (item) {
-        this.curDisease = item
-      },
       getProblem () {
         let param = {
-          "assessmentId":this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id,
           "pageNum": 1,
           "pageSize": 100
@@ -308,42 +201,6 @@
               })
             })
             this.tableData = res.data.records
-          }
-        })
-      },
-      addRecord () {
-        this.newForm = {
-          edit: true
-        }
-        this.dialogVisible = true
-      },
-      saveNewPro () {
-        this.newForm.diseaseName = this.curDisease.value
-        this.newForm.medName = this.curMed.value
-        this.newForm.medId = this.curMed.medId
-        this.newForm.diseaseId = this.curDisease.diseaseId
-        this.tableData.push(this.newForm)
-        this.dialogVisible = false
-      },
-      goPg () {
-        this.$router.push({name: 'pgSet', params: {id:this.$route.params.id, assessmentId:this.$route.params.assessmentId}})
-      },
-      editForm (item) {
-        item.edit = true
-        this.newForm = item
-      },
-      goNext () {
-        this.$emit('update:activeName', 'pglb');
-      },
-      saveInfo (item) {
-        this.newForm.assessmentId =this.$route.params.assessmentId
-        this.newForm.patientId = this.$route.params.id
-        saveMedProblems(this.newForm).then((res) => {
-          if (res.code === 200) {
-            this.$message.success('保存成功')
-            this.getProblem()
-          } else {
-            this.$message.error(res.errorMessage)
           }
         })
       }

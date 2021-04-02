@@ -63,7 +63,7 @@ export default {
         } else {
           // Temp set(will be used if only has one showing child)
           this.onlyOneChild = item
-          console.log('数据：', this.onlyOneChild)
+          // console.log('数据：', this.onlyOneChild)
           return true
         }
       })
@@ -76,7 +76,7 @@ export default {
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
         this.onlyOneChild = {...parent, path: '', noShowingChildren: true}
-        console.log('数据：', this.onlyOneChild)
+        // console.log('数据：', this.onlyOneChild)
         return true
       }
 

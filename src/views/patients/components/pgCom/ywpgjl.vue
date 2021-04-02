@@ -284,33 +284,31 @@
       <el-row class="form-wrap" :gutter="20">
         <el-col :span="12">
           <div class="title-item">问题及干预</div>
-          <el-input type="textarea" v-model="obj1.problemsInterventions" placeholder="请描述患者的问题">
+          <el-input disabled type="textarea" v-model="obj1.problemsInterventions" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('problemsInterventions')">保存</el-button>
         </el-col>
         <el-col :span="12">
           <div class="title-item">转归</div>
-          <el-input type="textarea" v-model="obj2.sequelae" placeholder="请描述患者的问题">
+          <el-input disabled type="textarea" v-model="obj2.sequelae" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('sequelae')">保存</el-button>
         </el-col>
       </el-row>
-      <el-form-item>
-        <el-button type="primary" @click="saveInfo">完成</el-button>
-        <el-button type="primary" style="margin-right: 10px;" @click="goNext">上一步</el-button>
-      </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-  import { getReportInfo, saveReportProblem, saveReportSequelae, getReportProblem, getReportSequelae } from '@/api/patients'
+  import { getReportInfo, getReportProblem, getReportSequelae } from '@/api/patients'
   export default {
     props: {
       activeName: {
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
@@ -332,13 +330,21 @@
         obj2: {}
       }
     },
+    watch: {
+      'assessmentId': function (val) {
+        if (val) {
+          this.assessmentId = val
+          this.getReportInfo()
+        }
+      }
+    },
     created () {
       this.getReportInfo()
     },
     methods: {
       getReportInfo () {
         let param = {
-          "assessmentId":this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id
         }
         getReportInfo(param).then((res) => {
@@ -545,43 +551,10 @@
           this.form.medProblemsVOList = data.medProblemsVOList
         }
       },
-      saveProblem (type) {
-        let param = {
-          "assessmentId":this.$route.params.assessmentId,
-          "patientId": this.$route.params.id
-        }
-        if (type === 'problemsInterventions') {
-          param[type] = this.obj1.problemsInterventions
-          param.id = this.obj1.id
-          saveReportProblem(param).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        } else {
-          param[type] = this.obj2.sequelae
-          param.id = this.obj2.id
-          saveReportSequelae(param).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-      },
       objectSpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 1 && rowIndex === 3) {
           return [1, 2];
         }
-      },
-      goNext () {
-        this.$emit('update:activeName', 'pglb');
-      },
-      saveInfo () {
-        this.$router.push({name: 'patients'})
       }
     }
   }

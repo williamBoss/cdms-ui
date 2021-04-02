@@ -8,9 +8,6 @@
             <el-col class="left-item" :span="chartIndex < 2 || chartIndex == 6 || chartIndex == 7 ? 4: 2">
               <div class="item-wrap">
                 {{chart.title}}
-                <div class="add-btn" >
-                  <i class="el-icon-plus" @click="pushData(chartIndex)"></i>
-                </div>
               </div>
               <div class="add-angle flex">
                 <div class="icon_01" >
@@ -44,16 +41,6 @@
                       <span v-else>{{scope.row[prop.key]}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="act"
-                    label="编辑">
-                    <template slot-scope="scope" v-if="!scope.row.id">
-                      <div class="flex">
-                        <el-button @click="saveData(chartIndex, scope.$index)" type="text" size="small">保存</el-button>
-                        <el-button type="text" size="small" @click="cancelData(chartIndex, scope.$index)">取消</el-button>
-                      </div>
-                    </template>
-                  </el-table-column>
                 </el-table>
               </div>
               <div class="charts" v-else>
@@ -65,9 +52,6 @@
       </el-col>
     </el-row>
     </div>
-    <div style="margin: 20px 0;float: right;">
-      <el-button type="primary" style="margin-right: 10px;" @click="goNext">下一步</el-button>
-    </div>
   </div>
 </template>
 
@@ -75,7 +59,7 @@
 import request from '@/utils/request'
 // import VeLine from 'v-charts/lib/line.common'
 import lineCharts from '@/views/components/echarts/lineCharts'
-import chartList from '../config/jyjcCharts'
+import chartList from '../../config/jyjcCharts'
 export default {
   props: {
     activeName: {
@@ -89,6 +73,7 @@ export default {
   },
   data(){
     return {
+      canEdit: true,
       chartList: chartList,
       tableData:[],
       lineGrid: {
@@ -98,6 +83,14 @@ export default {
     }
   },
   components: {lineCharts},
+  watch: {
+    'assessmentId': function (val) {
+      if (val) {
+        this.assessmentId = val
+         this.getAllTableData()
+      }
+    }
+  },
   mounted(){
     this.getAllTableData()
   },
@@ -110,15 +103,6 @@ export default {
         params: { patientId:this.$route.params.id }
       })
     },
-    // 保存数据
-    saveTableData(url, params){
-      console.log(url, params)
-      return request({
-        url: url,
-        method: 'post',
-        data: {patientId:this.$route.params.id, ...params}
-      })
-    },
     getAllTableData(){
       this.chartList.forEach((chart, index) => {
         this.getData(chart.getTableUrl).then(res => {
@@ -126,35 +110,6 @@ export default {
           this.chartList[index].tableData = records
         })
       })
-    },
-    // 插入数据
-    pushData(chartIndex){
-      let pushData = {}
-      this.chartList[chartIndex].tableProps.forEach(item => {
-        pushData[item.key] = ''
-      })
-      this.chartList[chartIndex].tableData.unshift(pushData)
-    },
-    // 取消数据
-    cancelData(chartIndex, delindex) {
-      this.chartList[chartIndex].tableData.splice(delindex, 1)
-    },
-    // 保存数据
-    saveData(chartIndex, saveIndex){
-      let url = this.chartList[chartIndex].saveTableUrl
-      let params = this.chartList[chartIndex].tableData[saveIndex]
-      this.saveTableData(url, params).then(res => {
-        if (res.code === 200 && res.success) {
-          this.getAllTableData()
-          // this.getData(this.chartList[chartIndex].getChartUrl).then(res => {
-          //   let {data:{records}} = res
-          //   this.chartList[chartIndex].tableData = records
-          // })
-        }
-      })
-    },
-    goNext () {
-      this.$emit('update:activeName', 'ywzlwt');
     },
     // 查看图表
     toggleChart(chartIndex){

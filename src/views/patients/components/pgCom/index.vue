@@ -1,49 +1,39 @@
 <template>
   <div class="patients">
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in curTabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
     </el-tabs>
-    <life-style :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
-    <history :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
-    <cur-sym :activeName.sync="activeName" v-if="activeName === 'curSym'"></cur-sym>
-    <ywpgjl :activeName.sync="activeName" v-if="activeName === 'ywpgjl'"></ywpgjl>
-    <yyjl :activeName.sync="activeName" v-if="activeName === 'yyjl'"></yyjl>
-    <ywzlwt :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
-    <pglb :activeName.sync="activeName" v-if="activeName === 'pglb'"></pglb>
-    <jyjc :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
-    <baseDrawer v-on:GetInfo="getInfo"></baseDrawer>
-    <el-drawer
-      title=""
-      :visible.sync="drawerShow"
-      direction="ltr"
-      class="drawer-tab"
-      size="70%">
-      <tab-page :assessmentId="assessmentId"></tab-page>
-    </el-drawer>
+    <life-style :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
+    <history :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
+    <cur-sym :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'curSym'"></cur-sym>
+    <ywpgjl :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'ywpgjl'"></ywpgjl>
+    <yyjl :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'yyjl'"></yyjl>
+    <ywzlwt :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
+    <pglb :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'pglb'"></pglb>
+    <jyjc :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
+    <baseDrawer v-if="canEdit"></baseDrawer>
   </div>
 </template>
 
 <script>
-  import baseDrawer from '../components/baseDrawer.vue'
+  import baseDrawer from '../baseDrawer.vue'
 import {
   getReportInfo
 } from '@/api/patients'
-import lifeStyle from '../components/lifeStyle'
-import history from '../components/history'
-import curSym from '../components/curSym'
-import ywpgjl from '../components/ywpgjl'
-import yyjl from '../components/yyjl'
-import ywzlwt from '../components/ywzlwt'
-import pglb from '../components/pglb'
-import jyjc from '../components/jyjc'
-import tabPage from '../components/pgCom/index.vue'
+import lifeStyle from './lifeStyle'
+import history from './history'
+import curSym from './curSym'
+import ywpgjl from './ywpgjl'
+import yyjl from './yyjl'
+import ywzlwt from './ywzlwt'
+import pglb from './pglb'
+import jyjc from './jyjc'
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer, tabPage},
+  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer},
   data () {
     return {
       canEdit: true,
-      drawerShow: false,
       checkTabList: [{
         name: '家族病史和既往病史',
         key: 'bs'
@@ -96,12 +86,32 @@ export default {
       }],
       curTabList: [],
       activeName: 'ywpgjl',
-      reportInfo: {},
-      assessmentId: ''
+      reportInfo: {}
+    }
+  },
+  props: ['assessmentId'],
+  watch: {
+    'assessmentId': function (val) {
+      if (val) {
+        this.assessmentId = val
+        if (this.assessmentId) {
+          this.curTabList = this.tabList
+        } else {
+          this.curTabList = this.checkTabList
+        }
+        this.activeName = this.curTabList[0].key
+        if (this.$route.query.tab) {
+          this.activeName = this.$route.query.tab
+        }
+      }
     }
   },
   created () {
-    this.curTabList = this.checkTabList
+    if (this.assessmentId) {
+      this.curTabList = this.tabList
+    } else {
+      this.curTabList = this.checkTabList
+    }
     this.activeName = this.curTabList[0].key
     if (this.$route.query.tab) {
       this.activeName = this.$route.query.tab
@@ -109,22 +119,14 @@ export default {
     // this.getReportInfo()
   },
   methods: {
-    getInfo (val) {
-      this.assessmentId = val.assessmentId.toString()
-      this.drawerShow = true
+    handleClick () {
+
     }
   }
 }
 </script>
+
 <style lang="scss">
-  .drawer-tab{
-    .el-drawer__body{
-      overflow: auto;
-    }
-    .patients{
-      padding-top: 0!important;
-    }
-  }
 .patients{
   padding: 28px 20px 0 40px;
 }

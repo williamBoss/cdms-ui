@@ -10,8 +10,7 @@
               </el-col>
               <el-col class="content-item" :span="21">
                <el-form-item label="描述" label-width="40px">
-                 <el-input  type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
-                 <el-button class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
+                 <el-input disabled type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
                </el-form-item>
               </el-col>
             </el-row>
@@ -25,31 +24,10 @@
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   诊断
-                  <div class="add-btn" @click="editItem('zdEdit')">
-                    <i class="el-icon-plus"></i>
-                  </div>
                 </div>
-                <div v-show="zdEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!zdEdit" :span="21">
+              <el-col class="content-item" :span="21">
                <el-tag v-for="item in diagnosisList">{{item.diseaseName}}</el-tag>
-              </el-col>
-              <el-col class="content-item" v-show="zdEdit" :span="21">
-
-                <el-input
-                  placeholder="请输入病种名称"
-                  prefix-icon="el-icon-search"
-                  class="search-item"
-                  size="mini"
-                  clearable
-                  @clear="clearDiagnosis"
-                  @change="searchDiagnosis"
-                  v-model="form.diagnosisKey">
-                </el-input>
-                <el-checkbox-group v-model="form.diagnosis">
-                  <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey" :value="item.diseaseId">{{item.diseaseName}}<el-input v-show="item.checked" placeholder="请输入年限" class="check-input" size="mini" type="primary"></el-input></el-checkbox>
-                </el-checkbox-group>
-                <el-button type="primary" size="mini" @click="saveDiagnosis">保存</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -78,7 +56,7 @@
                       size="mini"
                       v-model="form.input2">
                     </el-input> -->
-                    <el-checkbox-group class="flex"  v-if="checkList[page.curPage - 1]" v-model="curSym.list">
+                    <el-checkbox-group class="flex" disabled v-if="checkList[page.curPage - 1]" v-model="curSym.list">
                       <el-checkbox v-for="item in checkList[page.curPage - 1].list" :label="item.value" :key="item.value">{{item.name}}
                         <el-input v-show="item.key" placeholder="" class="check-input" size="mini" type="primary" v-model="curSym[item.key]"></el-input>
                       </el-checkbox>
@@ -91,7 +69,6 @@
                 </el-row>
                 <el-divider></el-divider>
                 <el-row style="margin-top: 10px;height: 30px;">
-                  <el-button class="card-btn" type="primary" size="mini" @click="onSubmit">保存</el-button>
                   <el-pagination
                     small
                     layout="prev, pager, next"
@@ -105,9 +82,6 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-form-item>
-        <el-button type="primary" @click="goNext">下一步</el-button>
-      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -122,13 +96,15 @@
    getConsult,
    saveConsult,
    getDiagnosis,
-   saveDiagnosis,
    getSymptom,
-   saveSymptom
  } from '@/api/patients'
   export default {
     props: {
       activeName: {
+        type: String,
+        default: '',
+      },
+      assessmentId: {
         type: String,
         default: '',
       }
@@ -180,6 +156,18 @@
         }
       }
     },
+    watch: {
+      'assessmentId': function (val) {
+        if (val) {
+          this.assessmentId = val
+           this.getDisease()
+           this.getAssessment() // 获取主述
+           this.getDiagnosis() // 获取诊断
+           this.getJson() // 获取json数据
+           this.getSymptom() // 查询当前症状描述
+        }
+      }
+    },
     created () {
       this.getDisease()
       this.getAssessment() // 获取主述
@@ -198,7 +186,7 @@
       },
       getAssessment () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id
         }
         getConsult(param).then((res) => {
@@ -209,13 +197,13 @@
       },
       getDiagnosis () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id
         }
         getDiagnosis(param).then((res) => {
           if (res.code === 200) {
             res.data.forEach((vv) => {
-              this.form.diagnosis.push(vv.diseaseId)
+              this.form.diagnosis.push(vv.diagnosisId)
             })
             this.diagnosisList = res.data
           }
@@ -236,7 +224,7 @@
       },
       getSymptom () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id
         }
         getSymptom(param).then((res) => {
@@ -251,71 +239,6 @@
         this.page.curPage = val
         this.curSym.list = this.curSym[this.checkList[this.page.curPage - 1].name]
       },
-      editItem (type) {
-        this[type] = !this[type]
-      },
-      filterMethod () {
-
-      },
-      goNext () {
-        this.$emit('update:activeName', 'lifeStyle');
-      },
-      saveConsult () {
-        let param = {
-          "assessmentId": this.$route.params.assessmentId,
-          "patientId": this.$route.params.id
-        }
-        param.mainConsult = this.consult.mainConsult
-        saveConsult(param).then((res) => {
-          if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-        })
-      },
-      onSubmit () {
-        this.curSym[this.checkList[this.page.curPage - 1].name] = this.curSym.list
-        this.curSym.assessmentId = this.$route.params.assessmentId
-        this.curSym.patientId = this.$route.params.id
-        saveSymptom(this.curSym).then((res) => {
-          if (res.code === 200) {
-            this.$message.success('保存成功')
-          } else {
-            this.$message.error(res.errorMessage)
-          }
-        })
-      },
-      saveDiagnosis () {
-        let param = {
-          "assessmentId": this.$route.params.assessmentId,
-          "diagnosisId": this.diagnosis.id || -1,
-          "diseaseIds": this.form.diagnosis,
-          "patientId": this.$route.params.id
-        }
-        saveDiagnosis (param).then((res) => {
-          if (res.code === 200) {
-            this.zdEdit = false
-            this.getDiagnosis()
-          }
-        })
-      },
-      searchDiagnosis () {
-        if (this.form.diagnosisKey) {
-          let list = []
-          this.diseaseList.forEach((vv) => {
-            if (vv.diseaseName.indexOf(this.form.diagnosisKey) > -1) {
-              list.push(vv)
-            }
-          })
-          this.curDiseaseList = list
-        } else {
-          this.curDiseaseList = this.diseaseList
-        }
-      },
-      clearDiagnosis () {
-        this.curDiseaseList = this.diseaseList
-      }
     }
   }
 </script>

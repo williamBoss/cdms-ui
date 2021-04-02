@@ -21,7 +21,9 @@ export default {
       if (reg.test(icon)) {
         vnodes.push(<div class="img_box"><img src={ icon } alt="" /></div>)
       } else {
-        vnodes.push(<div class="img_box"><svg-icon icon-class={ icon } /></div>)
+        vnodes.push(<div class="img_box">
+          <svg-icon icon-class={ icon } />
+        </div>)
       }
     }
 

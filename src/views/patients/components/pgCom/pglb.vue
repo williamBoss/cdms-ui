@@ -7,7 +7,7 @@
       <div class="question-item" v-for="(item, index) in curList.list">
         <div class="title">{{index + 1}}.{{item.question}}</div>
         <div class="optins-item">
-          <el-radio-group v-model="form[item.value]">
+          <el-radio-group disabled v-model="form[item.value]">
               <el-radio v-for="ii in item.options" :label="ii.value">{{ii.label}}</el-radio>
             </el-radio-group>
         </div>
@@ -38,10 +38,10 @@
         <el-table-column
           label="Name">
           <template slot-scope="scope">
-            <el-select v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
+            <el-select disabled v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
               <el-option v-for="item in scope.row.options" :label="item.name" :value="item.value"></el-option>
             </el-select>
-            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
+            <el-input disabled v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -58,10 +58,10 @@
         <el-table-column
           label="Name">
           <template slot-scope="scope">
-            <el-select v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
+            <el-select disabled v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
               <el-option v-for="item in scope.row.options" :label="item.name" :value="item.value"></el-option>
             </el-select>
-            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
+            <el-input disabled v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -75,28 +75,29 @@
           </div> -->
           <div class="el-slider__marks img-marks">
             <div class="el-slider__marks-text" style="left: 0%;">
-              <img src="../../../assets/icons/vas1.png" />
+              <img src="../../../../assets/icons/vas1.png" />
             </div>
             <div class="el-slider__marks-text" style="left: 20%;">
-              <img src="../../../assets/icons/vas2.png" />
+              <img src="../../../../assets/icons/vas2.png" />
             </div>
             <div class="el-slider__marks-text" style="left: 40%;">
-              <img src="../../../assets/icons/vas3.png" />
+              <img src="../../../../assets/icons/vas3.png" />
             </div>
             <div class="el-slider__marks-text" style="left: 60%;">
-              <img src="../../../assets/icons/vas4.png" />
+              <img src="../../../../assets/icons/vas4.png" />
             </div>
             <div class="el-slider__marks-text" style="left: 80%;">
-              <img src="../../../assets/icons/vas5.png" />
+              <img src="../../../../assets/icons/vas5.png" />
             </div>
             <div class="el-slider__marks-text" style="left: 100%;">
-              <img src="../../../assets/icons/vas6.png" />
+              <img src="../../../../assets/icons/vas6.png" />
             </div>
           </div>
         </div>
         <el-slider
               v-model="form.vasScore"
               show-stops
+              disabled
               :show-tooltip="showTooltip"
               :step="curList.list[0].step"
               :min="curList.list[0].min"
@@ -134,7 +135,7 @@
             label="选项"
             width="300">
             <template slot-scope="scope">
-              <el-radio-group v-model="form[scope.row.value]">
+              <el-radio-group disabled v-model="form[scope.row.value]">
                 <el-radio v-for="item in scope.row.options" :label="item.value" :value="item.value">{{item.label}}</el-radio>
               </el-radio-group>
             </template>
@@ -163,20 +164,20 @@
               prop="question">
               <template slot-scope="scope">
                 <span v-if="!scope.row.input">{{scope.row.question}}</span>
-                <el-input v-if="scope.row.input" v-model="form[scope.row.value]"></el-input>
+                <el-input disabled v-if="scope.row.input" v-model="form[scope.row.value]"></el-input>
               </template>
             </el-table-column>
             <el-table-column
               prop="amount1">
               <template slot-scope="scope">
-                <el-radio-group v-model="form[scope.row.value]">
+                <el-radio-group disabled v-model="form[scope.row.value]">
                   <el-radio v-for="item in scope.row.options" :label="item.value" :value="item.value">{{item.label}}</el-radio>
                 </el-radio-group>
               </template>
             </el-table-column>
             <el-table-column>
               <template slot-scope="scope">
-                <el-date-picker value-format="yyyy/MM/dd" format="yyyy/MM/dd" v-model="form[scope.row.date]"></el-date-picker>
+                <el-date-picker disabled value-format="yyyy/MM/dd" format="yyyy/MM/dd" v-model="form[scope.row.date]"></el-date-picker>
               </template>
             </el-table-column>
           </el-table>
@@ -193,6 +194,7 @@
               <el-slider
                   v-model="form[item.value]"
                   show-stops
+                  disabled
                   :show-tooltip="showTooltip"
                   :step="item.step"
                   :min="item.min"
@@ -207,7 +209,7 @@
 
       <div class="quest-item" v-for="(item, index) in curList.list">
         <div class="title">{{item.title}}</div>
-        <el-checkbox-group v-model="capriniChoose">
+        <el-checkbox-group disabled v-model="capriniChoose">
           <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value">{{ll.question}}</el-checkbox>
         </el-checkbox-group>
       </div>
@@ -216,43 +218,25 @@
       {{curList.nickName}}得分：{{scord}}
       <span v-for="rr in curList.rule" v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{rr.name}}</span>
     </div>
-    <div class="btn-wrap" v-if="curTag.id">
-      <el-button type="primary" @click="goNext">下一步</el-button>
-      <el-button type="primary" @click="saveInfo" style="margin-right: 10px;">保存</el-button>
-    </div>
   </div>
 </template>
 
 <script>
   import {
     getAssessmentTable,
-    saveMorisky,
     getMorisky,
-    saveQuestionRisk,
     getQuestionRisk,
-    saveEq5d3l,
     getEq5d3l,
-    saveEq5d5l,
     getEq5d5l,
-    saveVas,
     getVas,
-    saveHaq,
     getHaq,
     getEssen,
-    saveEssen,
     getSas,
-    saveSas,
     getSds,
-    saveSds,
-    saveChads,
     getChads,
     getAcr,
-    saveAcr,
-    saveAf,
     getAf,
-    saveCat,
     getCat,
-    saveCaprini,
     getCaprini
   } from '@/api/patients'
   import axios from 'axios'
@@ -261,10 +245,15 @@
       activeName: {
         type: String,
         default: '',
+      },
+      assessmentId: {
+        type: String,
+        default: '',
       }
     },
     data() {
       return {
+        canEdit: true,
         form: {
           vasId: 0
         },
@@ -278,6 +267,14 @@
         marks: {0:"0",2:"2",4:"4",6:"6",8:"8",10:"10"},
         marksRuler: {1:"1",2:"2",3:"3",4:"4",5:"5"},
         showTooltip: false
+      }
+    },
+    watch: {
+      'assessmentId': function (val) {
+        if (val) {
+          this.assessmentId = val
+          this.getQuestionList()
+        }
       }
     },
     created () {
@@ -331,7 +328,7 @@
       getQuestionList () {
         var _this = this
         let param = {
-          "assessmentId":this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getAssessmentTable (param).then((res) => {
@@ -352,7 +349,7 @@
       },
       getList () {
         let param = {
-          "assessmentId":this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         if (this.curList.name === 'yyycx') {
@@ -496,152 +493,7 @@
           }
         })
         this.getList()
-      },
-      goNext () {
-        this.$emit('update:activeName', 'ywpgjl');
-      },
-      saveInfo () {
-        this.form.assessmentId = this.$route.params.assessmentId
-        this.form.patientId = this.$route.params.id
-        if (this.curList.name === 'yyycx') {
-          saveMorisky(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if (this.curList.name === 'xnxg') {
-          saveQuestionRisk(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'eq5d3l') {
-          saveEq5d3l(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'eq5d5l') {
-          saveEq5d5l(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'vas') {
-          saveVas(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'haq') {
-          saveHaq(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'essen') {
-          saveEssen(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'sas') {
-          saveSas(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'sds') {
-          saveSds(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.scord = parseFloat(res.data.sdsScore)
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'chads') {
-          saveChads(this.form).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'acr') {
-          saveAcr(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.scord = parseFloat(res.data.acrScore)
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'af') {
-          saveAf(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.scord = parseFloat(res.data.afScore)
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if(this.curList.name === 'cat') {
-          saveCat(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.scord = parseFloat(res.data.catScore)
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-        if (this.curList.name === 'caprini') {
-          this.form.capriniChoose = this.capriniChoose
-          saveCaprini(this.form).then((res) => {
-            if (res.code === 200) {
-              this.form = res.data
-              this.scord = parseFloat(res.data.capriniScore)
-              this.$message.success('保存成功')
-            } else {
-              this.$message.error(res.errorMessage)
-            }
-          })
-        }
-      },
+      }
     }
   }
 </script>

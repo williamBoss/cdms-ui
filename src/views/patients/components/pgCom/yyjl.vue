@@ -34,7 +34,6 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-button class="add-btn" type="primary" @click="addMed">添加用药记录</el-button>
     <el-table
       :data="tableData"
       min-height="250"
@@ -70,19 +69,6 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id">{{scope.row.medName}}</span>
-          <el-autocomplete
-            v-model="searchName"
-            :fetch-suggestions="querySearch"
-            :trigger-on-focus="false"
-            placeholder="输入药品名"
-            size="mini"
-            v-show="!scope.row.id"
-            @select="handleSelect"
-          ></el-autocomplete>
-          <!-- <el-input v-model="scope.row.medName"></el-input> -->
-          <!-- <el-select  v-show="!scope.row.id" v-model="scope.row.medId">
-            <el-option v-for="item in medList" :label="item.medName" v-model="item.medId"></el-option>
-          </el-select> -->
         </template>
       </el-table-column>
       <el-table-column
@@ -90,19 +76,6 @@
         label="适应症">
         <template slot-scope="scope">
           <span v-show="scope.row.id">{{scope.row.diseaseName}}</span>
-          <el-autocomplete
-            v-model="searchDiseaseName"
-            :fetch-suggestions="queryDisease"
-            :trigger-on-focus="false"
-            placeholder="输入适应症"
-            size="mini"
-            v-show="!scope.row.id"
-            @select="handleDisease"
-          ></el-autocomplete>
-          <!-- <el-select  v-show="!scope.row.id" v-model="scope.row.indication">
-            <el-option v-for="item in diseaseList" :label="item.diseaseName" v-model="item.diseaseId"></el-option>
-          </el-select> -->
-          <!-- <el-input v-model="scope.row.indication"></el-input> -->
         </template>
       </el-table-column>
       <el-table-column
@@ -110,7 +83,6 @@
         label="用法">
         <template slot-scope="scope">
           <span v-show="scope.row.id">{{scope.row.dosage}}</span>
-          <el-input  v-show="!scope.row.id" v-model="scope.row.dosage"></el-input>
         </template>
       </el-table-column>
       <el-table-column
@@ -119,7 +91,6 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id">{{scope.row.dosageMonthly}}</span>
-          <el-input  v-show="!scope.row.id" v-model="scope.row.dosageMonthly"></el-input>
         </template>
       </el-table-column>
       <el-table-column
@@ -128,27 +99,9 @@
         width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.id">{{scope.row.remark}}</span>
-          <el-select  v-show="!scope.row.id" v-model="scope.row.remark">
-            <el-option v-for="item in options" :label="item" :value="item"></el-option>
-          </el-select>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        width="100px"
-
-        label="操作">
-        <template slot-scope="scope">
-          <el-button  v-show="!scope.row.id" style="float: inherit;" type="text" @click="saveRecord(scope.row)">保存</el-button>
-          <el-button style="float: inherit;" type="text" @click="delRecord(scope.row, scope.$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-form>
-      <el-form-item style="margin-top: 20px;float: right;">
-        <el-button type="primary" style="margin-right: 10px;" @click="saveInfo">下一步</el-button>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
@@ -158,14 +111,16 @@
   } from '@/api/outpatient'
   import {
     getPatientInfo,
-    saveRecord,
     getRecord,
-    delRecord,
     getDiseaseList
   } from '@/api/patients'
   export default {
     props: {
       activeName: {
+        type: String,
+        default: '',
+      },
+      assessmentId: {
         type: String,
         default: '',
       }
@@ -187,6 +142,15 @@
         curDisease: {}
       }
     },
+    watch: {
+      'assessmentId': function (val) {
+        if (val) {
+          this.assessmentId = val
+          this.getPatientInfo()
+          this.getRecord()
+        }
+      }
+    },
     created () {
       this.getPatientInfo()
       this.getRecord()
@@ -194,7 +158,7 @@
     methods: {
       getRecord () {
         let param = {
-          "assessmentId":this.$route.params.assessmentId,
+          "assessmentId": this.assessmentId,
           "patientId": this.$route.params.id,
           pageNum: this.page.pageNum,
           pageSize: this.page.pageSize
@@ -218,101 +182,6 @@
             }
           }
         })
-      },
-      querySearch(queryString, cb) {
-        this.searchMed(cb)
-      },
-      queryDisease(queryString, cb) {
-        this.searchDisease(cb)
-      },
-      async searchMed (cb) {
-        let result = []
-        const res = await getMed({
-          medName: this.searchName
-        })
-        let {data} = res
-        if (data) {
-          data.forEach(el => {
-            result.push({
-              value: el.medName,
-              medId: el.medId
-            })
-          });
-        }
-        this.restaurants = result
-        if (cb) {
-          cb(this.restaurants)
-        }
-      },
-      searchDisease (cb) {
-        let param = {
-          diseaseName: this.searchDiseaseName
-        }
-        getDiseaseList(param).then((res) => {
-          if (res.code === 200) {
-            if (res.data && res.data.records) {
-              let newList = []
-              res.data.records.forEach((vv) => {
-                newList.push({
-                  value: vv.diseaseName,
-                  diseaseId: vv.diseaseId
-                })
-              })
-              cb(newList)
-            }
-          }
-        })
-      },
-      handleSelect (item) {
-        this.curMed = item
-      },
-      handleDisease (item) {
-        this.curDisease = item
-      },
-      saveRecord (item) {
-        item.assessmentId =this.$route.params.assessmentId
-        item.patientId = this.$route.params.id
-        item.indication = this.curDisease.diseaseId
-        item.medId = this.curMed.medId
-        item.diseaseName = this.curDisease.value
-        saveRecord(item).then((res) => {
-          if (res.code === 200) {
-            this.$message.success('保存成功')
-            this.getRecord()
-            this.curDisease = {}
-            this.curMed = {}
-          } else {
-            this.$message.error(res.errorMessage)
-          }
-        })
-      },
-      delRecord (item, index) {
-        if (!item.id) {
-          this.tableData.splice(index, 1)
-        } else {
-          this.$confirm('您确定要删除此条记录？', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            delRecord(item).then((res) => {
-              if (res.code === 200) {
-                this.tableData.splice(index, 1)
-              } else {
-                this.$message.error(res.errorMessage)
-              }
-            })
-          })
-        }
-      },
-      handleSelectionChange (val) {
-        console.log(val)
-      },
-      addMed () {
-        this.tableData.push({})
-      },
-      saveInfo () {
-        this.$emit('update:activeName', 'jyjc');
       }
     }
   }

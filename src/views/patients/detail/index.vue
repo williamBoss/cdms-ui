@@ -39,7 +39,6 @@
       title=""
       :visible.sync="drawerShow"
       direction="ltr"
-      :before-close="handleClose"
       class="drawer-tab"
       size="70%">
       <tab-page :assessmentId="assessmentId"></tab-page>
@@ -53,7 +52,7 @@ import baseDrawer from '../components/baseDrawer.vue'
 import VeLine from 'v-charts/lib/line.common'
 import VePie from 'v-charts/lib/pie.common'
 import VeHistogram from 'v-charts/lib/histogram.common'
-import tabPage from '../form/index'
+import tabPage from '../components/pgCom/index.vue'
 import {
    getUseMedicine,
    getUseMedicalTreatment,
@@ -382,10 +381,7 @@ export default {
     changeTab (val) {
       this.activeTab = val.name
       this.getTabData(val.name)
-    },
-    handleClose () {
-      this.drawerShow = false
-    },
+    }
   }
 }
 </script>
