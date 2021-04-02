@@ -1,28 +1,28 @@
 <template>
   <div class="outpatient main">
-   <!-- <el-row :gutter="20">
-      <el-col :span="20">
-        <div class="search-wrap">
-          <el-autocomplete
-            v-model="searchName"
-            :fetch-suggestions="querySearch"
-            :trigger-on-focus="false"
-            placeholder="输入咨询的药品名"
-            @select="handleSelect"
-          >
-          </el-autocomplete>
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
-      </el-col>
-    </el-row> -->
+    <!-- <el-row :gutter="20">
+       <el-col :span="20">
+         <div class="search-wrap">
+           <el-autocomplete
+             v-model="searchName"
+             :fetch-suggestions="querySearch"
+             :trigger-on-focus="false"
+             placeholder="输入咨询的药品名"
+             @select="handleSelect"
+           >
+           </el-autocomplete>
+         </div>
+       </el-col>
+       <el-col :span="4">
+         <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
+       </el-col>
+     </el-row> -->
     <div class="flex-wrap">
       <div class="search-wrap">
         <el-autocomplete
           v-model="searchName"
           :fetch-suggestions="querySearch"
-          :trigger-on-focus="false"
+          :trigger-on-focus="true"
           placeholder="输入咨询的药品名"
           @select="handleSelect"
         >
@@ -38,7 +38,7 @@
         closable
         @close="handleClose(index)"
         :type="tag.type">
-        {{tag.value}}
+        {{ tag.value }}
       </el-tag>
       <div class="text-wrap">
         <el-input
@@ -50,9 +50,10 @@
       </div>
       <div class="select-wrap">
         <el-cascader
-        v-model="problems"
+          v-model="problems"
           :options="options"
           :props="props"
+          placeholder="请选择问题类型"
           collapse-tags
           clearable></el-cascader>
       </div>
@@ -84,31 +85,31 @@ import {
 export default {
   name: 'outpatient', // 药学门诊
   components: {baseDrawer},
-  data () {
+  data() {
     return {
       patientId: '',
-      searchName:'',
+      searchName: '',
       tags: [],
       restaurants: [],
       options: [],
-      problems:[],
+      problems: [],
       consultContext: '',
       consultReply: '',
       props: {multiple: true, value: 'id', label: 'medicationProblems', children: 'childList'}
     }
   },
-  mounted () {
+  mounted() {
     this.getProb()
   },
   methods: {
-    goList () {
+    goList() {
       this.$router.push({name: 'outpatientList'})
     },
     querySearch(queryString, cb) {
       this.searchMed(cb)
     },
 
-    async searchMed (cb) {
+    async searchMed(cb) {
       let result = []
       const res = await getMed({
         medName: this.searchName
@@ -128,7 +129,7 @@ export default {
       }
     },
 
-    async getProb(){
+    async getProb() {
       const res = await getProb()
       let {data} = res
       if (data) {
@@ -136,7 +137,8 @@ export default {
       }
     },
 
-    handleSelect(item){
+    handleSelect(item) {
+      this.searchName = ''
       this.tags.push(item)
     },
 
@@ -144,16 +146,16 @@ export default {
       this.tags.splice(index, 1)
     },
 
-    setPatientInfo(data){
+    setPatientInfo(data) {
       this.patientId = data.patientId
     },
 
-    async saveData(){
+    async saveData() {
       if (!this.patientId) {
-        this.$message({ showClose: true, message: '请先获取患者', type: "error" });
+        this.$message({showClose: true, message: '请先输入患者信息，保存或获取患者信息', type: 'error'});
         return false;
       }
-      if(this.tags.length < 1) {
+      if (this.tags.length < 1) {
         return false;
       }
       let medList = []
@@ -173,7 +175,11 @@ export default {
       })
 
       if (res.code === 200 && res.success === true) {
-        this.$message({ showClose: true, message: '保存成功', type: "success" });
+        this.$message({showClose: true, message: '保存成功', type: 'success'});
+        this.tags = []
+        this.consultContext = ''
+        this.problems = []
+        this.consultReply = ''
       }
 
     }
@@ -181,43 +187,51 @@ export default {
 }
 </script>
 
-<style lang="scss" >
-.outpatient{
+<style lang="scss">
+.outpatient {
   padding: 28px 24px 0;
-  .search-wrap{
+
+  .search-wrap {
     flex: 1;
     -webkit-flex: 1;
     padding-right: 10px;
-    .el-autocomplete{
+
+    .el-autocomplete {
       width: 100%;
     }
   }
-  .main-wrap{
+
+  .main-wrap {
     // width: 750px;
     padding-top: 25px;
-    .tag-wrap{
+
+    .tag-wrap {
       margin-bottom: 13px;
       margin: 0 11px 33px;
       border-radius: 25px;
     }
   }
-  .flex-wrap{
+
+  .flex-wrap {
     display: flex;
     display: -webkit-flex;
   }
-  .select-wrap{
+
+  .select-wrap {
     padding: 15px 0;
     text-align: right;
 
-    .el-select{
+    .el-select {
       margin-left: 8px;
     }
   }
-  .btn-wrap{
+
+  .btn-wrap {
     padding: 20px 0;
     text-align: right;
   }
-  .btn-item{
+
+  .btn-item {
     display: inline-block;
   }
 }
