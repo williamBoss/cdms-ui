@@ -23,38 +23,38 @@ import ParentView from '@/components/ParentView';
     icon: 'svg-name'             // 设置该路由的图标，对应路径src/assets/icons/svg
     breadcrumb: false            // 如果设置为false，则不会在breadcrumb面包屑中显示
   }
-  unfold: true,                  // 将二级菜单在第一级展示
+ unfold: true,                  // 将二级菜单在第一级展示
  */
 
 // 公共路由
 export const constantRoutes = [
   {
     path: '/login',
-    component: (resolve) => require(['@/views/login'], resolve),
+    component: (resolve) => require([ '@/views/login' ], resolve),
     hidden: true
   },
   {
     path: '/404',
-    component: (resolve) => require(['@/views/error/404'], resolve),
+    component: (resolve) => require([ '@/views/error/404' ], resolve),
     hidden: true
   },
   {
     path: '/401',
-    component: (resolve) => require(['@/views/error/401'], resolve),
+    component: (resolve) => require([ '@/views/error/401' ], resolve),
     hidden: true
   },
   {
     path: '',
     // component: Layout,
-    component: (resolve) => require(['@/views/index'], resolve),
+    component: (resolve) => require([ '@/views/index' ], resolve),
     redirect: 'index',
     hidden: true,
     children: [
       {
         path: 'index',
-        component: (resolve) => require(['@/views/index'], resolve),
+        component: (resolve) => require([ '@/views/index' ], resolve),
         name: '首页',
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true },
+        meta: {title: '首页', icon: 'dashboard', noCache: true, affix: true},
         hidden: true
       }
     ]
@@ -66,9 +66,10 @@ export const constantRoutes = [
     children: [
       {
         path: 'type/data/:dictId(\\d+)',
-        component: (resolve) => require(['@/views/system/dict/data'], resolve),
+        component: (resolve) => require([ '@/views/system/dict/data' ],
+          resolve),
         name: 'Data',
-        meta: { title: '字典数据', icon: '' }
+        meta: {title: '字典数据', icon: ''}
       }
     ]
   },
@@ -79,9 +80,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'log',
-        component: (resolve) => require(['@/views/monitor/job/log'], resolve),
+        component: (resolve) => require([ '@/views/monitor/job/log' ], resolve),
         name: 'JobLog',
-        meta: { title: '调度日志' }
+        meta: {title: '调度日志'}
       }
     ]
   },
@@ -92,9 +93,10 @@ export const constantRoutes = [
     children: [
       {
         path: 'edit/:tableId(\\d+)',
-        component: (resolve) => require(['@/views/tool/gen/editTable'], resolve),
+        component: (resolve) => require([ '@/views/tool/gen/editTable' ],
+          resolve),
         name: 'GenEdit',
-        meta: { title: '修改生成配置' }
+        meta: {title: '修改生成配置'}
       }
     ]
   },
@@ -105,80 +107,81 @@ export const constantRoutes = [
     children: [
       {
         path: 'outpatient',
-        component: (resolve) => require(['@/views/outpatient/index'], resolve),
+        component: (resolve) => require([ '@/views/outpatient/index' ],
+          resolve),
         name: 'outpatient',
-        meta: { title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png') }
+        meta: {title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png')}
       },
       {
         path: 'outpatientList',
-        component: (resolve) => require(['@/views/outpatient/list/index'], resolve),
+        component: (resolve) => require([ '@/views/outpatient/list/index' ],
+          resolve),
         name: 'outpatientList',
         hidden: true,
-        meta: { title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png') }
-      },
-      {
-        path: 'analysis',  // require('@/assets/icons/menu/sjfx.png')
-        component: (resolve) => require(['@/views/analysis/index'], resolve),
-        name: 'analysis',
-        meta: { title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png') }
+        meta: {title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png')}
       },
       {
         path: 'patients',
-        component: (resolve) => require(['@/views/patients/list/index'], resolve),
+        component: (resolve) => require([ '@/views/patients/list/index' ],
+          resolve),
         name: 'patients',
-        meta: { title: '患者管理', icon: require('@/assets/icons/menu/hzgl.png') }
+        meta: {title: '患者管理', icon: require('@/assets/icons/menu/hzgl.png')}
       },
       {
         path: 'pgSet/:id/:assessmentId',
-        component: (resolve) => require(['@/views/patients/list/pgSet'], resolve),
+        component: (resolve) => require([ '@/views/patients/list/pgSet' ],
+          resolve),
         name: 'pgSet',
         hidden: true,
-        meta: { title: '评估量表', icon: '' }
+        meta: {title: '评估量表', icon: ''}
       },
       {
         path: 'patientsDetail/:id',
-        component: (resolve) => require(['@/views/patients/detail/index'], resolve),
+        component: (resolve) => require([ '@/views/patients/detail/index' ],
+          resolve),
         name: 'patientsDetail',
         hidden: true,
-        meta: { title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png') }
+        meta: {title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png')}
       },
       {
         path: 'patientsForm/:id/:assessmentId',
-        component: (resolve) => require(['@/views/patients/form/index'], resolve),
+        component: (resolve) => require([ '@/views/patients/form/index' ],
+          resolve),
         name: 'patientsForm',
         hidden: true,
-        meta: { title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png') }
+        meta: {title: '患者评估', icon: require('@/assets/icons/menu/hzgl.png')}
       },
       {
         path: 'patientsEdit',
-        component: (resolve) => require(['@/views/patients/editForm/index'], resolve),
+        component: (resolve) => require([ '@/views/patients/editForm/index' ],
+          resolve),
         name: 'patientsEdit',
         hidden: true,
-        meta: { title: '患者信息', icon: require('@/assets/icons/menu/hzgl.png') }
-      },
-      {
-        path: 'knowledge',
-        component: (resolve) => require(['@/views/knowledge/index'], resolve),
-        name: 'knowledge',
-        meta: { title: '知识库', icon: require('@/assets/icons/menu/zsk.png') }
+        meta: {title: '患者信息', icon: require('@/assets/icons/menu/hzgl.png')}
       },
       {
         path: 'followup',
-        component: (resolve) => require(['@/views/followup/index'], resolve),
+        component: (resolve) => require([ '@/views/followup/index' ], resolve),
         name: 'followup',
-        meta: { title: '随访管理', icon: require('@/assets/icons/menu/sfgl.png') }
+        meta: {title: '随访管理', icon: require('@/assets/icons/menu/sfgl.png')}
       },
-      // {
-      //   path: 'diseases',
-      //   component: (resolve) => require(['@/views/followup/index'], resolve),
-      //   name: 'diseases',
-      //   meta: { title: '病种管理', icon: '' }
-      // },
+      {
+        path: 'analysis',
+        component: (resolve) => require([ '@/views/analysis/index' ], resolve),
+        name: 'analysis',
+        meta: {title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png')}
+      },
+      {
+        path: 'knowledge',
+        component: (resolve) => require([ '@/views/knowledge/index' ], resolve),
+        name: 'knowledge',
+        meta: {title: '知识库', icon: require('@/assets/icons/menu/zsk.png')}
+      },
       {
         path: 'diseases',
-        component: (resolve) => require(['@/views/diseases/list'], resolve),
+        component: (resolve) => require([ '@/views/diseases/list' ], resolve),
         name: 'diseases',
-        meta: { title: '病种管理', icon: require('@/assets/icons/menu/bzgl.png') }
+        meta: {title: '病种管理', icon: require('@/assets/icons/menu/bzgl.png')}
       }
     ]
   }
@@ -191,6 +194,6 @@ Router.prototype.push = function push(location) {
 
 export default new Router({
   mode: 'history', // 去掉url中的#
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRoutes
 })
