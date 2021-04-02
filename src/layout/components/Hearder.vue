@@ -14,16 +14,16 @@
         <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
           <div class="avatar-wrapper">
             <img :src="avatar" class="user-avatar">
-            <span class="name-item">{{name}}</span>
+            <span class="name-item">{{ name }}</span>
             <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown">
             <router-link to="/user/profile">
               <el-dropdown-item>个人中心</el-dropdown-item>
             </router-link>
-            <el-dropdown-item @click.native="setting = true">
+            <!--<el-dropdown-item @click.native="setting = true">
               <span>布局设置</span>
-            </el-dropdown-item>
+            </el-dropdown-item>-->
             <el-dropdown-item divided @click.native="logout">
               <span>退出登录</span>
             </el-dropdown-item>
@@ -85,18 +85,20 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  .main{
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+
+  .main {
     width: 1140px;
     margin: 0 auto;
   }
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, .025)
@@ -111,15 +113,18 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
-  .logo-wrap{
+
+  .logo-wrap {
     display: inline-block;
     vertical-align: middle;
     margin-left: 20px;
-    img{
+
+    img {
       height: 60px;
       width: auto;
     }
   }
+
   .right-menu {
     float: right;
     height: 100%;
@@ -159,7 +164,8 @@ export default {
         height: 50px;
         padding: 5px 30px 5px 5px;
         border-radius: 4px;
-        .name-item{
+
+        .name-item {
           line-height: 40px;
           display: inline-block;
           vertical-align: top;
@@ -167,6 +173,7 @@ export default {
           font-size: 14px;
           color: #1890FF;
         }
+
         .user-avatar {
           cursor: pointer;
           width: 40px;
