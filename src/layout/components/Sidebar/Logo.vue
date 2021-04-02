@@ -2,7 +2,7 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img :src="logo" class="sidebar-logo">
+        <img :src="smallLogo" class="sidebar-logo" style="height: 40px;width:40px;margin-left: 5px;">
         <!-- <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1> -->
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
@@ -16,6 +16,7 @@
 
 <script>
 import logoImg from '@/assets/icons/menu/logo.png'
+import smallLogo from '@/assets/logo/logo1.png'
 import variables from '@/assets/styles/variables.scss'
 
 export default {
@@ -37,7 +38,8 @@ export default {
   data() {
     return {
       title: 'MTM系统',
-      logo: logoImg
+      logo: logoImg,
+      smallLogo: smallLogo
     }
   }
 }
@@ -66,7 +68,7 @@ export default {
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
-    
+
     text-align: left;
 
     & .sidebar-logo {

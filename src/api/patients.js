@@ -804,3 +804,12 @@ export function getReportInfo(param) {
     params: param
   })
 }
+
+// 获取所有病种
+export const getDiseaseList = (param) => {
+  return request({
+    url: '/cdms/config/disease/list',
+    method: 'get',
+    params: param
+  })
+}

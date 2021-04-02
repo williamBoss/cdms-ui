@@ -12,8 +12,9 @@
       </el-form-item>
       <el-form-item prop="birthday">
         <label>出生日期</label>
-        <el-date-picker format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date" placeholder="选择日期" v-model="form.birthday"
-          style="width: 100%;"></el-date-picker>
+        <el-date-picker format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date" placeholder="选择日期"
+                        v-model="form.birthday"
+                        style="width: 100%;"></el-date-picker>
       </el-form-item>
       <el-form-item prop="gender">
         <label>性别</label>
@@ -105,263 +106,274 @@
 </template>
 
 <script>
-  import {
-    savePatient,
-    getAssessment
-  } from '@/api/patients'
-  import {
-    getAddress
-  } from '@/api/param'
-  import {
-    getPatientPhone,
-  } from '@/api/outpatient'
-  export default {
-    name: 'patientsEdit', // 患者管理详情
-    data() {
-      return {
-        form: {
-          bmi: 0
-        },
-        options: [],
-        rules: {
-          phone: [{
+import {
+  savePatient,
+  getAssessment
+} from '@/api/patients'
+import {
+  getAddress
+} from '@/api/param'
+import {
+  getPatientPhone
+} from '@/api/outpatient'
+
+export default {
+  name: 'patientsEdit', // 患者管理详情
+  data() {
+    return {
+      form: {
+        bmi: 0
+      },
+      options: [],
+      rules: {
+        phone: [
+          {
             required: true,
             message: '请输入手机号',
             trigger: 'blur'
-          }],
-          birthday: [{
+          } ],
+        birthday: [
+          {
             required: true,
             message: '请选择出生日期',
             trigger: 'blur'
-          }],
-          // bmi: [{
-          //   required: true,
-          //   message: '请输入bmi',
-          //   trigger: 'blur'
-          // }],
-          // company: [{
-          //   required: true,
-          //   message: '请输入工作单位',
-          //   trigger: 'blur'
-          // }],
-          // downtownAddress: [{
-          //   required: true,
-          //   message: '请选择入家庭住址',
-          //   trigger: 'blur'
-          // }],
-          // eduLevel: [{
-          //   required: true,
-          //   message: '请选择受教育程度',
-          //   trigger: 'blur'
-          // }],
-          // emergencyInfusionNum: [{
-          //   required: true,
-          //   message: '请输入就诊后一年急诊/输液次数',
-          //   trigger: 'blur'
-          // }],
-          gender: [{
+          } ],
+        // bmi: [{
+        //   required: true,
+        //   message: '请输入bmi',
+        //   trigger: 'blur'
+        // }],
+        // company: [{
+        //   required: true,
+        //   message: '请输入工作单位',
+        //   trigger: 'blur'
+        // }],
+        // downtownAddress: [{
+        //   required: true,
+        //   message: '请选择入家庭住址',
+        //   trigger: 'blur'
+        // }],
+        // eduLevel: [{
+        //   required: true,
+        //   message: '请选择受教育程度',
+        //   trigger: 'blur'
+        // }],
+        // emergencyInfusionNum: [{
+        //   required: true,
+        //   message: '请输入就诊后一年急诊/输液次数',
+        //   trigger: 'blur'
+        // }],
+        gender: [
+          {
             required: true,
             message: '请选择性别',
             trigger: 'blur'
-          }],
-          height: [{
+          } ],
+        height: [
+          {
             required: true,
             message: '请输入身高',
             trigger: 'blur'
-          }],
-          // homeAddress: [{
-          //   required: true,
-          //   message: '请输入家庭详细地址',
-          //   trigger: 'blur'
-          // }],
-          // hospitalizationNum: [{
-          //   required: true,
-          //   message: '请输入就诊后一年住院次数',
-          //   trigger: 'blur'
-          // }],
-          idCard: [{
+          } ],
+        // homeAddress: [{
+        //   required: true,
+        //   message: '请输入家庭详细地址',
+        //   trigger: 'blur'
+        // }],
+        // hospitalizationNum: [{
+        //   required: true,
+        //   message: '请输入就诊后一年住院次数',
+        //   trigger: 'blur'
+        // }],
+        idCard: [
+          {
             required: true,
             message: '请输入身份证号码',
             trigger: 'blur'
-          }],
-          // medType: [{
-          //   required: true,
-          //   message: '请选择医保类型',
-          //   trigger: 'blur'
-          // }],
-          patId: [{
+          } ],
+        // medType: [{
+        //   required: true,
+        //   message: '请选择医保类型',
+        //   trigger: 'blur'
+        // }],
+        patId: [
+          {
             required: true,
             message: '请输入患者ID',
             trigger: 'blur'
-          }],
-          patientName: [{
+          } ],
+        patientName: [
+          {
             required: true,
             message: '请输入姓名',
             trigger: 'blur'
-          }],
-          phone: [{
-            required: true,
-            message: '请输入手机号',
-            trigger: 'blur'
-          }],
-          weight: [{
+          } ],
+        weight: [
+          {
             required: true,
             message: '请输入体重',
             trigger: 'blur'
-          }]
-        }
-      }
-    },
-    created() {
-      this.getAddress()
-    },
-    methods: {
-      getAddress() {
-        getAddress().then((res) => {
-          if (res.code === 200) {
-            this.options = this.getTreeData(res.data)
-          }
-        })
-      },
-      getTreeData(data) {
-        // 循环遍历json数据
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].children.length < 1) {
-            data[i].children = undefined;
-          } else {
-            this.getTreeData(data[i].children);
-          }
-        }
-        return data;
-      },
-      async searchUser () {
-
-        if (/^1[34578]\d{9}$/.test(this.form.phone)) {
-          let res = await getPatientPhone(this.form.phone);
-          console.log('用户信息：', res);
-          let {data} = res;
-          if (data) {
-            data.gender = data.gender.toString()
-            data.medType = data.medType.toString()
-            data.eduLevel = data.eduLevel.toString()
-            if (data.downtownAddress.length > 0) {
-              let newList = []
-              data.downtownAddress.forEach((vv) => {
-                newList.push(parseInt(vv))
-              })
-              data.downtownAddress = newList
-            }
-            this.form = data
-          }
-        } else {
-          this.form = {
-            phone: '',
-            patientName: '',
-            birthday: '',
-            gender: '',
-            height: '',
-            homeAddress: '',
-            hospitalizationNum: '',
-            idCard: '',
-            medType: '',
-            patId: '',
-            weight: '',
-            bmi: 0
-          }
-        }
-      },
-      saveInfo() {
-        // this.form.downtownAddress = JSON.stringify(this.form.downtownAddress)
-        this.$refs.form.validate((valid) => {
-          if (valid) {
-            savePatient(this.form).then((res) => {
-              if (res.code === 200) {
-                this.$message({
-                  message: '保存成功',
-                  type: 'success'
-                });
-              }
-            })
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'error'
-            });
-          }
-        });
-      },
-      clearDate() {
-        this.form = {}
-        this.$refs.form.resetFields();
-      },
-      back() {
-        this.$router.push({
-          name: 'patients'
-        })
-      },
-      getBmi () {
-        if (this.form.weight && this.form.height) {
-          this.form.bmi = Number((Number(this.form.weight) / ((Number(this.form.height) / 100) * (Number(this.form.height) / 100))).toFixed(2))
-        }
-      },
-      goNext() {
-        if (!this.form.patientId) {
-          this.$message.error('用户信息不存在')
-          return false
-        }
-        getAssessment({patientId: this.form.patientId}).then((res) => {
-          if (res.code === 200) {
-            this.$router.push({name: 'patientsForm', params: {id: this.form.patientId, assessmentId: res.data.assessmentId}})
-          }
-        })
-      },
-      handleClick() {
-
+          } ]
       }
     }
+  },
+  created() {
+    this.getAddress()
+  },
+  methods: {
+    getAddress() {
+      getAddress().then((res) => {
+        if (res.code === 200) {
+          this.options = this.getTreeData(res.data)
+        }
+      })
+    },
+    getTreeData(data) {
+      // 循环遍历json数据
+      for (var i = 0; i < data.length; i++) {
+        if (data[ i ].children.length < 1) {
+          data[ i ].children = undefined;
+        } else {
+          this.getTreeData(data[ i ].children);
+        }
+      }
+      return data;
+    },
+    async searchUser() {
+
+      if (/^1[34578]\d{9}$/.test(this.form.phone)) {
+        let res = await getPatientPhone(this.form.phone);
+        console.log('用户信息：', res);
+        let {data} = res;
+        if (data) {
+          data.gender = data.gender.toString()
+          data.medType = data.medType.toString()
+          data.eduLevel = data.eduLevel.toString()
+          if (data.downtownAddress.length > 0) {
+            let newList = []
+            data.downtownAddress.forEach((vv) => {
+              newList.push(parseInt(vv))
+            })
+            data.downtownAddress = newList
+          }
+          this.form = data
+        }
+      } else {
+        this.form = {
+          phone: '',
+          patientName: '',
+          birthday: '',
+          gender: '',
+          height: '',
+          homeAddress: '',
+          hospitalizationNum: '',
+          idCard: '',
+          medType: '',
+          patId: '',
+          weight: '',
+          bmi: 0
+        }
+      }
+    },
+    saveInfo() {
+      // this.form.downtownAddress = JSON.stringify(this.form.downtownAddress)
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          savePatient(this.form).then((res) => {
+            if (res.code === 200) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }
+          })
+        } else {
+          this.$message({
+            message: res.errorMessage,
+            type: 'error'
+          });
+        }
+      });
+    },
+    clearDate() {
+      this.form = {}
+      this.$refs.form.resetFields();
+    },
+    back() {
+      this.$router.push({
+        name: 'patients'
+      })
+    },
+    getBmi() {
+      if (this.form.weight && this.form.height) {
+        this.form.bmi = Number(
+          (Number(this.form.weight) / ((Number(this.form.height) / 100) * (Number(this.form.height) / 100))).toFixed(2))
+      }
+    },
+    goNext() {
+      if (!this.form.patientId) {
+        this.$message.error('用户信息不存在')
+        return false
+      }
+      getAssessment({patientId: this.form.patientId}).then((res) => {
+        if (res.code === 200) {
+          this.$router.push({
+            name: 'patientsForm',
+            params: {id: this.form.patientId, assessmentId: res.data.assessmentId},
+            query: {type: 'newAssessment'}
+          })
+        }
+      })
+    },
+    handleClick() {
+
+    }
   }
+}
 </script>
 
 <style lang="scss">
-  .new-patients {
-    padding: 28px 20px 0 40px;
+.new-patients {
+  padding: 28px 20px 0 40px;
 
-    .el-form {
-      margin-top: 10px;
-    }
-    .btn-wrap{
-      text-align: right;
-    }
-    label {
-      height: 40px;
-      line-height: 40px;
-      display: block;
-      font-weight: normal;
-      color: #1e3f7c;
-    }
-
-    .el-input--medium .el-input__inner {
-      background: #f0f0f0;
-      border-radius: 0;
-      border: 0;
-    }
-
-    .el-radio--medium.is-bordered {
-      line-height: inherit;
-      background: #f0f0f0;
-      border: 0;
-    }
-
-    .el-radio.is-bordered.is-checked {
-      background: #1890FF;
-    }
-
-    .el-radio__input.is-checked+.el-radio__label {
-      color: #fff;
-    }
-
-    .el-radio__input {
-      display: none;
-    }
+  .el-form {
+    margin-top: 10px;
   }
+
+  .btn-wrap {
+    text-align: right;
+  }
+
+  label {
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    font-weight: normal;
+    color: #1e3f7c;
+  }
+
+  .el-input--medium .el-input__inner {
+    background: #f0f0f0;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .el-radio--medium.is-bordered {
+    line-height: inherit;
+    background: #f0f0f0;
+    border: 0;
+  }
+
+  .el-radio.is-bordered.is-checked {
+    background: #1890FF;
+  }
+
+  .el-radio__input.is-checked + .el-radio__label {
+    color: #fff;
+  }
+
+  .el-radio__input {
+    display: none;
+  }
+}
 </style>

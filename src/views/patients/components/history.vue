@@ -1,5 +1,5 @@
 <template>
-  <div class="life-style">
+  <div class="life-style history">
     <el-form ref="form" :model="form" label-width="80px">
       <el-row :gutter="20">
         <el-col :span="12">
@@ -52,7 +52,7 @@
               </el-col>
               <el-col class="content-item" v-show="!jwbEdit" :span="18">
                 <el-row>
-                  <el-tag closable :disable-transitions="false" @close="handleClose(item, index, 'delOldHistory')" v-for="(item, index) in oldHistory">{{item.diseaseName}}</el-tag>
+                  <el-tag closable :disable-transitions="false" @close="handleClose(item, index, 'delOldHistory')" v-for="(item, index) in oldHistory">{{item.diseaseName}}{{item.durationIllness}}年</el-tag>
                 </el-row>
               </el-col>
               <el-col class="content-item" v-show="jwbEdit" :span="18">
@@ -119,9 +119,9 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   糖尿病并发症
-                 <el-switch
+                 <!-- <el-switch
                     v-model="diabetesHistory.length > 0">
-                  </el-switch>
+                  </el-switch> -->
                   <div class="add-btn" style="margin-top: 10px;" @click="editItem('tnbEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
@@ -152,12 +152,16 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   肝损害
-                  <el-switch
-                    v-model="liverInfo.liverDamageDesc && liverInfo.liverDamageDesc.length > 0">
-                  </el-switch>
-                  <div class="add-btn" style="margin-top: 10px;" @click="editItem('gssEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="switch-wrap">
+                    <el-switch
+                      active-text="有"
+                      inactive-text="无"
+                      v-model="gssEdit">
+                    </el-switch>
                   </div>
+                  <!-- <div class="add-btn" style="margin-top: 10px;" @click="editItem('gssEdit')">
+                    <i class="el-icon-plus"></i>
+                  </div> -->
                 </div>
                 <div v-show="gssEdit" class="add-angle"></div>
               </el-col>
@@ -166,7 +170,7 @@
               </el-col>
               <el-col class="content-item" v-show="gssEdit" :span="18">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" v-model="form.liverInfo"></el-input>
+                 <el-input type="textarea" :rows="5" v-model="form.liverInfo"></el-input>
                  <el-button class="card-btn" type="primary" @click="saveHistory('saveLiverInfo')">保存</el-button>
                </el-form-item>
               </el-col>
@@ -179,12 +183,16 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   肾损害
-                  <el-switch
-                    v-model="kidneyInfo.kidneyDamageDesc && kidneyInfo.kidneyDamageDesc.length > 0">
-                  </el-switch>
-                  <div class="add-btn" style="margin-top: 10px;" @click="editItem('sssEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="switch-wrap">
+                    <el-switch
+                      active-text="有"
+                      inactive-text="无"
+                      v-model="sssEdit">
+                    </el-switch>
                   </div>
+                  <!-- <div class="add-btn" style="margin-top: 10px;" @click="editItem('sssEdit')">
+                    <i class="el-icon-plus"></i>
+                  </div> -->
                 </div>
                 <div v-show="sssEdit" class="add-angle"></div>
               </el-col>
@@ -193,7 +201,7 @@
               </el-col>
               <el-col class="content-item" v-show="sssEdit" :span="18">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" v-model="form.kidneyInfo"></el-input>
+                 <el-input type="textarea" :rows="5" v-model="form.kidneyInfo"></el-input>
                  <el-button class="card-btn" type="primary" @click="saveHistory('saveKidneyInfo')">保存</el-button>
                </el-form-item>
               </el-col>
@@ -228,7 +236,7 @@
                   <el-input size="mini" v-model="form.allergen"></el-input>
                 </el-form-item>
                 <el-form-item label="过敏症状">
-                  <el-input type="textarea" size="mini" v-model="form.allergySymptoms"></el-input>
+                  <el-input type="textarea" :rows="6" size="mini" v-model="form.allergySymptoms"></el-input>
                 </el-form-item>
                 <el-form-item label="发生日期">
                   <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date" placeholder="选择日期" v-model="form.allergyDatetime"
@@ -242,8 +250,8 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card>
-            <el-row type="flex">
+          <el-card :style="'overflow:' + (ywfyEdit ? 'inherit' : 'hidden')">
+            <el-row>
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   药物不良反应
@@ -262,21 +270,23 @@
                  <div class="history-time">{{item.occurrenceDatetime}}</div>
                </div>
               </el-col>
-              <el-col class="content-item" v-show="ywfyEdit" :span="21">
+              <el-col class="content-item table-wrap" style="overflow:inherit;" v-show="ywfyEdit" :span="21">
                 <div class="search-wrap">
-                  <el-select size="mini" v-model="form.medId" filterable placeholder="请选择">
-                    <el-option
-                      v-for="item in medList"
-                      :key="item.medId"
-                      :label="item.medName"
-                      :value="item.medId">
-                    </el-option>
-                  </el-select>
+                  <el-autocomplete
+                    v-model="searchName"
+                    :fetch-suggestions="querySearch"
+                    :trigger-on-focus="false"
+                    placeholder="输入药品名"
+                    size="mini"
+                    @select="handleSelect"
+                  >
+                  </el-autocomplete>
                   <el-button type="primary" size="mini" @click="addMed">添加</el-button>
                 </div>
                 <el-table
                     :data="medSideList"
                     border
+                    :header-cell-style="{background:'#1e3f7c',color:'white'}"
                     style="width: 100%">
                     <el-table-column
                       fixed
@@ -297,7 +307,10 @@
                       label="不良反应症状">
                       <template slot-scope="scope">
                         <el-checkbox-group class="flex" v-model="scope.row.adverseReactionsSymptomsList">
-                          <el-checkbox v-for="item in sicknessList" :label="item">{{item}}</el-checkbox>
+                          <el-checkbox v-for="item in scope.row.sicknessList" v-show="item.name || (!item.name && item.key)" :label="item.name">
+                            <span v-show="!item.key">{{item.name}}</span>
+                            <el-input v-show="item.key" size="min" v-model="item.name"></el-input>
+                          </el-checkbox>
                         </el-checkbox-group>
                       </template>
                     </el-table-column>
@@ -339,6 +352,9 @@
    getMedList
  } from '@/api/param'
  import {
+   getMed
+ } from '@/api/outpatient'
+ import {
    getFamilyHistory,
    saveFamilyHistory,
    delFamilyHistory,
@@ -377,7 +393,7 @@
           surgicalIds: [],
           complicationsSymptoms: []
         },
-        sicknessList: ['恶心', '呕吐', '皮疹', '便秘'],
+        sicknessList: [{name: '恶心'}, {name: '呕吐'}, {name: '皮疹'}, {name: '便秘'}, {key: 'other', name: ''}],
         value: '',
         jzEdit: false,
         jwbEdit: false,
@@ -394,7 +410,6 @@
         familyHistory: [],
         oldHistory: [],
         surgicalHistory: [],
-        tableData: [],
         options: [],
         oldInput: [],
         curDisease: {},
@@ -405,7 +420,8 @@
         allergenHistory: [],
         medList: [],
         tableData: [],
-        medSideList: []
+        medSideList: [],
+        searchName: ''
       }
     },
     created () {
@@ -426,11 +442,11 @@
             this.curSurgicalList = res.data
           }
         })
-        getMedList().then((res) => {
-          if (res.code === 200  && res.data) {
-            this.medList = res.data.records
-          }
-        })
+        // getMedList().then((res) => {
+        //   if (res.code === 200  && res.data) {
+        //     this.medList = res.data.records
+        //   }
+        // })
       },
       getHistory () {
         let param = {
@@ -476,12 +492,14 @@
         getLiverInfo(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.liverInfo = res.data
+            this.gssEdit = this.liverInfo.liverDamageDesc ? true : false
             this.form.liverInfo = res.data.liverDamageDesc
           }
         })
         getKidneyInfo(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.kidneyInfo = res.data
+            this.sssEdit = this.kidneyInfo.kidneyDamageDesc ? true : false
             this.form.kidneyInfo = res.data.kidneyDamageDesc
           }
         })
@@ -491,6 +509,7 @@
           if (res.code === 200) {
             res.data.records.forEach((vv) => {
               vv.adverseReactionsSymptomsList = vv.adverseReactionsSymptoms.split(',')
+              vv.sicknessList = JSON.parse(JSON.stringify(this.sicknessList))
             })
             this.medSideList = res.data.records
           }
@@ -503,6 +522,28 @@
             // this.form.kidneyInfo = res.data.kidneyDamageDesc
           }
         })
+      },
+      querySearch(queryString, cb) {
+        this.searchMed(cb)
+      },
+      async searchMed (cb) {
+        let result = []
+        const res = await getMed({
+          medName: this.searchName
+        })
+        let {data} = res
+        if (data) {
+          data.forEach(el => {
+            result.push({
+              value: el.medName,
+              medId: el.medId
+            })
+          });
+        }
+        this.restaurants = result
+        if (cb) {
+          cb(this.restaurants)
+        }
       },
       searchHistory () {
         if (this.jzEdit || this.jwbEdit) {
@@ -535,19 +576,22 @@
       clearHistory () {
         this.curDiseaseList = this.diseaseList
       },
+      handleSelect(item){
+        this.form.medId = item.medId
+        this.form.medName = item.value
+      },
       addMed () {
-        this.medList.forEach((vv) => {
-          if (parseInt(vv.medId) ===parseInt(this.form.medId)){
-            this.medSideList.push({
-              medId: vv.medId,
-              medName: vv.medName,
-              adverseReactionsSymptomsList: []
-            })
-          }
-        })
-        // this.tableData.push({
-        //   medName
-        // })
+        if (this.form.medId) {
+          this.medSideList.push({
+            medId: this.form.medId,
+            medName: this.form.medName,
+            adverseReactionsSymptomsList: [],
+            sicknessList: JSON.parse(JSON.stringify(this.sicknessList))
+          })
+          this.searchName = ''
+          this.form.medId = ''
+          this.form.medName = ''
+        }
       },
       handleClick (item) {
         item.assessmentId = this.$route.params.assessmentId
@@ -729,13 +773,20 @@
       },
       editItem (type) {
         this[type] = !this[type]
+        this.form = {
+          value: [],
+          familyHistoryIds: [],
+          oldHistoryIds: [],
+          surgicalIds: [],
+          complicationsSymptoms: []
+        }
         this.curDiseaseList = this.diseaseList
       },
       filterMethod () {
 
       },
       goNext () {
-        this.$emit('update:activeName', 'lifeStyle');
+        this.$emit('update:activeName', 'curSym');
       },
       onSubmit () {
 
@@ -743,7 +794,31 @@
     }
   }
 </script>
-
+<style lang="scss">
+  .history{
+    .el-switch__label *{
+      font-size: 12px;
+    }
+    .el-switch__label{
+      display: none;
+      &.is-active{
+        display: inline-block;
+        position: absolute;
+        z-index: 100;
+        left: 20px;
+        font-size: 10px;
+        top: 1px;
+        color: #999;
+        &.el-switch__label--right{
+          left: 6px;
+          margin:0;
+          top: 0;
+          color: #fff;
+        }
+      }
+    }
+  }
+</style>
 <style scoped lang="scss">
   .life-style {
     .left-item {
@@ -752,6 +827,9 @@
       background: #1e3f7c;
       color: #fff;
       font-size: 14px;
+      height: 180px;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
     }
     .add-btn{
       height: 40px;
@@ -819,6 +897,10 @@
         font-size: 12px;
       }
     }
+    .table-wrap{
+      display: inline-block;
+      padding: 8px 0;
+    }
     .search-item{
       margin-bottom: 5px;
     }
@@ -833,12 +915,14 @@
     .card-btn{
       margin-top: 5px;
     }
-    .el-switch{
-      display: block;
-    }
     .search-wrap{
       width: 260px;
       margin-bottom: 10px;
+    }
+    .switch-wrap{
+      width: 40px;
+      margin: 0 auto;
+      position: relative;
     }
   }
 </style>

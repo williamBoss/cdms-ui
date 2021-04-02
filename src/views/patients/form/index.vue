@@ -1,7 +1,7 @@
 <template>
   <div class="patients">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
+      <el-tab-pane v-for="item in curTabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
     </el-tabs>
     <life-style :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
     <history :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
@@ -33,15 +33,40 @@ export default {
   components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer},
   data () {
     return {
-      tabList: [{
-        name: '药物重整评估记录',
-        key: 'ywpgjl'
+      checkTabList: [{
+        name: '家族病史和既往病史',
+        key: 'bs'
       }, {
         name: '现有症状',
         key: 'curSym'
       }, {
+        name: '生活方式',
+        key: 'lifeStyle'
+      }, {
+        name: '用药记录',
+        key: 'yyjl'
+      }, {
+        name: '检验检查',
+        key: 'jyjc'
+      }, {
+        name: '药物治疗问题',
+        key: 'ywzlwt'
+      }, {
+        name: '评估量表',
+        key: 'pglb'
+      },{
+        name: '药物重整评估记录',
+        key: 'ywpgjl'
+      }],
+      tabList: [{
+        name: '药物重整评估记录',
+        key: 'ywpgjl'
+      },{
         name: '家族病史和既往病史',
         key: 'bs'
+      }, {
+        name: '现有症状',
+        key: 'curSym'
       }, {
         name: '生活方式',
         key: 'lifeStyle'
@@ -58,11 +83,21 @@ export default {
         name: '评估量表',
         key: 'pglb'
       }],
+      curTabList: [],
       activeName: 'ywpgjl',
       reportInfo: {}
     }
   },
   created () {
+    if (this.$route.query.type) {
+      this.curTabList = this.checkTabList
+    } else {
+      this.curTabList = this.tabList
+    }
+    this.activeName = this.curTabList[0].key
+    if (this.$route.query.tab) {
+      this.activeName = this.$route.query.tab
+    }
     // this.getReportInfo()
   },
   methods: {
@@ -140,9 +175,13 @@ export default {
     }
     .el-textarea,.el-textarea__inner{
       min-height: 120px;
+      height: 100%;
       background: #f0f0f0;
       border: 0;
     }
+  }
+  .el-textarea__inner{
+    height: 100%!important;
   }
   .el-button{
     float: right;

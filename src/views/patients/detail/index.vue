@@ -31,7 +31,8 @@
     <el-tabs type="border-card" v-model="activeTab" @tab-click="changeTab">
       <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key">
       </el-tab-pane>
-      <ve-line :data="tabData"></ve-line>
+      <!-- <ve-line :data="tabData"></ve-line> -->
+      <ve-line :grid="lineGrid" :data="tabData"></ve-line>
     </el-tabs>
     <baseDrawer :drawer="true"></baseDrawer>
   </div>
@@ -175,7 +176,10 @@ export default {
       "columns": [],
         "rows": []
       },
-      tabData: [],
+      tabData: {
+        "columns": [],
+          "rows": []
+      },
       activeTab: 'getBloodPressure',
       tabList: [{
         name: '血压',
@@ -273,7 +277,7 @@ export default {
     getTabList (index) {
       if (!index) {
         this.tabList.forEach((vv) => {
-          if (vv.name === this.activeTab) {
+          if (vv.key === this.activeTab) {
             this.getTabData(vv.key)
           }
         })
@@ -343,6 +347,8 @@ export default {
       }
     },
     handleTableData(data) {
+      this.tabData.columns = []
+      this.tabData.rows = []
       data.legendData.unshift('日期')
       this.tabData.columns = data.legendData
       let list = []
@@ -359,7 +365,6 @@ export default {
     },
     changeTab (val) {
       this.activeTab = val.name
-      console.log(val.name)
       this.getTabData(val.name)
     },
   }

@@ -11,7 +11,7 @@
         </el-menu-item>
       </app-link>
     </template>
-    
+
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
@@ -105,6 +105,11 @@ export default {
   .el-menu-item.is-active {
     .img_box{
       background: #498AFD;
+    }
+  }
+  .hideSidebar{
+    .img_box{
+      margin-left: 12px;
     }
   }
   .img_box{

@@ -10,7 +10,7 @@
               </el-col>
               <el-col class="content-item" :span="21">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" v-model="consult.mainConsult"></el-input>
+                 <el-input type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
                  <el-button class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
                </el-form-item>
               </el-col>
@@ -63,7 +63,7 @@
                 当前症状描述
               </el-col>
               <el-col class="content-item" :span="21">
-                <el-row style="height: 170px;">
+                <el-row>
                   <el-col :span="4">
                     <div class="page-item">
                       {{page.curPage}}<span> / {{checkList.length}}</span>
@@ -78,7 +78,7 @@
                       size="mini"
                       v-model="form.input2">
                     </el-input> -->
-                    <el-checkbox-group v-if="checkList[page.curPage - 1]" v-model="curSym.list">
+                    <el-checkbox-group class="vertical-checkbox" v-if="checkList[page.curPage - 1]" v-model="curSym.list">
                       <el-checkbox v-for="item in checkList[page.curPage - 1].list" :label="item.value" :key="item.value">{{item.name}}
                         <el-input v-show="item.key" placeholder="" class="check-input" size="mini" type="primary" v-model="curSym[item.key]"></el-input>
                       </el-checkbox>
@@ -258,7 +258,7 @@
 
       },
       goNext () {
-        this.$emit('update:activeName', 'bs');
+        this.$emit('update:activeName', 'lifeStyle');
       },
       saveConsult () {
         let param = {
@@ -329,8 +329,16 @@
       font-size: 14px;
       position: relative;
     }
+    .el-checkbox{
+      width: 200px;
+    }
+    .vertical-checkbox{
+      .el-checkbox{
+        display: block;
+      }
+    }
     .el-divider--horizontal{
-      margin: 0;
+      margin: 24px 0 0;
     }
     .add-btn{
       height: 40px;

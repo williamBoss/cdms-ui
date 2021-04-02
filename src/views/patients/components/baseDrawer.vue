@@ -20,7 +20,7 @@
         <el-radio-group v-model="form.gender">
           <el-radio-button label="2">女</el-radio-button>
           <el-radio-button label="1">男</el-radio-button>
-          <el-radio-button label="0" >未知</el-radio-button>
+          <el-radio-button label="0">未知</el-radio-button>
         </el-radio-group>
         <div class="cart-title">患者ID</div>
         <el-input v-model="form.patId" placeholder="请输入内容"></el-input>
@@ -37,15 +37,14 @@
       </el-tab-pane>
       <el-tab-pane label="评估记录">
         <div class="record-wrap">
-          <el-button v-if="activities.length < 1" type="primary" style="margin: 0 auto;" @click="goForm">患者评估</el-button>
-          <el-timeline v-else>
+          <!-- <el-button v-if="activities.length < 1" type="primary" style="margin: 0 auto;" @click="goForm">患者评估</el-button> -->
+          <el-timeline>
             <el-timeline-item v-for="item in activities" :timestamp="item.fillDate" placement="top">
               <el-button class="time-btn" type="primary" size="mini" @click="goForm(item)">患者评估</el-button>
               <div class="time-content">
-                <div class="time-item">药师：{{item.recorder}}</div>
-                <div class="time-item">主述: {{item.mainConsult}}</div>
+                <div class="time-item">药师：{{ item.recorder }}</div>
+                <div class="time-item">主述: {{ item.mainConsult }}</div>
               </div>
-            </el-timeline-item>
             </el-timeline-item>
           </el-timeline>
         </div>
@@ -56,66 +55,69 @@
 
 <script>
 import { getPatientInfo, asseList, getAssessment } from '@/api/patients'
+
 export default {
   data() {
     return {
       drawer: false,
       form: {},
-      activities: [{
-        content: '支持使用图标',
-        timestamp: '2018-04-12 20:46',
-        size: 'large',
-        type: 'primary',
-        // icon: 'el-icon-more'
-      }, {
-        content: '支持自定义颜色',
-        timestamp: '2018-04-03 20:46',
-        // color: '#0bbd87'
-      }, {
-        content: '支持自定义尺寸',
-        timestamp: '2018-04-03 20:46',
-        size: 'large'
-      }, {
-        content: '默认样式的节点',
-        timestamp: '2018-04-03 20:46'
-      }]
+      activities: [
+        {
+          content: '支持使用图标',
+          timestamp: '2018-04-12 20:46',
+          size: 'large',
+          type: 'primary'
+          // icon: 'el-icon-more'
+        }, {
+          content: '支持自定义颜色',
+          timestamp: '2018-04-03 20:46'
+          // color: '#0bbd87'
+        }, {
+          content: '支持自定义尺寸',
+          timestamp: '2018-04-03 20:46',
+          size: 'large'
+        }, {
+          content: '默认样式的节点',
+          timestamp: '2018-04-03 20:46'
+        } ]
     };
   },
-  created () {
+  created() {
   },
   methods: {
-    handleClick: function (e) {
+    handleClick: function(e) {
       if (e.label === '评估记录') {
         this.getAsseList()
       }
     },
-    getPatientInfo: function () {
+    getPatientInfo: function() {
       getPatientInfo(this.$route.params.id).then((res) => {
         if (res.code) {
           this.form = res.data
         }
       })
     },
-    getAsseList: function () {
+    getAsseList: function() {
       asseList({patientId: this.$route.params.id}).then((res) => {
         if (res.code) {
           this.activities = res.data
         }
       })
     },
-    goForm: function (item) {
+    goForm: function(item) {
       if (item.assessmentId) {
         this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: item.assessmentId}})
       } else {
         getAssessment({patientId: this.$route.params.id}).then((res) => {
           if (res.code === 200) {
-            this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: res.data.assessmentId}})
+            this.$router.push(
+              {name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: res.data.assessmentId}})
           }
         })
       }
       // this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id}})
     },
-    showDrawer: function () {
+    showDrawer: function() {
       this.drawer = !this.drawer
       if (this.drawer) {
         this.getPatientInfo()
@@ -125,7 +127,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.drawer-wrap{
+.drawer-wrap {
   position: fixed;
   top: 20px;
   bottom: 20px;
@@ -135,12 +137,14 @@ export default {
   // height: calc(100% - 50px);
   overflow-y: auto;
   padding-left: 20px;
-  .cart-title{
+
+  .cart-title {
     font-size: 12px;
     height: 45px;
     line-height: 45px;
   }
-  .drawer-btn{
+
+  .drawer-btn {
     height: 40px;
     width: 20px;
     line-height: 40px;
@@ -154,46 +158,57 @@ export default {
     left: 0;
     cursor: pointer;
   }
+
   // .el-tabs{
   //   border-radius: 4px;
   // }
-  .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active{
+  .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
     background-color: #1E3F7C;
     color: #fff;
     // border-top-left-radius: 8px;
   }
-  .el-tabs__item{
+
+  .el-tabs__item {
     width: 140px;
     text-align: center;
   }
-  .record-wrap{
+
+  .record-wrap {
     min-height: 600px;
     padding-top: 20px;
-    .el-timeline{
+
+    .el-timeline {
       padding-left: 10px;
     }
-    .el-timeline-item__timestamp{
+
+    .el-timeline-item__timestamp {
       font-size: 16px;
       color: #1890FF;
       margin-bottom: 10px;
     }
-    .time-btn{
+
+    .time-btn {
       position: absolute;
       top: 0;
       right: 0;
     }
-    .time-content{
+
+    .time-content {
       padding: 10px 0;
     }
-    .time-item{
+
+    .time-item {
       font-size: 14px;
       line-height: 25px;
+      word-break: break-all;
     }
   }
-  .el-tabs__content{
+
+  .el-tabs__content {
     width: 280px;
   }
-  .btn-wrap{
+
+  .btn-wrap {
     margin-top: 10px;
   }
 }

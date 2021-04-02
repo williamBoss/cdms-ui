@@ -9,10 +9,11 @@ export const getAddress = () => {
 }
 
 // 获取所有病种
-export const getDisease = () => {
+export const getDisease = (param) => {
   return request({
     url: '/cdms/config/disease/all',
-    method: 'get'
+    method: 'get',
+    params: param
   })
 }
 

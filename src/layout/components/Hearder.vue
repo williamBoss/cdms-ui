@@ -1,30 +1,35 @@
 <template>
   <div class="navbar">
+    <div class="main">
+      <div class="logo-wrap">
+        <img src="../../assets/images/logo.png" />
+      </div>
+      <div class="right-menu">
+        <!-- <template v-if="device!=='mobile'">
 
-    <div class="right-menu">
-      <template v-if="device!=='mobile'">
+          <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        </template> -->
 
-      </template>
-
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/user/profile">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item @click.native="setting = true">
-            <span>布局设置</span>
-          </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span>退出登录</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+          <div class="avatar-wrapper">
+            <img :src="avatar" class="user-avatar">
+            <span class="name-item">{{name}}</span>
+            <i class="el-icon-caret-bottom" />
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <router-link to="/user/profile">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+            </router-link>
+            <el-dropdown-item @click.native="setting = true">
+              <span>布局设置</span>
+            </el-dropdown-item>
+            <el-dropdown-item divided @click.native="logout">
+              <span>退出登录</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +45,8 @@ export default {
   computed: {
     ...mapGetters([
       'avatar',
-      'device'
+      'device',
+      'name'
     ]),
     setting: {
       get() {
@@ -80,7 +86,10 @@ export default {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
+  .main{
+    width: 1140px;
+    margin: 0 auto;
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -102,7 +111,15 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
-
+  .logo-wrap{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    img{
+      height: 60px;
+      width: auto;
+    }
+  }
   .right-menu {
     float: right;
     height: 100%;
@@ -124,9 +141,9 @@ export default {
         cursor: pointer;
         transition: background .3s;
 
-        &:hover {
-          background: rgba(0, 0, 0, .025)
-        }
+        // &:hover {
+        //   background: rgba(0, 0, 0, .025)
+        // }
       }
     }
 
@@ -134,9 +151,22 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        margin-top: 10px;
         position: relative;
-
+        display: inline-block;
+        vertical-align: top;
+        background: #f0f3f9;
+        height: 50px;
+        padding: 5px 30px 5px 5px;
+        border-radius: 4px;
+        .name-item{
+          line-height: 40px;
+          display: inline-block;
+          vertical-align: top;
+          padding: 0 10px;
+          font-size: 14px;
+          color: #1890FF;
+        }
         .user-avatar {
           cursor: pointer;
           width: 40px;
@@ -147,8 +177,8 @@ export default {
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
-          right: -20px;
-          top: 25px;
+          right: 5px;
+          top: 18px;
           font-size: 12px;
         }
       }

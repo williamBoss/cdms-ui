@@ -62,7 +62,7 @@
               </div>
             </el-col>
           </el-row>
-        </el-card> 
+        </el-card>
       </el-col>
     </el-row>
     </div>
@@ -141,10 +141,11 @@ export default {
       let params = this.chartList[chartIndex].tableData[saveIndex]
       this.saveTableData(url, params).then(res => {
         if (res.code === 200 && res.success) {
-          this.getData(this.chartList[chartIndex].getChartUrl).then(res => {
-            let {data:{records}} = res
-            this.chartList[chartIndex].tableData = records
-          })
+          this.getAllTableData()
+          // this.getData(this.chartList[chartIndex].getChartUrl).then(res => {
+          //   let {data:{records}} = res
+          //   this.chartList[chartIndex].tableData = records
+          // })
         }
       })
     },

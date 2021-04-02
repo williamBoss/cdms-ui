@@ -12,6 +12,7 @@
     <el-table
       :data="tableData"
       border
+      :header-cell-style="{background:'#1e3f7c',color:'white'}"
       style="width: 100%">
       <el-table-column
         prop="index"
@@ -85,8 +86,8 @@
         label="操作">
         <template slot-scope="scope">
           <div class="flex">
-            <el-button type="text" @click="saveInfo(scope.row)">保存</el-button>
-            <el-button type="text" @click="editForm(scope.row)">编辑</el-button>
+            <el-button type="text" v-if="scope.row.edit" @click="saveInfo(scope.row)">保存</el-button>
+            <el-button type="text" v-if="!scope.row.edit" @click="editForm(scope.row)">编辑</el-button>
           </div>
         </template>
       </el-table-column>
@@ -102,17 +103,31 @@
       <span>
         <el-form>
           <el-form-item label="选择病种">
-            <el-select v-model="newForm.diseaseId">
+            <el-autocomplete
+              v-model="searchDiseaseName"
+              :fetch-suggestions="queryDisease"
+              :trigger-on-focus="false"
+              placeholder="输入适应症"
+              @select="handleDisease"
+            ></el-autocomplete>
+            <!-- <el-select v-model="newForm.diseaseId">
               <el-option v-for="item in diseaseList" :value="item.diseaseId" :label="item.diseaseName">{{item.diseaseName}}</el-option>
-            </el-select>
+            </el-select> -->
           </el-form-item>
           <el-form-item label="选择药物">
+            <el-autocomplete
+              v-model="searchName"
+              :fetch-suggestions="querySearch"
+              :trigger-on-focus="false"
+              placeholder="输入药品名"
+              @select="handleSelect"
+            ></el-autocomplete>
             <!-- <el-checkbox-group v-model="newForm.indicationsList">
               <el-checkbox v-for="item in medList" :label="item.medName"></el-checkbox>
             </el-checkbox-group> -->
-            <el-select v-model="newForm.medId">
+            <!-- <el-select v-model="newForm.medId">
               <el-option v-for="item in medList" :value="item.medId" :label="item.medName">{{item.medName}}</el-option>
-            </el-select>
+            </el-select> -->
           </el-form-item>
         </el-form>
       </span>
@@ -126,13 +141,13 @@
 
 <script>
   import {
-    getDisease,
-    getAllMedList
-  } from '@/api/param'
+    getMed
+  } from '@/api/outpatient'
   import {
     getProblemsDict,
     saveMedProblems,
-    getMedProblems
+    getMedProblems,
+    getDiseaseList
   } from '@/api/patients'
   export default {
     props: {
@@ -170,7 +185,11 @@
           label: 'medicationProblems',
           value: 'id',
           children: 'childList'
-        }
+        },
+        searchName: '',
+        searchDiseaseName: '',
+        curMed: {},
+        curDisease: {}
       }
     },
     created () {
@@ -178,16 +197,6 @@
     },
     methods: {
       getList () {
-        getDisease().then((res) => {
-          if (res.code === 200) {
-            this.diseaseList = res.data
-          }
-        })
-        getAllMedList().then((res) => {
-          if (res.code === 200) {
-            this.medList = res.data
-          }
-        })
         getProblemsDict().then((res) => {
           if (res.code === 200) {
             res.data.forEach((vv) => {
@@ -208,6 +217,56 @@
             this.getProblem()
           }
         })
+      },
+      querySearch(queryString, cb) {
+        this.searchMed(cb)
+      },
+      queryDisease(queryString, cb) {
+        this.searchDisease(cb)
+      },
+      async searchMed (cb) {
+        let result = []
+        const res = await getMed({
+          medName: this.searchName
+        })
+        let {data} = res
+        if (data) {
+          data.forEach(el => {
+            result.push({
+              value: el.medName,
+              medId: el.medId
+            })
+          });
+        }
+        this.restaurants = result
+        if (cb) {
+          cb(this.restaurants)
+        }
+      },
+      searchDisease (cb) {
+        let param = {
+          diseaseName: this.searchDiseaseName
+        }
+        getDiseaseList(param).then((res) => {
+          if (res.code === 200) {
+            if (res.data && res.data.records) {
+              let newList = []
+              res.data.records.forEach((vv) => {
+                newList.push({
+                  value: vv.diseaseName,
+                  diseaseId: vv.diseaseId
+                })
+              })
+              cb(newList)
+            }
+          }
+        })
+      },
+      handleSelect (item) {
+        this.curMed = item
+      },
+      handleDisease (item) {
+        this.curDisease = item
       },
       getProblem () {
         let param = {
@@ -247,26 +306,22 @@
                   }
                 })
               })
-              console.log(vv)
             })
             this.tableData = res.data.records
           }
         })
       },
       addRecord () {
+        this.newForm = {
+          edit: true
+        }
         this.dialogVisible = true
       },
       saveNewPro () {
-        this.diseaseList.forEach((vv) => {
-          if (vv.diseaseId === this.newForm.diseaseId) {
-            this.newForm.diseaseName = vv.diseaseName
-          }
-        })
-        this.medList.forEach((vv) => {
-          if (vv.medId === this.newForm.medId) {
-            this.newForm.medName = vv.medName
-          }
-        })
+        this.newForm.diseaseName = this.curDisease.value
+        this.newForm.medName = this.curMed.value
+        this.newForm.medId = this.curMed.medId
+        this.newForm.diseaseId = this.curDisease.diseaseId
         this.tableData.push(this.newForm)
         this.dialogVisible = false
       },

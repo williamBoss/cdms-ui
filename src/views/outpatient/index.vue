@@ -1,7 +1,7 @@
 <template>
-  <div class="outpatient">
-    <el-row :gutter="20">
-      <el-col :span="18">
+  <div class="outpatient main">
+   <!-- <el-row :gutter="20">
+      <el-col :span="20">
         <div class="search-wrap">
           <el-autocomplete
             v-model="searchName"
@@ -10,15 +10,14 @@
             placeholder="输入咨询的药品名"
             @select="handleSelect"
           >
-            <!-- <el-button slot="append" @click="searchMed()">搜索</el-button> -->
           </el-autocomplete>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
       </el-col>
-    </el-row>
-    <!-- <div class="flex-wrap">
+    </el-row> -->
+    <div class="flex-wrap">
       <div class="search-wrap">
         <el-autocomplete
           v-model="searchName"
@@ -30,7 +29,7 @@
         </el-autocomplete>
       </div>
       <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
-    </div> -->
+    </div>
     <div class="main-wrap">
       <el-tag
         class="tag-wrap"
@@ -186,6 +185,9 @@ export default {
 .outpatient{
   padding: 28px 24px 0;
   .search-wrap{
+    flex: 1;
+    -webkit-flex: 1;
+    padding-right: 10px;
     .el-autocomplete{
       width: 100%;
     }
@@ -199,9 +201,14 @@ export default {
       border-radius: 25px;
     }
   }
+  .flex-wrap{
+    display: flex;
+    display: -webkit-flex;
+  }
   .select-wrap{
     padding: 15px 0;
     text-align: right;
+
     .el-select{
       margin-left: 8px;
     }

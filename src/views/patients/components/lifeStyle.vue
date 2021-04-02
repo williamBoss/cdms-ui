@@ -196,7 +196,7 @@
               </el-col>
               <el-col class="content-item" :span="18">
                 <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" v-model="form.lifestyleSummary"></el-input>
+                  <el-input type="textarea" :rows="7" v-model="form.lifestyleSummary"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>

@@ -1,12 +1,13 @@
 <template>
   <div class="outpatient">
+    <el-button class="back-btn" size="mini" type="primary" @click="goBack">返回</el-button>
     <div class="flex-wrap">
       <div class="search-wrap">
         <el-autocomplete
           v-model="searchName"
           :fetch-suggestions="querySearch"
           :trigger-on-focus="false"
-          placeholder="输入咨询的药品名"
+          placeholder="输入名称"
           @select="handleSelect"
         >
           <el-button slot="append" @click="searchMed()">搜索</el-button>
@@ -47,7 +48,6 @@ export default {
   },
   mounted () {
     this.getProb()
-    this.getAssessmentTable()
   },
   methods: {
     querySearch(queryString, cb) {
@@ -63,7 +63,7 @@ export default {
         if (res.code === 200) {
           this.tags.forEach((vv) => {
             res.data.forEach((rr) => {
-              if (vv.id === rr.id) {
+              if (parseInt(vv.id) === parseInt(rr.id)) {
                 vv.check = true
               }
             })
@@ -101,8 +101,12 @@ export default {
             vv.check = false
           })
           this.tags = res.data
+          this.getAssessmentTable()
         }
       })
+    },
+    goBack () {
+      this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: this.$route.params.assessmentId}, query: {tab: 'ywzlwt'}})
     }
   }
 }
@@ -111,6 +115,9 @@ export default {
 <style lang="scss" >
 .outpatient{
   padding: 28px 24px 0;
+  .back-btn{
+    margin: 0 0 20px;
+  }
   .search-wrap{
     // width: 750px;
     // display: inline-block;

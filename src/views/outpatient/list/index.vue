@@ -18,6 +18,7 @@
       value-format="yyyy/MM/dd">
     </el-date-picker>
       <el-cascader
+      style="margin-left: 20px;"
         v-model="problems"
         :options="options"
         :props="propsSearch"
@@ -26,6 +27,7 @@
     <div class="main-wrap">
       <el-table
         :data="tableData"
+        :header-cell-style="{background:'#1e3f7c',color:'white'}"
         border
         style="width: 100%">
         <el-table-column
@@ -84,7 +86,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <baseDrawer :drawer="true"></baseDrawer>
+    <!-- <baseDrawer :drawer="true"></baseDrawer> -->
   </div>
 </template>
 
@@ -222,6 +224,7 @@ export default {
 <style lang="scss">
 .outpatient-list{
   padding: 0 0 0 40px;
+  max-width: 1440px;
   .back-btn{
     margin: 20px 0;
   }

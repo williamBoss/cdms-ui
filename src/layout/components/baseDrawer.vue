@@ -18,17 +18,17 @@
         </el-date-picker>
         <div class="cart-title">性别</div>
         <el-radio-group v-model="patientInfoVO.gender">
-          <el-radio-button label="男"></el-radio-button>
-          <el-radio-button label="女"></el-radio-button>
+          <el-radio-button label="1">男</el-radio-button>
+          <el-radio-button label="2">女</el-radio-button>
         </el-radio-group>
         <div class="cart-title">患者ID</div>
         <el-input v-model="patientInfoVO.patientId" placeholder="请输入内容"></el-input>
         <div class="cart-title">身高</div>
-        <el-input v-model="patientInfoVO.height" placeholder="请输入内容"></el-input>
+        <el-input v-model="patientInfoVO.height" @change="getBmi" placeholder="请输入内容"></el-input>
         <div class="cart-title">体重</div>
-        <el-input v-model="patientInfoVO.weight" placeholder="请输入内容"></el-input>
+        <el-input v-model="patientInfoVO.weight" @change="getBmi" placeholder="请输入内容"></el-input>
         <div class="cart-title">bim</div>
-        <el-input v-model="patientInfoVO.bmi" placeholder="请输入内容"></el-input>
+        <el-input disabled v-model="patientInfoVO.bmi" placeholder="请输入内容"></el-input>
         <div class="btn-wrap">
           <el-button type="infor" @click="clearAll">清空</el-button>
           <el-button type="primary" @click="savePatient()">保存</el-button>
@@ -54,7 +54,8 @@ export default {
         phone: '',
         patientName: '',
         birthday: '',
-        patientId: ''
+        patientId: '',
+        bmi: 0
       }
     };
   },
@@ -72,6 +73,7 @@ export default {
         console.log('用户信息：', res);
         let {data} = res;
         if (data) {
+          data.gender = data.gender.toString()
           this.patientInfoVO = data
         }
       } else {
@@ -100,6 +102,11 @@ export default {
         }
       }
       this.$emit('setPatientInfo', this.patientInfoVO)
+    },
+    getBmi () {
+      if (this.patientInfoVO.weight && this.patientInfoVO.height) {
+        this.patientInfoVO.bmi = Number((Number(this.patientInfoVO.weight) / ((Number(this.patientInfoVO.height) / 100) * (Number(this.patientInfoVO.height) / 100))).toFixed(2))
+      }
     },
     clearAll(){
       this.patientInfoVO = {
