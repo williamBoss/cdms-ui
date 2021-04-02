@@ -35,7 +35,7 @@ export default {
     pageSizes: {
       type: Array,
       default() {
-        return [10, 20, 30, 50]
+        return [ 10, 20, 30, 50 ]
       }
     },
     layout: {
@@ -75,13 +75,13 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
-      this.$emit('pagination', { page: this.currentPage, limit: val })
+      this.$emit('pagination', {page: this.currentPage, limit: val})
       if (this.autoScroll) {
         scrollTo(0, 800)
       }
     },
     handleCurrentChange(val) {
-      this.$emit('pagination', { page: val, limit: this.pageSize })
+      this.$emit('pagination', {page: val, limit: this.pageSize})
       if (this.autoScroll) {
         scrollTo(0, 800)
       }
@@ -92,9 +92,9 @@ export default {
 
 <style scoped>
 .pagination-container {
-  background: #fff;
   padding: 32px 16px;
 }
+
 .pagination-container.hidden {
   display: none;
 }
