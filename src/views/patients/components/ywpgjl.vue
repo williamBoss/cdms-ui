@@ -284,18 +284,18 @@
       <el-row class="form-wrap" :gutter="20">
         <el-col :span="12">
           <div class="title-item">问题及干预</div>
-          <el-input type="textarea" v-model="obj1.problemsInterventions" placeholder="请描述患者的问题">
+          <el-input :disabled="!canEdit" type="textarea" v-model="obj1.problemsInterventions" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('problemsInterventions')">保存</el-button>
+          <el-button v-if="canEdit" class="save-btn" size="mini" type="info" @click="saveProblem('problemsInterventions')">保存</el-button>
         </el-col>
         <el-col :span="12">
           <div class="title-item">转归</div>
-          <el-input type="textarea" v-model="obj2.sequelae" placeholder="请描述患者的问题">
+          <el-input :disabled="!canEdit" type="textarea" v-model="obj2.sequelae" placeholder="请描述患者的问题">
           </el-input>
-          <el-button class="save-btn" size="mini" type="info" @click="saveProblem('sequelae')">保存</el-button>
+          <el-button v-if="canEdit" class="save-btn" size="mini" type="info" @click="saveProblem('sequelae')">保存</el-button>
         </el-col>
       </el-row>
-      <el-form-item>
+      <el-form-item v-if="canEdit">
         <el-button type="primary" @click="goNext">完成</el-button>
         <el-button type="primary" style="margin-right: 10px;" @click="saveInfo">上一步</el-button>
       </el-form-item>
@@ -311,9 +311,14 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {
           patientInfoVO: {},
           pastHistoryVO: [],
@@ -334,11 +339,14 @@
     },
     created () {
       this.getReportInfo()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       getReportInfo () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getReportInfo(param).then((res) => {
@@ -547,7 +555,7 @@
       },
       saveProblem (type) {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         if (type === 'problemsInterventions') {

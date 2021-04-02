@@ -21,7 +21,7 @@
                 年龄 : {{userInfo.age}}
               </el-col>
               <el-col :span="5">
-                手机 : {{userInfo.patientName}}
+                手机 : {{userInfo.phone}}
               </el-col>
               <el-col class="time-item" :span="9">
               </el-col>
@@ -34,7 +34,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-button class="add-btn" type="primary" @click="addMed">添加用药记录</el-button>
+    <el-button v-if="canEdit" class="add-btn" type="primary" @click="addMed">添加用药记录</el-button>
     <el-table
       :data="tableData"
       min-height="250"
@@ -136,6 +136,7 @@
       <el-table-column
         prop="address"
         width="100px"
+        v-if="canEdit"
         label="操作">
         <template slot-scope="scope">
           <el-button  v-show="!scope.row.id" style="float: inherit;" type="text" @click="saveRecord(scope.row)">保存</el-button>
@@ -143,7 +144,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-form>
+    <el-form v-if="canEdit">
       <el-form-item style="margin-top: 20px;float: right;">
         <el-button type="primary" style="margin-right: 10px;" @click="saveInfo">下一步</el-button>
       </el-form-item>
@@ -168,9 +169,14 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {},
         userInfo: {},
         tableData: [],
@@ -189,11 +195,14 @@
     created () {
       this.getPatientInfo()
       this.getRecord()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       getRecord () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id,
           pageNum: this.page.pageNum,
           pageSize: this.page.pageSize
@@ -269,7 +278,7 @@
         this.curDisease = item
       },
       saveRecord (item) {
-        item.assessmentId = this.$route.params.assessmentId
+        item.assessmentId =this.$route.params.assessmentId || this.assessmentId
         item.patientId = this.$route.params.id
         item.indication = this.curDisease.diseaseId
         item.medId = this.curMed.medId

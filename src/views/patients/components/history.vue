@@ -8,7 +8,7 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   家族病史
-                  <div class="add-btn" @click="editItem('jzEdit')">
+                  <div class="add-btn" v-show="canEdit" @click="editItem('jzEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   既往病史
-                  <div class="add-btn" @click="editItem('jwbEdit')">
+                  <div class="add-btn" v-show="canEdit" @click="editItem('jwbEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                    <div v-show="jwbEdit" class="add-angle"></div>
@@ -85,7 +85,7 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   既往手术史
-                  <div class="add-btn" @click="editItem('jwssEdit')">
+                  <div class="add-btn" v-show="canEdit" @click="editItem('jwssEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -122,7 +122,7 @@
                  <!-- <el-switch
                     v-model="diabetesHistory.length > 0">
                   </el-switch> -->
-                  <div class="add-btn" style="margin-top: 10px;" @click="editItem('tnbEdit')">
+                  <div class="add-btn" v-show="canEdit" style="margin-top: 10px;" @click="editItem('tnbEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -152,7 +152,7 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   肝损害
-                  <div class="switch-wrap">
+                  <div class="switch-wrap" v-show="canEdit">
                     <el-switch
                       active-text="有"
                       inactive-text="无"
@@ -170,8 +170,8 @@
               </el-col>
               <el-col class="content-item" v-show="gssEdit" :span="18">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" :rows="5" v-model="form.liverInfo"></el-input>
-                 <el-button class="card-btn" type="primary" @click="saveHistory('saveLiverInfo')">保存</el-button>
+                 <el-input type="textarea" :disabled="!canEdit" :rows="5" v-model="form.liverInfo"></el-input>
+                 <el-button v-show="canEdit" class="card-btn" type="primary" @click="saveHistory('saveLiverInfo')">保存</el-button>
                </el-form-item>
               </el-col>
             </el-row>
@@ -183,7 +183,7 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   肾损害
-                  <div class="switch-wrap">
+                  <div class="switch-wrap" v-show="canEdit">
                     <el-switch
                       active-text="有"
                       inactive-text="无"
@@ -201,8 +201,8 @@
               </el-col>
               <el-col class="content-item" v-show="sssEdit" :span="18">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" :rows="5" v-model="form.kidneyInfo"></el-input>
-                 <el-button class="card-btn" type="primary" @click="saveHistory('saveKidneyInfo')">保存</el-button>
+                 <el-input type="textarea" :disabled="!canEdit" :rows="5" v-model="form.kidneyInfo"></el-input>
+                 <el-button v-show="canEdit"  class="card-btn" type="primary" @click="saveHistory('saveKidneyInfo')">保存</el-button>
                </el-form-item>
               </el-col>
             </el-row>
@@ -216,7 +216,7 @@
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   过敏史
-                  <div class="add-btn" @click="editItem('gmEdit')">
+                  <div class="add-btn" v-show="canEdit" @click="editItem('gmEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -255,7 +255,7 @@
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   药物不良反应
-                  <div class="add-btn" @click="editItem('ywfyEdit')">
+                  <div class="add-btn" v-show="canEdit" @click="editItem('ywfyEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -338,7 +338,7 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-form-item>
+      <el-form-item v-if="canEdit">
         <el-button type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
@@ -383,9 +383,14 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {
           value: [],
           familyHistoryIds: [],
@@ -410,6 +415,7 @@
         familyHistory: [],
         oldHistory: [],
         surgicalHistory: [],
+        tableData: [],
         options: [],
         oldInput: [],
         curDisease: {},
@@ -427,6 +433,9 @@
     created () {
       this.getDisease()
       this.getHistory()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       getDisease () {
@@ -450,7 +459,7 @@
       },
       getHistory () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getFamilyHistory(param).then((res) => {
@@ -594,7 +603,7 @@
         }
       },
       handleClick (item) {
-        item.assessmentId = this.$route.params.assessmentId
+        item.assessmentId =this.$route.params.assessmentId || this.assessmentId
         item.patientId = this.$route.params.id
         item.adverseReactionsSymptoms = item.adverseReactionsSymptomsList.join(',')
         saveMedSideList(item).then((res) => {
@@ -607,7 +616,7 @@
       },
       saveHistory (type) {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         switch (type) {

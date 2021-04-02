@@ -1,12 +1,15 @@
 <template>
   <div class="life-style yyjl-wrap">
-    <el-row>
-      <el-col :span="12">
+    <el-row v-if="canEdit">
+      <el-col :span="12" >
         <el-button class="add-btn" type="primary" @click="addRecord">添加记录</el-button>
       </el-col>
       <el-col :span="12">
         <el-button type="primary" class="right-btn" @click="goPg">评估量表</el-button>
       </el-col>
+    </el-row>
+    <el-row v-if="!canEdit" >
+      <el-button type="primary" class="right-btn" @click="goPg">评估量表</el-button>
     </el-row>
     <el-form>
     <el-table
@@ -92,7 +95,7 @@
         </template>
       </el-table-column>
     </el-table>
-      <el-form-item style="margin-top: 20px;float: right;">
+      <el-form-item v-if="canEdit" style="margin-top: 20px;float: right;">
         <el-button type="primary" style="margin-right: 10px;" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
@@ -155,9 +158,14 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {},
         dialogVisible: false,
         tableData: [],
@@ -194,6 +202,9 @@
     },
     created () {
       this.getList()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       getList () {
@@ -270,7 +281,7 @@
       },
       getProblem () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id,
           "pageNum": 1,
           "pageSize": 100
@@ -326,7 +337,7 @@
         this.dialogVisible = false
       },
       goPg () {
-        this.$router.push({name: 'pgSet', params: {id:this.$route.params.id, assessmentId: this.$route.params.assessmentId}})
+        this.$router.push({name: 'pgSet', params: {id:this.$route.params.id, assessmentId:this.$route.params.assessmentId || this.assessmentId}})
       },
       editForm (item) {
         item.edit = true
@@ -336,7 +347,7 @@
         this.$emit('update:activeName', 'pglb');
       },
       saveInfo (item) {
-        this.newForm.assessmentId = this.$route.params.assessmentId
+        this.newForm.assessmentId =this.$route.params.assessmentId || this.assessmentId
         this.newForm.patientId = this.$route.params.id
         saveMedProblems(this.newForm).then((res) => {
           if (res.code === 200) {
@@ -363,6 +374,9 @@
   .yyjl-wrap{
     .el-table__header-wrapper{
       display: none;
+    }
+    .right-btn{
+      margin-bottom: 20px;
     }
     .add-btn{
       float: left;

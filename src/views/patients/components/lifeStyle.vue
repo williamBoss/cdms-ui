@@ -18,10 +18,10 @@
                   <el-col class="set-item" :span="12">
                     <div class="extra">1年内体重(kg)</div>
                     <el-form-item label="减少" label-width="40px">
-                      <el-input size="mini" v-model="form.weightLossValue"></el-input>
+                      <el-input :disabled="!canEdit" size="mini" v-model="form.weightLossValue"></el-input>
                     </el-form-item>
                     <el-form-item label="增加" label-width="40px">
-                      <el-input size="mini" v-model="form.weightGainValue"></el-input>
+                      <el-input :disabled="!canEdit" size="mini" v-model="form.weightGainValue"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -38,25 +38,25 @@
               <el-col class="content-item" :span="18">
                 <el-row>
                   <el-form-item label="每日的主食量约(kg)" label-width="136px">
-                    <el-input size="mini" v-model="form.dailyBasicFoodAmount"></el-input>
+                    <el-input :disabled="!canEdit" size="mini" v-model="form.dailyBasicFoodAmount"></el-input>
                   </el-form-item>
                   <el-col class="food-item" :span="12">
                     <el-form-item label="摄盐量:" label-width="60px">
-                      <el-radio-group v-model="form.dailySaltAmount">
+                      <el-radio-group :disabled="!canEdit" v-model="form.dailySaltAmount">
                         <el-radio label="1">少</el-radio>
                         <el-radio label="2">中</el-radio>
                         <el-radio label="3">多</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="吸烟:" label-width="60px">
-                      <el-radio-group v-model="form.isSmoke">
+                      <el-radio-group :disabled="!canEdit" v-model="form.isSmoke">
                         <el-radio label="1">是</el-radio>
                         <el-radio label="2">否</el-radio>
                         <el-radio label="3">已戒烟</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="饮酒:" label-width="60px">
-                      <el-radio-group v-model="form.isDrinking">
+                      <el-radio-group :disabled="!canEdit" v-model="form.isDrinking">
                         <el-radio label="1">是</el-radio>
                         <el-radio label="2">否</el-radio>
                       </el-radio-group>
@@ -64,14 +64,14 @@
                   </el-col>
                   <el-col class="food-item" :span="12">
                     <el-form-item label="油脂:" label-width="60px">
-                      <el-radio-group v-model="form.dailyFatAmount">
+                      <el-radio-group :disabled="!canEdit" v-model="form.dailyFatAmount">
                         <el-radio label="1">少</el-radio>
                         <el-radio label="2">中</el-radio>
                         <el-radio label="3">多</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="蔬/果:" label-width="60px">
-                      <el-radio-group v-model="form.dailyVegetableFruitAmount">
+                      <el-radio-group :disabled="!canEdit" v-model="form.dailyVegetableFruitAmount">
                         <el-radio label="1">少</el-radio>
                         <el-radio label="2">中</el-radio>
                         <el-radio label="3">多</el-radio>
@@ -93,16 +93,16 @@
               </el-col>
               <el-col class="content-item" :span="18">
                 <el-form-item label="通常运动项目" label-width="96px">
-                  <el-input size="mini" v-model="form.usualSports"></el-input>
+                  <el-input :disabled="!canEdit" size="mini" v-model="form.usualSports"></el-input>
                 </el-form-item>
                 <el-form-item label="每次的运动时间约(分)" label-width="150px">
-                  <el-input size="mini" v-model="form.eachExerciseTime"></el-input>
+                  <el-input :disabled="!canEdit" size="mini" v-model="form.eachExerciseTime"></el-input>
                 </el-form-item>
                 <el-form-item label="每周的运动频率是(次/周)" label-width="167px">
-                  <el-input size="mini" v-model="form.weeklyExerciseFrequency"></el-input>
+                  <el-input :disabled="!canEdit" size="mini" v-model="form.weeklyExerciseFrequency"></el-input>
                 </el-form-item>
                 <el-form-item label="每周的运动时间是(小时)" label-width="163px">
-                  <el-input size="mini" v-model="form.weeklyExerciseTime"></el-input>
+                  <el-input :disabled="!canEdit" size="mini" v-model="form.weeklyExerciseTime"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -116,7 +116,7 @@
               </el-col>
               <el-col class="content-item" :span="18">
                 <el-form-item label="有睡眠障碍吗？" label-width="110px">
-                  <el-radio-group v-model="form.isSleepDisorder">
+                  <el-radio-group :disabled="!canEdit" v-model="form.isSleepDisorder">
                     <el-radio label="1">没有</el-radio>
                     <el-radio label="2">入睡困难</el-radio>
                     <el-radio label="3">早醒</el-radio>
@@ -124,16 +124,16 @@
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="睡眠障碍发生的频率？(次/周)" label-width="194px">
-                  <el-input size="mini" v-model="form.sleepDisorderAmount"></el-input>
+                  <el-input :disabled="!canEdit" size="mini" v-model="form.sleepDisorderAmount"></el-input>
                 </el-form-item>
                 <el-form-item label="有过跌倒么？" label-width="96px">
-                  <el-radio-group v-model="form.isFall">
+                  <el-radio-group :disabled="!canEdit" v-model="form.isFall">
                     <el-radio label="0">否</el-radio>
                     <el-radio label="1">是</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="跌倒原因是" label-width="82px">
-                  <el-input v-model="form.fallReason"></el-input>
+                  <el-input :disabled="!canEdit" v-model="form.fallReason"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -151,37 +151,37 @@
                 <el-row type="flex">
                   <label class="name-item">就诊前</label>
                   <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input size="mini" v-model="form.beforeTotal"></el-input>
+                    <el-input :disabled="!canEdit" size="mini" v-model="form.beforeTotal"></el-input>
                   </el-form-item>
                   <el-form-item label="药费" label-width="60px">
-                    <el-input size="mini" v-model="form.beforeMedicalExpenses"></el-input>
+                    <el-input :disabled="!canEdit" size="mini" v-model="form.beforeMedicalExpenses"></el-input>
                   </el-form-item>
                 </el-row>
                 <el-row type="flex">
                   <label class="name-item">就诊3个月后</label>
                   <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input size="mini"  v-model="form.afterThreeTotal"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterThreeTotal"></el-input>
                   </el-form-item>
                   <el-form-item label="药费" label-width="60px">
-                    <el-input size="mini"  v-model="form.afterThreeMedicalExpenses"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterThreeMedicalExpenses"></el-input>
                   </el-form-item>
                 </el-row>
                 <el-row type="flex">
                   <label class="name-item">就诊6个月后</label>
                   <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input size="mini"  v-model="form.afterSixTotal"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterSixTotal"></el-input>
                   </el-form-item>
                   <el-form-item label="药费" label-width="60px">
-                    <el-input size="mini"  v-model="form.afterSixMedicalExpenses"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterSixMedicalExpenses"></el-input>
                   </el-form-item>
                 </el-row>
                 <el-row type="flex">
                   <label class="name-item">就诊12个月后</label>
                   <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input size="mini"  v-model="form.afterTwelveTotal"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterTwelveTotal"></el-input>
                   </el-form-item>
                   <el-form-item label="药费" label-width="60px">
-                    <el-input size="mini"  v-model="form.afterTwelveMedicalExpenses"></el-input>
+                    <el-input :disabled="!canEdit" size="mini"  v-model="form.afterTwelveMedicalExpenses"></el-input>
                   </el-form-item>
                 </el-row>
               </el-col>
@@ -196,14 +196,14 @@
               </el-col>
               <el-col class="content-item" :span="18">
                 <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="7" v-model="form.lifestyleSummary"></el-input>
+                  <el-input :disabled="!canEdit" type="textarea" :rows="7" v-model="form.lifestyleSummary"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-card>
         </el-col>
       </el-row>
-      <el-form-item>
+      <el-form-item v-if="canEdit">
         <el-button type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
@@ -224,21 +224,34 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {},
         checkList: [],
         userInfo: {}
       }
     },
+    watch: {
+      '$route': function () {
+        console.log(333)
+      }
+    },
     created () {
       this.getPatientInfo()
       this.getLifestyle()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       goNext () {
-        this.form.assessmentId = this.$route.params.assessmentId
+        this.form.assessmentId =this.$route.params.assessmentId || this.assessmentId
         this.form.patientId = this.$route.params.id
         saveLifestyle(this.form).then((res) => {
           if (res.code === 200) {
@@ -251,7 +264,7 @@
       },
       getLifestyle () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getLifestyle(param).then((res) => {

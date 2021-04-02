@@ -8,7 +8,7 @@
             <el-col class="left-item" :span="chartIndex < 2 || chartIndex == 6 || chartIndex == 7 ? 4: 2">
               <div class="item-wrap">
                 {{chart.title}}
-                <div class="add-btn">
+                <div class="add-btn" v-if="canEdit">
                   <i class="el-icon-plus" @click="pushData(chartIndex)"></i>
                 </div>
               </div>
@@ -66,13 +66,11 @@
       </el-col>
     </el-row>
     </div>
-    <baseDrawer :drawer="true"></baseDrawer>
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
-import baseDrawer from './baseDrawer.vue'
 // import VeLine from 'v-charts/lib/line.common'
 import lineCharts from '@/views/components/echarts/lineCharts'
 import chartList from '../config/jyjcCharts'
@@ -82,9 +80,14 @@ export default {
       type: String,
       default: '',
     },
+    assessmentId: {
+      type: String,
+      default: '',
+    }
   },
   data(){
     return {
+      canEdit: true,
       chartList: chartList,
       tableData:[],
       lineGrid: {
@@ -93,8 +96,11 @@ export default {
       },
     }
   },
-  components: {baseDrawer, lineCharts},
+  components: {lineCharts},
   mounted(){
+    if (this.assessmentId) {
+      this.canEdit = false
+    }
     this.getAllTableData()
   },
   methods: {

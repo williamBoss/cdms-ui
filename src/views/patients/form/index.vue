@@ -3,15 +3,15 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="item in curTabList" :label="item.name" :name="item.key" :key="item.key"></el-tab-pane>
     </el-tabs>
-    <life-style :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
-    <history :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
-    <cur-sym :activeName.sync="activeName" v-if="activeName === 'curSym'"></cur-sym>
-    <ywpgjl :activeName.sync="activeName" v-if="activeName === 'ywpgjl'"></ywpgjl>
-    <yyjl :activeName.sync="activeName" v-if="activeName === 'yyjl'"></yyjl>
-    <ywzlwt :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
-    <pglb v-if="activeName === 'pglb'"></pglb>
-    <jyjc :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
-    <baseDrawer></baseDrawer>
+    <life-style :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'lifeStyle'"></life-style>
+    <history :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'bs'"></history>
+    <cur-sym :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'curSym'"></cur-sym>
+    <ywpgjl :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'ywpgjl'"></ywpgjl>
+    <yyjl :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'yyjl'"></yyjl>
+    <ywzlwt :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
+    <pglb :assessmentId="assessmentId" v-if="activeName === 'pglb'"></pglb>
+    <jyjc :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
+    <baseDrawer v-if="canEdit"></baseDrawer>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
   components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer},
   data () {
     return {
+      canEdit: true,
       checkTabList: [{
         name: '家族病史和既往病史',
         key: 'bs'
@@ -88,6 +89,7 @@ export default {
       reportInfo: {}
     }
   },
+  props: ['assessmentId'],
   created () {
     if (this.$route.query.type) {
       this.curTabList = this.checkTabList
@@ -98,12 +100,15 @@ export default {
     if (this.$route.query.tab) {
       this.activeName = this.$route.query.tab
     }
+    if (this.$route.query.type === 'show') {
+      this.canEdit = false
+    }
     // this.getReportInfo()
   },
   methods: {
     getReportInfo () {
       let param = {
-        "assessmentId": this.$route.params.assessmentId,
+        "assessmentId": this.$route.params.assessmentId || this.assessmentId,
         "patientId": this.$route.params.id
       }
       getReportInfo(param).then((res) => {

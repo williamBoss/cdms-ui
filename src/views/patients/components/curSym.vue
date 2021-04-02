@@ -10,8 +10,8 @@
               </el-col>
               <el-col class="content-item" :span="21">
                <el-form-item label="描述" label-width="40px">
-                 <el-input type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
-                 <el-button class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
+                 <el-input :disabled="!canEdit" type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
+                 <el-button v-show="canEdit" class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
                </el-form-item>
               </el-col>
             </el-row>
@@ -25,7 +25,7 @@
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   诊断
-                  <div class="add-btn" @click="editItem('zdEdit')">
+                  <div v-show="canEdit" class="add-btn" @click="editItem('zdEdit')">
                     <i class="el-icon-plus"></i>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                 <el-checkbox-group v-model="form.diagnosis">
                   <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey" :value="item.diseaseId">{{item.diseaseName}}<el-input v-show="item.checked" placeholder="请输入年限" class="check-input" size="mini" type="primary"></el-input></el-checkbox>
                 </el-checkbox-group>
-                <el-button type="primary" size="mini" @click="saveDiagnosis">保存</el-button>
+                <el-button type="primary" v-show="canEdit" size="mini" @click="saveDiagnosis">保存</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -78,7 +78,7 @@
                       size="mini"
                       v-model="form.input2">
                     </el-input> -->
-                    <el-checkbox-group class="vertical-checkbox" v-if="checkList[page.curPage - 1]" v-model="curSym.list">
+                    <el-checkbox-group :disabled="!canEdit" class="vertical-checkbox" v-if="checkList[page.curPage - 1]" v-model="curSym.list">
                       <el-checkbox v-for="item in checkList[page.curPage - 1].list" :label="item.value" :key="item.value">{{item.name}}
                         <el-input v-show="item.key" placeholder="" class="check-input" size="mini" type="primary" v-model="curSym[item.key]"></el-input>
                       </el-checkbox>
@@ -90,8 +90,8 @@
                   </el-col>
                 </el-row>
                 <el-divider></el-divider>
-                <el-row style="margin-top: 10px;">
-                  <el-button class="card-btn" type="primary" size="mini" @click="onSubmit">保存</el-button>
+                <el-row style="margin-top: 10px;height: 30px;">
+                  <el-button v-show="canEdit" class="card-btn" type="primary" size="mini" @click="onSubmit">保存</el-button>
                   <el-pagination
                     small
                     layout="prev, pager, next"
@@ -106,7 +106,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="goNext">下一步</el-button>
+        <el-button type="primary" v-show="canEdit" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -132,9 +132,14 @@
         type: String,
         default: '',
       },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
+        canEdit: true,
         form: {
           value: [],
           diagnosis: [],
@@ -186,6 +191,9 @@
       this.getDiagnosis() // 获取诊断
       this.getJson() // 获取json数据
       this.getSymptom() // 查询当前症状描述
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     methods: {
       getDisease () {
@@ -198,7 +206,7 @@
       },
       getAssessment () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getConsult(param).then((res) => {
@@ -209,7 +217,7 @@
       },
       getDiagnosis () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getDiagnosis(param).then((res) => {
@@ -236,7 +244,7 @@
       },
       getSymptom () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getSymptom(param).then((res) => {
@@ -262,7 +270,7 @@
       },
       saveConsult () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         param.mainConsult = this.consult.mainConsult
@@ -276,7 +284,7 @@
       },
       onSubmit () {
         this.curSym[this.checkList[this.page.curPage - 1].name] = this.curSym.list
-        this.curSym.assessmentId = this.$route.params.assessmentId
+        this.curSym.assessmentId = this.$route.params.assessmentId || this.assessmentId
         this.curSym.patientId = this.$route.params.id
         saveSymptom(this.curSym).then((res) => {
           if (res.code === 200) {
@@ -288,7 +296,7 @@
       },
       saveDiagnosis () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId": this.$route.params.assessmentId || this.assessmentId,
           "diagnosisId": this.diagnosis.id || -1,
           "diseaseIds": this.form.diagnosis,
           "patientId": this.$route.params.id

@@ -34,7 +34,16 @@
       <!-- <ve-line :data="tabData"></ve-line> -->
       <ve-line :grid="lineGrid" :data="tabData"></ve-line>
     </el-tabs>
-    <baseDrawer :drawer="true"></baseDrawer>
+    <baseDrawer :drawer="true" v-on:GetInfo="getInfo"></baseDrawer>
+    <el-drawer
+      title=""
+      :visible.sync="drawerShow"
+      direction="ltr"
+      :before-close="handleClose"
+      class="drawer-tab"
+      size="70%">
+      <tab-page :assessmentId="assessmentId"></tab-page>
+    </el-drawer>
   </div>
 </template>
 
@@ -44,6 +53,7 @@ import baseDrawer from '../components/baseDrawer.vue'
 import VeLine from 'v-charts/lib/line.common'
 import VePie from 'v-charts/lib/pie.common'
 import VeHistogram from 'v-charts/lib/histogram.common'
+import tabPage from '../form/index'
 import {
    getUseMedicine,
    getUseMedicalTreatment,
@@ -60,10 +70,12 @@ import {
  } from '@/api/patients'
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: { VeLine, VePie, VeHistogram, baseDrawer},
+  components: { VeLine, VePie, VeHistogram, baseDrawer, tabPage},
   data () {
     return {
       showLegend: false,
+      drawerShow: false,
+      assessmentId: '',
       lineGrid: {
         x: 20,
         y: 20,
@@ -213,6 +225,10 @@ export default {
     this.getTabList()
   },
   methods: {
+    getInfo (val) {
+      this.assessmentId = val.assessmentId.toString()
+      this.drawerShow = true
+    },
     getList () {
       let param = {
         "patientId": this.$route.params.id
@@ -367,10 +383,22 @@ export default {
       this.activeTab = val.name
       this.getTabData(val.name)
     },
+    handleClose () {
+      this.drawerShow = false
+    },
   }
 }
 </script>
-
+<style lang="scss">
+  .drawer-tab{
+    .el-drawer__body{
+      overflow: auto;
+    }
+    .patients{
+      padding-top: 0!important;
+    }
+  }
+</style>
 <style scoped lang="scss">
 .patients{
   padding: 28px 20px 0;

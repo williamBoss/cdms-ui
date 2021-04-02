@@ -216,7 +216,7 @@
       {{curList.nickName}}得分：{{scord}}
       <span v-for="rr in curList.rule" v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{rr.name}}</span>
     </div>
-    <div class="btn-wrap" v-if="curTag.id">
+    <div class="btn-wrap" v-if="curTag.id && canEdit">
       <el-button type="primary" @click="saveInfo">下一步</el-button>
     </div>
   </div>
@@ -256,8 +256,19 @@
   } from '@/api/patients'
   import axios from 'axios'
   export default {
+    props: {
+      activeName: {
+        type: String,
+        default: '',
+      },
+      assessmentId: {
+        type: String,
+        default: '',
+      }
+    },
     data() {
       return {
+        canEdit: true,
         form: {
           vasId: 0
         },
@@ -275,6 +286,9 @@
     },
     created () {
       this.getQuestionList()
+      if (this.assessmentId) {
+        this.canEdit = false
+      }
     },
     mounted() {
       // this.$nextTick(function(){
@@ -324,7 +338,7 @@
       getQuestionList () {
         var _this = this
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         getAssessmentTable (param).then((res) => {
@@ -345,7 +359,7 @@
       },
       getList () {
         let param = {
-          "assessmentId": this.$route.params.assessmentId,
+          "assessmentId":this.$route.params.assessmentId || this.assessmentId,
           "patientId": this.$route.params.id
         }
         if (this.curList.name === 'yyycx') {
@@ -491,7 +505,7 @@
         this.getList()
       },
       saveInfo () {
-        this.form.assessmentId = this.$route.params.assessmentId
+        this.form.assessmentId = this.$route.params.assessmentId || this.assessmentId
         this.form.patientId = this.$route.params.id
         if (this.curList.name === 'yyycx') {
           saveMorisky(this.form).then((res) => {
@@ -637,6 +651,7 @@
 </script>
 <style lang="scss">
 .pglb-wrap{
+  margin-bottom: 20px;
   .el-table thead{
     display: none;
   }
