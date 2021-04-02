@@ -179,7 +179,7 @@ export default {
     async getOutList () {
       //
       let params = {
-        medNames: this.searchName,
+        searchValue: this.searchName,
         beginTime: this.searchDate[0] || '',
         endTime: this.searchDate[1] || '',
         questionTypes: this.problems
