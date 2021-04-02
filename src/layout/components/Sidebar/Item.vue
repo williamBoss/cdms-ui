@@ -13,15 +13,20 @@ export default {
     }
   },
   render(h, context) {
-    const { icon, title } = context.props
+    const {icon, title} = context.props
     const vnodes = []
 
     if (icon) {
-      vnodes.push(<svg-icon icon-class={icon}/>)
+      const reg = /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*?)\s*$/i;
+      if (reg.test(icon)) {
+        vnodes.push(<div class="img_box"><img src={ icon } alt="" /></div>)
+      } else {
+        vnodes.push(<div class="img_box"><svg-icon icon-class={ icon } /></div>)
+      }
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      vnodes.push(<span slot='title'>{ (title) }</span>)
     }
     return vnodes
   }
