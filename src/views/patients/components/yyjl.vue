@@ -73,7 +73,7 @@
           <el-autocomplete
             v-model="searchName"
             :fetch-suggestions="querySearch"
-            :trigger-on-focus="false"
+            :trigger-on-focus="true"
             placeholder="输入药品名"
             size="mini"
             v-show="!scope.row.id"
@@ -93,7 +93,7 @@
           <el-autocomplete
             v-model="searchDiseaseName"
             :fetch-suggestions="queryDisease"
-            :trigger-on-focus="false"
+            :trigger-on-focus="true"
             placeholder="输入适应症"
             size="mini"
             v-show="!scope.row.id"
@@ -372,12 +372,11 @@
       }
     }
     .other-wrap{
-      height: 36px;
-      line-height: 36px;
+      height: 100%;
+      line-height: 50px;
       padding: 8px 0;
       text-align: center;
       .el-col{
-        line-height: 24px;
         border-right: 1px solid #eee;
       }
       .time-item{

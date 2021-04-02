@@ -241,12 +241,11 @@
       }
     }
     .other-wrap{
-      height: 36px;
-      line-height: 36px;
+      height: 100%;
+      line-height: 50px;
       padding: 8px 0;
       text-align: center;
       .el-col{
-        line-height: 24px;
         border-right: 1px solid #eee;
       }
       .time-item{

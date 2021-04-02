@@ -17,7 +17,7 @@
       :visible.sync="drawerShow"
       direction="ltr"
       class="drawer-tab"
-      size="70%">
+      size="75%">
       <tab-page :assessmentId="assessmentId"></tab-page>
     </el-drawer>
   </div>

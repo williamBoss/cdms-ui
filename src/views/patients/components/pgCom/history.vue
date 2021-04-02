@@ -373,13 +373,23 @@ export default {
 </style>
 <style scoped lang="scss">
 .life-style {
+  .cell {
+    .el-button {
+      float: left;
+    }
+  }
+
+  .el-card {
+    height: 190px;
+  }
+
   .left-item {
     position: relative;
     text-align: center;
     background: #1e3f7c;
     color: #fff;
     font-size: 14px;
-    height: 180px;
+    height: 190px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -398,7 +408,7 @@ export default {
 
   .item-wrap {
     line-height: 40px;
-    margin-top: 40px;
+    margin-top: 50px;
   }
 
   .add-angle {
@@ -441,7 +451,7 @@ export default {
     }
 
     .history-desc {
-      height: 80px;
+      height: 90px;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -449,10 +459,11 @@ export default {
       -webkit-box-orient: vertical;
       line-height: 25px;
       font-weight: normal;
+      padding: 8px;
     }
 
     .history-time {
-      line-height: 22px;
+      line-height: 50px;
       font-weight: normal;
       color: #999;
       font-size: 12px;

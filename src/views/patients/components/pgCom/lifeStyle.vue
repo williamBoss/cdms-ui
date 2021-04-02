@@ -52,7 +52,7 @@
                       <el-radio-group disabled v-model="form.isSmoke">
                         <el-radio label="1">是</el-radio>
                         <el-radio label="2">否</el-radio>
-                        <el-radio label="3">已戒烟</el-radio>
+                        <el-radio label="3">已戒</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="饮酒:" label-width="60px">

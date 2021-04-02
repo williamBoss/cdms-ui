@@ -1,34 +1,30 @@
 <template>
   <div class="patients">
-    <el-row :gutter="20">
-      <el-col :span="6">
+    <el-row :gutter="15">
+      <el-col :span="5">
         <el-input
           placeholder="患者姓名"
           prefix-icon="el-icon-user-solid"
           v-model="param.patientName">
         </el-input>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-input
           placeholder="手机号码"
           prefix-icon="el-icon-mobile"
           v-model="param.phone">
         </el-input>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-input
           placeholder="身份证号码"
           prefix-icon="el-icon-postcard"
           v-model="param.idCard">
         </el-input>
       </el-col>
-      <el-col :span="6">
-        <el-button type="info" @click="goSearch">查询</el-button>
-        <el-button type="info" plain @click="resetParam">重置</el-button>
-      </el-col>
     </el-row>
-    <el-row :gutter="20">
-      <el-col :span="12">
+    <el-row :gutter="15">
+      <el-col :span="10">
         <el-date-picker
           v-model="param.pgDate"
           format="yyyy/MM/dd"
@@ -39,17 +35,19 @@
           end-placeholder="评估时间">
         </el-date-picker>
       </el-col>
-      <el-col :span="6">
-        <el-select multiple v-model="diseaseIdsList" placeholder="选择病种">
-            <el-option
-              v-for="item in diseaseList"
-              :key="item.diseaseKey"
-              :label="item.diseaseName"
-              :value="item.diseaseId">
-            </el-option>
-          </el-select>
+      <el-col :span="5">
+        <el-select multiple v-model="diseaseIdsList" placeholder="选择病种" style="width: 100%">
+          <el-option
+            v-for="item in diseaseList"
+            :key="item.diseaseKey"
+            :label="item.diseaseName"
+            :value="item.diseaseId">
+          </el-option>
+        </el-select>
       </el-col>
       <el-col :span="6">
+        <el-button type="info" @click="goSearch">查询</el-button>
+        <el-button type="info" plain @click="resetParam">重置</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -96,7 +94,7 @@
           align="center"
           label="诊断结果">
           <template slot-scope="scope">
-            <el-tag v-for="item in scope.row.diseaseList">{{item}}</el-tag>
+            <el-tag v-for="item in scope.row.diseaseList">{{ item }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -127,11 +125,12 @@
 </template>
 
 <script>
-  import { getPatients, delPatient } from '@/api/patients'
-  import { getDisease } from '@/api/param'
+import { getPatients, delPatient } from '@/api/patients'
+import { getDisease } from '@/api/param'
+
 export default {
-  name: 'patientsList' ,// 患者管理列表
-  data () {
+  name: 'patientsList',// 患者管理列表
+  data() {
     return {
       tableData: [],
       diseaseList: [],
@@ -145,29 +144,29 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.getList()
     this.getDiease()
   },
   methods: {
-    goSearch () {
+    goSearch() {
       this.param.diseaseIds = this.diseaseIdsList.join(',')
       this.getList(this.param)
     },
-    resetParam () {
+    resetParam() {
       this.param = {
         phone: '',
         idCard: '',
         patientName: '',
         pgDate: [],
-        diseaseIds: '',
+        diseaseIds: ''
       }
       this.diseaseIdsList = []
     },
-    getList (param) {
+    getList(param) {
       if (param && param.pgDate.length > 0) {
-        param.beginTime = param.pgDate[0]
-        param.endTime = param.pgDate[1]
+        param.beginTime = param.pgDate[ 0 ]
+        param.endTime = param.pgDate[ 1 ]
       }
       getPatients(param).then((res) => {
         if (res.code === 200) {
@@ -180,14 +179,14 @@ export default {
         }
       })
     },
-    getDiease () {
+    getDiease() {
       getDisease().then((res) => {
         if (res.code === 200) {
           this.diseaseList = res.data
         }
       })
     },
-    delPatient (item, index) {
+    delPatient(item, index) {
       delPatient(item.patientId).then((res) => {
         if (res.code === 200) {
           this.$message({
@@ -198,10 +197,10 @@ export default {
         }
       })
     },
-    goEdit () {
+    goEdit() {
       this.$router.push({name: 'patientsEdit'})
     },
-    goDetail (item) {
+    goDetail(item) {
       this.$router.push({name: 'patientsDetail', params: {id: item.patientId}})
     }
   }
@@ -209,15 +208,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.patients{
+.patients {
   padding: 28px 20px 0 40px;
+
   .el-row {
     margin-bottom: 20px;
   }
-  .el-date-editor.el-input, .el-date-editor.el-input__inner{
+
+  .el-date-editor.el-input, .el-date-editor.el-input__inner {
     width: 100%;
   }
-  .el-tag{
+
+  .el-tag {
     margin: 5px;
     border-radius: 25px;
   }

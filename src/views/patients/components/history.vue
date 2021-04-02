@@ -226,9 +226,9 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card>
+          <el-card style="height: 220px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   过敏史
                   <div class="add-btn" @click="editItem('gmEdit')">
@@ -246,17 +246,23 @@
                   <div class="history-time">{{ item.allergyDatetime }}</div>
                 </div>
               </el-col>
-              <el-col class="content-item" v-show="gmEdit" :span="10">
-                <el-form-item label="过敏源">
-                  <el-input size="mini" v-model="form.allergen"></el-input>
-                </el-form-item>
+              <el-col class="content-item" v-show="gmEdit" :span="20">
+                <el-row>
+                  <el-col :span="8">
+                    <el-form-item label="过敏源">
+                      <el-input size="mini" v-model="form.allergen"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="发生日期">
+                      <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
+                                      placeholder="选择日期" v-model="form.allergyDatetime"
+                                      style="width: 100%;"></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
                 <el-form-item label="过敏症状">
                   <el-input type="textarea" :rows="6" size="mini" v-model="form.allergySymptoms"></el-input>
-                </el-form-item>
-                <el-form-item label="发生日期">
-                  <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
-                                  placeholder="选择日期" v-model="form.allergyDatetime"
-                                  style="width: 100%;"></el-date-picker>
                 </el-form-item>
                 <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveAllergyHistory')">保存
                 </el-button>
@@ -267,9 +273,9 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card :style="'overflow:' + (ywfyEdit ? 'inherit' : 'hidden')">
+          <el-card :style="'overflow:' + (ywfyEdit ? 'inherit' : 'hidden')" style="height: 220px;">
             <el-row>
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   药物不良反应
                   <div class="add-btn" @click="editItem('ywfyEdit')">
@@ -287,12 +293,14 @@
                   <div class="history-time">{{ item.occurrenceDatetime }}</div>
                 </div>
               </el-col>
-              <el-col class="content-item table-wrap" style="overflow:inherit;" v-show="ywfyEdit" :span="21">
+              <el-col class="content-item table-wrap" style="overflow:inherit;padding: 20px;background: #FFFFFF;"
+                      v-show="ywfyEdit"
+                      :span="21">
                 <div class="search-wrap">
                   <el-autocomplete
                     v-model="searchName"
                     :fetch-suggestions="querySearch"
-                    :trigger-on-focus="false"
+                    :trigger-on-focus="true"
                     placeholder="输入药品名"
                     size="mini"
                     @select="handleSelect"
@@ -304,12 +312,12 @@
                   :data="medSideList"
                   border
                   :header-cell-style="{background:'#1e3f7c',color:'white'}"
-                  style="width: 100%">
+                  style="width: 100%;background: rgb(255, 255, 255);">
                   <el-table-column
                     fixed
                     prop="index"
                     label="序号"
-                    width="50">
+                    width="60">
                     <template slot-scope="scope">
                       {{ scope.$index + 1 }}
                     </template>
@@ -317,25 +325,28 @@
                   <el-table-column
                     prop="medName"
                     label="药品名称"
-                    width="120">
+                    width="150">
                   </el-table-column>
                   <el-table-column
                     prop="province"
                     label="不良反应症状">
                     <template slot-scope="scope">
                       <el-checkbox-group class="flex" v-model="scope.row.adverseReactionsSymptomsList">
-                        <el-checkbox v-for="item in scope.row.sicknessList"
-                                     v-show="item.name || (!item.name && item.key)" :label="item.name">
-                          <span v-show="!item.key">{{ item.name }}</span>
-                          <el-input v-show="item.key" size="min" v-model="item.name"></el-input>
-                        </el-checkbox>
+                        <el-col>
+                          <el-checkbox v-for="item in scope.row.sicknessList"
+                                       v-show="item.name || (!item.name && item.key)" :label="item.name">
+                            <span v-show="!item.key">{{ item.name }}</span>
+                            <el-input v-show="item.key" size="min" v-model="item.name"
+                                      placeholder="其他不良反应症状"></el-input>
+                          </el-checkbox>
+                        </el-col>
                       </el-checkbox-group>
                     </template>
                   </el-table-column>
                   <el-table-column
                     prop="city"
                     label="发生时间"
-                    width="150">
+                    width="170">
                     <template slot-scope="scope">
                       <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
                                       placeholder="选择日期" v-model="scope.row.occurrenceDatetime"
@@ -345,11 +356,21 @@
                   <el-table-column
                     fixed="right"
                     label="操作"
-                    width="100">
+                    width="120">
                     <template slot-scope="scope">
-                      <el-button @click="handleClick(scope.row)" type="text" size="small">保存</el-button>
+                      <el-popover
+                        placement="top"
+                        title=""
+                        width="50"
+                        trigger="click"
+                        v-model="scope.row.medSideSaveVisible"
+                        :content="scope.row.medSideSaveMessage">
+                        <el-button :loading="scope.row.saveVisible" @click="handleClick(scope.row)" type="text"
+                                   size="small" slot="reference">保存
+                        </el-button>
+                      </el-popover>
                       <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
-                                 style="margin-right: 10px;">删除
+                                 style="margin-left: 10px;">删除
                       </el-button>
                     </template>
                   </el-table-column>
@@ -617,13 +638,18 @@ export default {
       }
     },
     handleClick(item) {
+      item.saveVisible = true
       item.assessmentId = this.$route.params.assessmentId
       item.patientId = this.$route.params.id
       item.adverseReactionsSymptoms = item.adverseReactionsSymptomsList.join(',')
       saveMedSideList(item).then((res) => {
+        item.medSideSaveVisible = true
+        item.saveVisible = false
         if (res.code === 200) {
+          item.medSideSaveMessage = '保存成功'
           this.$message.success('保存成功')
         } else {
+          item.medSideSaveMessage = res.errorMessage
           this.$message.error(res.errorMessage)
         }
       })
@@ -849,13 +875,23 @@ export default {
 </style>
 <style scoped lang="scss">
 .life-style {
+  .cell {
+    .el-button {
+      float: left;
+    }
+  }
+
+  .el-card {
+    height: 190px;
+  }
+
   .left-item {
     position: relative;
     text-align: center;
     background: #1e3f7c;
     color: #fff;
     font-size: 14px;
-    height: 180px;
+    height: 190px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -874,7 +910,7 @@ export default {
 
   .item-wrap {
     line-height: 40px;
-    margin-top: 40px;
+    margin-top: 50px;
   }
 
   .add-angle {
@@ -917,7 +953,7 @@ export default {
     }
 
     .history-desc {
-      height: 80px;
+      height: 90px;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -925,10 +961,11 @@ export default {
       -webkit-box-orient: vertical;
       line-height: 25px;
       font-weight: normal;
+      padding: 8px;
     }
 
     .history-time {
-      line-height: 22px;
+      line-height: 50px;
       font-weight: normal;
       color: #999;
       font-size: 12px;
