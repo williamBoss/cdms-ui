@@ -128,7 +128,7 @@ export default {
 
 <style lang="scss">
 .patients{
-  padding: 28px 20px 0 40px;
+  padding: 30px 100px 30px 70px;
 }
 .flex{
   display: -webkit-box;

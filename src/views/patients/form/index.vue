@@ -125,8 +125,8 @@ export default {
       padding-top: 0!important;
     }
   }
-.patients{
-  padding: 28px 20px 0 40px;
+.patients {
+  padding: 30px 100px 30px 70px;
 }
 .flex{
   display: -webkit-box;

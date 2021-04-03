@@ -189,7 +189,7 @@ export default {
 
 <style lang="scss">
 .outpatient {
-  padding: 28px 24px 0;
+  padding: 30px 40px 60px 70px;
 
   .search-wrap {
     flex: 1;

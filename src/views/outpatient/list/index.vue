@@ -223,7 +223,7 @@ export default {
 
 <style lang="scss">
 .outpatient-list{
-  padding: 0 0 0 40px;
+  padding: 10px 40px 60px 70px;
   max-width: 1440px;
   .back-btn{
     margin: 20px 0;

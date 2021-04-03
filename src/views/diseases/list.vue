@@ -164,7 +164,7 @@ export default {
 
 <style lang="scss" >
 .diseases-wrap{
-  padding: 28px 24px 0;
+  padding: 30px 40px 60px 70px;
   .search-wrap{
     // width: 750px;
     // display: inline-block;
