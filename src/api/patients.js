@@ -14,6 +14,14 @@ export function getPatients(param) {
   })
 }
 
+// 获取患者列表
+export function getPatientsByPhone(phone) {
+  return request({
+    url: `/cdms/patient/patient/list/${ phone }`,
+    method: 'get'
+  })
+}
+
 // 添加患者
 export function savePatient(param) {
   return request({
@@ -27,7 +35,7 @@ export function savePatient(param) {
 export function delPatient(id) {
   return request({
     url: '/cdms/patient/patient/' + id,
-    method: 'delete',
+    method: 'delete'
   })
 }
 
@@ -35,7 +43,7 @@ export function delPatient(id) {
 export function getPatientInfo(id) {
   return request({
     url: '/cdms/patient/patient/id/' + id,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -141,7 +149,7 @@ export function saveMedSideList(param) {
 export function delMedSideList(param) {
   return request({
     url: '/cdms/assessment/med-side-effect/' + param.id,
-    method: 'DELETE',
+    method: 'DELETE'
   })
 }
 
@@ -214,6 +222,7 @@ export function saveReportProblem(param) {
     data: param
   })
 }
+
 // 查询转归
 export function getReportSequelae(param) {
   return request({
@@ -677,7 +686,6 @@ export function saveSds(param) {
     data: param
   })
 }
-
 
 //用药数量统计图
 export function getUseMedicine(param) {

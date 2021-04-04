@@ -24,11 +24,11 @@
         </el-radio-group>
         <div class="cart-title">患者ID</div>
         <el-input v-model="form.patId" placeholder="请输入内容"></el-input>
-        <div class="cart-title">身高</div>
+        <div class="cart-title">身高(cm)</div>
         <el-input v-model="form.height" placeholder="请输入内容"></el-input>
-        <div class="cart-title">体重</div>
+        <div class="cart-title">体重(kg)</div>
         <el-input v-model="form.weight" placeholder="请输入内容"></el-input>
-        <div class="cart-title">bmi</div>
+        <div class="cart-title">BMI</div>
         <el-input v-model="form.bmi" placeholder="请输入内容"></el-input>
         <div class="btn-wrap">
           <el-button type="primary">保存</el-button>

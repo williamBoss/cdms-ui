@@ -13,7 +13,7 @@
                   <el-col class="life-item" :span="12">
                     <div>身高：{{userInfo.height}}cm</div>
                     <div>体重：{{userInfo.weight}}kg</div>
-                    <div>bmi：{{userInfo.bmi}}</div>
+                    <div>BMI：{{userInfo.bmi}}</div>
                   </el-col>
                   <el-col class="set-item" :span="12">
                     <div class="extra">1年内体重(kg)</div>

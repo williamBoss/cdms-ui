@@ -10,15 +10,15 @@
     </div>
     <div class="select-wrap">
       <el-date-picker
-      v-model="searchDate"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      value-format="yyyy/MM/dd">
-    </el-date-picker>
+        v-model="searchDate"
+        type="daterange"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        value-format="yyyy/MM/dd">
+      </el-date-picker>
       <el-cascader
-      style="margin-left: 20px;"
+        style="margin-left: 20px;"
         v-model="problems"
         :options="options"
         :props="propsSearch"
@@ -69,7 +69,7 @@
           label="问题类型"
           width="200">
           <template slot-scope="scope">
-          <el-cascader
+            <el-cascader
               :options="options"
               :props="props"
               v-model="scope.row.questionTypes"></el-cascader>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import baseDrawer from '@/layout/components/baseDrawer.vue'
+import baseDrawer from '@/layout/components/PatientDrawer.vue'
 import {
   getOutList,
   getProb,
@@ -101,7 +101,7 @@ import {
 export default {
   name: 'outpatient', // 药学门诊
   components: {baseDrawer},
-  data () {
+  data() {
     return {
       searchName: '',
       tags: [],
@@ -111,30 +111,30 @@ export default {
       propsSearch: {value: 'id', label: 'medicationProblems', children: 'childList'},
       value: '',
       tableData: [],
-      searchDate:[],
-      problems:[]
+      searchDate: [],
+      problems: []
     }
   },
-  mounted(){
+  mounted() {
     this.getOutList()
     this.getProb()
   },
   methods: {
-    goList () {
+    goList() {
       this.$router.push({name: 'outpatientList'})
     },
-    async getProb(){
+    async getProb() {
       const res = await getProb()
       let {data} = res
       if (data) {
         this.options = data
       }
     },
-    getAge (strAge) {
-      var birArr = strAge.split("/");
-      var birYear = birArr[0];
-      var birMonth = birArr[1];
-      var birDay = birArr[2];
+    getAge(strAge) {
+      var birArr = strAge.split('/');
+      var birYear = birArr[ 0 ];
+      var birMonth = birArr[ 1 ];
+      var birDay = birArr[ 2 ];
 
       d = new Date();
       var nowYear = d.getFullYear();
@@ -144,7 +144,8 @@ export default {
 
       if (birArr == null) {
         return false
-      };
+      }
+      ;
       var d = new Date(birYear, birMonth - 1, birDay);
       if (d.getFullYear() == birYear && (d.getMonth() + 1) == birMonth && d.getDate() == birDay) {
         if (nowYear == birYear) {
@@ -168,20 +169,20 @@ export default {
               }
             }
           } else {
-            return  "出生日期晚于今天，数据有误"; //返回-1 表示出生日期输入错误 晚于今天
+            return '出生日期晚于今天，数据有误'; //返回-1 表示出生日期输入错误 晚于今天
           }
         }
         return returnAge;
       } else {
-        return ("输入的日期格式错误！");
+        return ('输入的日期格式错误！');
       }
     },
-    async getOutList () {
+    async getOutList() {
       //
       let params = {
         searchValue: this.searchName,
-        beginTime: this.searchDate[0] || '',
-        endTime: this.searchDate[1] || '',
+        beginTime: this.searchDate[ 0 ] || '',
+        endTime: this.searchDate[ 1 ] || '',
         questionTypes: this.problems
       }
       console.log('参数：', params)
@@ -204,16 +205,16 @@ export default {
         }
       }
     },
-    handleClick(v){
+    handleClick(v) {
       console.log(v)
     },
-    goBack () {
+    goBack() {
       this.$router.push({name: 'outpatient'})
     },
     async deleteData(data) {
       let res = await deleteData(data.id)
       if (res.code === 200 && res.success === true) {
-        this.$message({ showClose: true, message: '删除成功', type: "success" });
+        this.$message({showClose: true, message: '删除成功', type: 'success'});
         this.getOutList()
       }
     }
@@ -222,18 +223,21 @@ export default {
 </script>
 
 <style lang="scss">
-.outpatient-list{
+.outpatient-list {
   padding: 10px 40px 60px 70px;
   max-width: 1440px;
-  .back-btn{
+
+  .back-btn {
     margin: 20px 0;
   }
+
   // .search-wrap{
   //   width: 900px;
   // }
-  .select-wrap{
+  .select-wrap {
     padding: 17px 0 35px;
-    .el-select{
+
+    .el-select {
       margin-right: 10px;
     }
   }

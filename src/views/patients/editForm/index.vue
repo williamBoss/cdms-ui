@@ -32,7 +32,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item prop="patId" label="患者ID">
-            <el-input type="number" v-model="form.patId"></el-input>
+            <el-input v-model="form.patId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -53,7 +53,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item prop="bmi" label="bmi">
+          <el-form-item prop="bmi" label="BMI">
             <label></label>
             <el-input type="number" disabled v-model="form.bmi"></el-input>
           </el-form-item>

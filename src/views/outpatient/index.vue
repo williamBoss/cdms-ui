@@ -1,92 +1,83 @@
 <template>
-  <div class="outpatient main">
-    <!-- <el-row :gutter="20">
-       <el-col :span="20">
-         <div class="search-wrap">
-           <el-autocomplete
-             v-model="searchName"
-             :fetch-suggestions="querySearch"
-             :trigger-on-focus="false"
-             placeholder="输入咨询的药品名"
-             @select="handleSelect"
-           >
-           </el-autocomplete>
-         </div>
-       </el-col>
-       <el-col :span="4">
-         <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
-       </el-col>
-     </el-row> -->
-    <div class="flex-wrap">
-      <div class="search-wrap">
-        <el-autocomplete
-          v-model="searchName"
-          :fetch-suggestions="querySearch"
-          :trigger-on-focus="true"
-          placeholder="输入咨询的药品名"
-          @select="handleSelect"
-        >
-        </el-autocomplete>
+  <div>
+    <PatientDrawer ref="patientDrawer"
+                   :visible="visible"
+                   :modal="false"
+                   :withHeader="false"
+                   @closedDrawer="closedDrawer"
+                   @setPatientInfo="setPatientInfo"></PatientDrawer>
+    <div class="outpatient main">
+      <div class="flex-wrap">
+        <div class="search-wrap">
+          <el-autocomplete
+            v-model="searchName"
+            :fetch-suggestions="querySearch"
+            :trigger-on-focus="true"
+            placeholder="输入咨询的药品名"
+            @select="handleSelect"
+          >
+          </el-autocomplete>
+        </div>
+        <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
       </div>
-      <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
-    </div>
-    <div class="main-wrap">
-      <el-tag
-        class="tag-wrap"
-        v-for="(tag, index) in tags"
-        :key="tag.value"
-        closable
-        @close="handleClose(index)"
-        :type="tag.type">
-        {{ tag.value }}
-      </el-tag>
-      <div class="text-wrap">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 6, maxRows: 6}"
-          placeholder="请描述患者的问题"
-          v-model="consultContext">
-        </el-input>
-      </div>
-      <div class="select-wrap">
-        <el-cascader
-          v-model="problems"
-          :options="options"
-          :props="props"
-          placeholder="请选择问题类型"
-          collapse-tags
-          clearable></el-cascader>
-      </div>
-      <div class="text-wrap">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 6, maxRows: 6}"
-          placeholder="请输入回复"
-          v-model="consultReply">
-        </el-input>
-      </div>
-      <div class="btn-wrap">
-        <el-button type="default">取消</el-button>
-        <el-button type="primary" @click="saveData()">保存</el-button>
+      <div class="main-wrap">
+        <el-tag
+          class="tag-wrap"
+          v-for="(tag, index) in tags"
+          :key="tag.value"
+          closable
+          @close="handleClose(index)"
+          :type="tag.type">
+          {{ tag.value }}
+        </el-tag>
+        <div class="text-wrap">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 6, maxRows: 6}"
+            placeholder="请描述患者的问题"
+            v-model="consultContext">
+          </el-input>
+        </div>
+        <div class="select-wrap">
+          <el-cascader
+            v-model="problems"
+            :options="options"
+            :props="props"
+            placeholder="请选择问题类型"
+            collapse-tags
+            clearable></el-cascader>
+        </div>
+        <div class="text-wrap">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 6, maxRows: 6}"
+            placeholder="请输入回复"
+            v-model="consultReply">
+          </el-input>
+        </div>
+        <div class="btn-wrap">
+          <el-button type="default">取消</el-button>
+          <el-button type="primary" @click="saveData()">保存</el-button>
+        </div>
       </div>
     </div>
-    <baseDrawer :drawer="true" @setPatientInfo="setPatientInfo"></baseDrawer>
   </div>
 </template>
 
 <script>
-import baseDrawer from '@/layout/components/baseDrawer.vue'
 import {
   getMed,
   getProb,
   saveOut
 } from '@/api/outpatient'
+import PatientDrawer from '@/layout/components/PatientDrawer';
 
 export default {
   name: 'outpatient', // 药学门诊
-  components: {baseDrawer},
+  components: {PatientDrawer},
   data() {
     return {
+      visible: true,
       patientId: '',
       searchName: '',
       tags: [],
@@ -102,6 +93,9 @@ export default {
     this.getProb()
   },
   methods: {
+    closedDrawer(val) {
+      this.visible = val
+    },
     goList() {
       this.$router.push({name: 'outpatientList'})
     },
@@ -152,7 +146,9 @@ export default {
 
     async saveData() {
       if (!this.patientId) {
-        this.$message({showClose: true, message: '请先输入患者信息，保存或获取患者信息', type: 'error'});
+        this.visible = true
+        this.$refs.patientDrawer.isGetPatientInfo()
+        this.$message({showClose: true, message: '请先输入患者信息，创建或获取患者信息', type: 'error'});
         return false;
       }
       if (this.tags.length < 1) {
@@ -235,5 +231,4 @@ export default {
     display: inline-block;
   }
 }
-
 </style>
