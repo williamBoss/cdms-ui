@@ -53,7 +53,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item prop="bmi" label="BMI">
+          <el-form-item prop="bmi" label="BMI(正常：18.5~25)">
             <label></label>
             <el-input type="number" disabled v-model="form.bmi"></el-input>
           </el-form-item>

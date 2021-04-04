@@ -2,61 +2,65 @@
   <div>
     <Drawer :visible="this.$attrs.visible"
             :modal="this.$attrs.modal"
-            :title="'患者信息'"
+            :with-header="this.$attrs.withHeader"
             v-on="this.$listeners">
-      <el-autocomplete v-model="phone"
-                       :fetch-suggestions="searchPatientList"
-                       :trigger-on-focus="false"
-                       :clearable="true"
-                       @select="handleSelect"
-                       placeholder="请输入手机号搜索患者信息"
-                       style="margin-bottom: 20px;">
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
-      </el-autocomplete>
-      <el-form :model="patientForm" label-position="top" :rules="rules" ref="patientForm">
-        <el-form-item label="姓名" prop="patientName">
-          <el-input v-model="patientForm.patientName" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" prop="phone">
-          <el-input v-model="patientForm.phone" @change="searchUser()" placeholder="请输入电话"></el-input>
-        </el-form-item>
-        <el-form-item label="出生日期(年/月/日)" prop="birthday">
-          <el-date-picker
-            format="yyyy/MM/dd" value-format="yyyy/MM/dd"
-            v-model="patientForm.birthday"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-radio-group v-model="patientForm.gender">
-            <el-radio-button label="1">男</el-radio-button>
-            <el-radio-button label="2">女</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="患者ID" prop="patId">
-          <el-input v-model="patientForm.patId" placeholder="请输入内容"></el-input>
-        </el-form-item>
-        <el-form-item label="身高(cm)" prop="height">
-          <el-input v-model="patientForm.height" @change="getBmi" placeholder="请输入内容"></el-input>
-        </el-form-item>
-        <el-form-item label="体重(kg)" prop="weight">
-          <el-input v-model="patientForm.weight" @change="getBmi" placeholder="请输入内容"></el-input>
-        </el-form-item>
-        <el-form-item label="BMI(正常：18.5~25)" prop="bmi">
-          <el-input disabled v-model="patientForm.bmi" placeholder="请输入内容"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-button type="infor" @click="clearAll" style="width: 100%">清空</el-button>
-            </el-col>
-            <el-col :span="12">
-              <el-button type="primary" @click="savePatient()" style="width: 100%">保存</el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-      </el-form>
+      <el-tabs type="card">
+        <el-tab-pane label="患者信息" style="padding: 20px;">
+          <el-autocomplete v-model="phone"
+                           :fetch-suggestions="searchPatientList"
+                           :trigger-on-focus="false"
+                           :clearable="true"
+                           @select="handleSelect"
+                           placeholder="请输入手机号搜索患者信息"
+                           style="margin-bottom: 20px;">
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          </el-autocomplete>
+          <el-form :model="patientForm" label-position="top" :rules="rules" ref="patientForm">
+            <el-form-item label="姓名" prop="patientName">
+              <el-input v-model="patientForm.patientName" placeholder="请输入姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="patientForm.phone" @change="searchUser()" placeholder="请输入电话"></el-input>
+            </el-form-item>
+            <el-form-item label="出生日期(年/月/日)" prop="birthday">
+              <el-date-picker
+                format="yyyy/MM/dd" value-format="yyyy/MM/dd"
+                v-model="patientForm.birthday"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+              <el-radio-group v-model="patientForm.gender">
+                <el-radio-button label="1">男</el-radio-button>
+                <el-radio-button label="2">女</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="患者ID" prop="patId">
+              <el-input v-model="patientForm.patId" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="身高(cm)" prop="height">
+              <el-input v-model="patientForm.height" @change="getBmi" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="体重(kg)" prop="weight">
+              <el-input v-model="patientForm.weight" @change="getBmi" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="BMI(正常：18.5~25)" prop="bmi">
+              <el-input disabled v-model="patientForm.bmi" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-row :gutter="20">
+                <el-col :span="12">
+                  <el-button type="infor" @click="clearAll" style="width: 100%">清空</el-button>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="primary" @click="savePatient()" style="width: 100%">保存</el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
     </Drawer>
   </div>
 </template>
@@ -206,7 +210,12 @@ export default {
 }
 </script>
 <style lang="scss">
-.drawer-body {
+.el-tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
   .el-autocomplete {
     .el-input__inner {
       width: 243px;

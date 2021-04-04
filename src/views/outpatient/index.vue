@@ -3,7 +3,6 @@
     <PatientDrawer ref="patientDrawer"
                    :visible="visible"
                    :modal="false"
-                   :withHeader="false"
                    @closedDrawer="closedDrawer"
                    @setPatientInfo="setPatientInfo"></PatientDrawer>
     <div class="outpatient main">
