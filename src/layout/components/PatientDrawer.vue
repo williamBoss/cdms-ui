@@ -3,6 +3,8 @@
     <Drawer :visible="this.$attrs.visible"
             :modal="this.$attrs.modal"
             :title="'患者信息'"
+            :header-style="`background: #1E3F7C;text-align: center;`"
+            :title-style="`color:#ffffff;`"
             v-on="this.$listeners">
       <el-autocomplete v-model="phone"
                        :fetch-suggestions="searchPatientList"
@@ -25,7 +27,8 @@
             format="yyyy/MM/dd" value-format="yyyy/MM/dd"
             v-model="patientForm.birthday"
             type="date"
-            placeholder="选择日期">
+            placeholder="选择日期"
+            style="width: 100%">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="性别" prop="gender">

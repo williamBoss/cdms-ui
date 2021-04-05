@@ -57,6 +57,7 @@
       <el-table
         :data="tableData"
         border
+        stripe
         :header-cell-style="{background:'#1e3f7c',color:'white'}"
         style="width: 100%">
         <el-table-column
@@ -92,9 +93,15 @@
         <el-table-column
           prop="diseaseName"
           align="center"
-          label="诊断结果">
+          label="诊断结果"
+          show-overflow-tooltip>
           <template slot-scope="scope">
-            <el-tag v-for="item in scope.row.diseaseList">{{ item }}</el-tag>
+            <el-popover trigger="hover" placement="top" v-for="item in scope.row.diseaseList">
+              <p>{{ scope.row.diseaseName }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">{{ item }}</el-tag>
+              </div>
+            </el-popover>
           </template>
         </el-table-column>
         <el-table-column

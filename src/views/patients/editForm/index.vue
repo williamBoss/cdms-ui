@@ -4,13 +4,13 @@
     <el-form ref="form" label-position="top" :rules="rules" :model="form">
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item prop="phone" label="电话">
-            <el-input v-model="form.phone" @change="searchUser()" placeholder="*建议填写患者手机号"></el-input>
+          <el-form-item prop="patientName" label="姓名">
+            <el-input v-model="form.patientName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item prop="patientName" label="姓名">
-            <el-input v-model="form.patientName"></el-input>
+          <el-form-item prop="phone" label="电话">
+            <el-input v-model="form.phone" @change="searchUser()" placeholder="*建议填写患者手机号"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -156,10 +156,22 @@ export default {
       },
       options: [],
       rules: {
+        patientName: [
+          {
+            required: true,
+            message: '请输入姓名',
+            trigger: 'blur'
+          } ],
         phone: [
           {
             required: true,
             message: '请输入手机号',
+            trigger: 'blur'
+          } ],
+        gender: [
+          {
+            required: true,
+            message: '请选择性别',
             trigger: 'blur'
           } ],
         birthday: [
@@ -167,7 +179,7 @@ export default {
             required: true,
             message: '请选择出生日期',
             trigger: 'blur'
-          } ],
+          } ]
         // bmi: [{
         //   required: true,
         //   message: '请输入bmi',
@@ -193,18 +205,12 @@ export default {
         //   message: '请输入就诊后一年急诊/输液次数',
         //   trigger: 'blur'
         // }],
-        gender: [
-          {
-            required: true,
-            message: '请选择性别',
-            trigger: 'blur'
-          } ],
-        height: [
-          {
-            required: true,
-            message: '请输入身高',
-            trigger: 'blur'
-          } ],
+        // height: [
+        //   {
+        //     required: true,
+        //     message: '请输入身高',
+        //     trigger: 'blur'
+        //   } ],
         // homeAddress: [{
         //   required: true,
         //   message: '请输入家庭详细地址',
@@ -215,35 +221,29 @@ export default {
         //   message: '请输入就诊后一年住院次数',
         //   trigger: 'blur'
         // }],
-        idCard: [
-          {
-            required: true,
-            message: '请输入身份证号码',
-            trigger: 'blur'
-          } ],
+        // idCard: [
+        //   {
+        //     required: true,
+        //     message: '请输入身份证号码',
+        //     trigger: 'blur'
+        //   } ],
         // medType: [{
         //   required: true,
         //   message: '请选择医保类型',
         //   trigger: 'blur'
         // }],
-        patId: [
-          {
-            required: true,
-            message: '请输入患者ID',
-            trigger: 'blur'
-          } ],
-        patientName: [
-          {
-            required: true,
-            message: '请输入姓名',
-            trigger: 'blur'
-          } ],
-        weight: [
-          {
-            required: true,
-            message: '请输入体重',
-            trigger: 'blur'
-          } ]
+        // patId: [
+        //   {
+        //     required: true,
+        //     message: '请输入患者ID',
+        //     trigger: 'blur'
+        //   } ],
+        // weight: [
+        //   {
+        //     required: true,
+        //     message: '请输入体重',
+        //     trigger: 'blur'
+        //   } ]
       }
     }
   },

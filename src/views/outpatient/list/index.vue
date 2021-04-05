@@ -29,6 +29,7 @@
         :data="tableData"
         :header-cell-style="{background:'#1e3f7c',color:'white'}"
         border
+        stripe
         style="width: 100%">
         <el-table-column
           fixed

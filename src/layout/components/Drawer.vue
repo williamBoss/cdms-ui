@@ -7,8 +7,8 @@
            :style="[{width: `${drawerSize}`},{transform: visible?'':'translateX(100%)'}]">
         <div class="drawer-content">
           <div class="drawer-wrapper-body">
-            <div class="drawer-header" v-if="withHeader">
-              <div class="drawer-title">
+            <div class="drawer-header" v-if="withHeader" :style="headerStyle">
+              <div class="drawer-title" :style="titleStyle">
                 <slot name="title">
                   <span :title="title">{{ title }}</span>
                 </slot>
@@ -56,6 +56,14 @@ export default {
       default: 300
     },
     title: {
+      type: String,
+      default: ''
+    },
+    headerStyle: {
+      type: String,
+      default: ''
+    },
+    titleStyle: {
       type: String,
       default: ''
     },
