@@ -1,73 +1,106 @@
 <template>
   <div class="outpatient-list">
-    <el-button class="back-btn" size="mini" type="primary" @click="goBack">返回</el-button>
-    <div class="flex-wrap">
-      <div class="search-wrap">
-        <el-input placeholder="请输入内容" v-model="searchName" class="input-with-select">
-          <el-button slot="append" @click="getOutList()">搜索</el-button>
-        </el-input>
-      </div>
-    </div>
-    <div class="select-wrap">
-      <el-date-picker
-        v-model="searchDate"
-        type="daterange"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        value-format="yyyy/MM/dd">
-      </el-date-picker>
-      <el-cascader
-        style="margin-left: 20px;"
-        v-model="problems"
-        :options="options"
-        :props="propsSearch"
-        clearable></el-cascader>
-    </div>
-    <div class="main-wrap">
+    <el-row :gutter="20">
+      <el-col>
+        <el-button class="back-btn btn-size" size="medium" type="primary" @click="goBack">返回</el-button>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-input placeholder="请输入问题或解答的内容" v-model="searchName"></el-input>
+      </el-col>
+      <el-col :span="8">
+        <el-autocomplete
+          v-model="medName"
+          :fetch-suggestions="querySearchMedInfo"
+          :trigger-on-focus="true"
+          placeholder="输入咨询的药品名"
+          @select="handleSelectMedInfo"
+          :clearable="true"
+          style="width: 100%"
+        >
+        </el-autocomplete>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-date-picker
+          v-model="searchDate"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy/MM/dd"
+          style="width: 100%">
+        </el-date-picker>
+      </el-col>
+      <el-col :span="8">
+        <el-cascader
+          v-model="problems"
+          :options="options"
+          :props="propsSearch"
+          clearable
+          placeholder="问题类型"
+          style="width: 100%">
+        </el-cascader>
+      </el-col>
+      <el-col :span="8">
+        <el-button class="btn-size" type="primary" @click="getOutList()">查询</el-button>
+        <el-button class="btn-size" type="info">导出</el-button>
+        <el-button class="btn-size" @click="clearSearch">重置</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-table
         :data="tableData"
         :header-cell-style="{background:'#1e3f7c',color:'white'}"
         border
-        stripe
-        style="width: 100%">
+        stripe>
         <el-table-column
           fixed
           prop="index"
           label="序号"
-          width="50">
+          align="center"
+          width="60">
         </el-table-column>
         <el-table-column
           prop="clinicConsultDate"
           label="日期"
-          width="120">
+          align="center"
+          width="100">
         </el-table-column>
         <el-table-column
           prop="patientName"
           label="姓名"
-          width="120">
+          align="center"
+          width="90">
         </el-table-column>
         <el-table-column
           prop="age"
           label="年龄"
+          align="center"
           width="60">
         </el-table-column>
         <el-table-column
           prop="medNames"
           label="咨询药物"
-          width="300">
+          show-overflow-tooltip
+          width="200">
         </el-table-column>
         <el-table-column
           prop="consultContext"
-          label="问题">
+          label="问题"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="consultReply"
-          label="解答">
+          label="解答"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="questionTypes"
           label="问题类型"
+          align="center"
           width="200">
           <template slot-scope="scope">
             <el-cascader
@@ -79,15 +112,15 @@
         <el-table-column
           fixed="right"
           label="操作"
+          align="center"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+            <!--<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
             <el-button type="text" size="small" @click="deleteData(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </div>
-    <!-- <baseDrawer :drawer="true"></baseDrawer> -->
+    </el-row>
   </div>
 </template>
 
@@ -96,7 +129,7 @@ import baseDrawer from '@/layout/components/PatientDrawer.vue'
 import {
   getOutList,
   getProb,
-  deleteData
+  deleteData, getMed
 } from '@/api/outpatient'
 
 export default {
@@ -105,6 +138,8 @@ export default {
   data() {
     return {
       searchName: '',
+      medName: '',
+      medId: '',
       tags: [],
       restaurants: [],
       options: [],
@@ -120,6 +155,13 @@ export default {
     this.getOutList()
     this.getProb()
   },
+  watch: {
+    'medName': function(val) {
+      if (val === '') {
+        this.medId = ''
+      }
+    }
+  },
   methods: {
     goList() {
       this.$router.push({name: 'outpatientList'})
@@ -131,60 +173,13 @@ export default {
         this.options = data
       }
     },
-    getAge(strAge) {
-      var birArr = strAge.split('/');
-      var birYear = birArr[ 0 ];
-      var birMonth = birArr[ 1 ];
-      var birDay = birArr[ 2 ];
-
-      d = new Date();
-      var nowYear = d.getFullYear();
-      var nowMonth = d.getMonth() + 1; //记得加1
-      var nowDay = d.getDate();
-      var returnAge;
-
-      if (birArr == null) {
-        return false
-      }
-      ;
-      var d = new Date(birYear, birMonth - 1, birDay);
-      if (d.getFullYear() == birYear && (d.getMonth() + 1) == birMonth && d.getDate() == birDay) {
-        if (nowYear == birYear) {
-          returnAge = 0; //
-        } else {
-          var ageDiff = nowYear - birYear; //
-          if (ageDiff > 0) {
-            if (nowMonth == birMonth) {
-              var dayDiff = nowDay - birDay; //
-              if (dayDiff < 0) {
-                returnAge = ageDiff - 1;
-              } else {
-                returnAge = ageDiff;
-              }
-            } else {
-              var monthDiff = nowMonth - birMonth; //
-              if (monthDiff < 0) {
-                returnAge = ageDiff - 1;
-              } else {
-                returnAge = ageDiff;
-              }
-            }
-          } else {
-            return '出生日期晚于今天，数据有误'; //返回-1 表示出生日期输入错误 晚于今天
-          }
-        }
-        return returnAge;
-      } else {
-        return ('输入的日期格式错误！');
-      }
-    },
     async getOutList() {
-      //
       let params = {
         searchValue: this.searchName,
         beginTime: this.searchDate[ 0 ] || '',
         endTime: this.searchDate[ 1 ] || '',
-        questionTypes: this.problems
+        questionTypes: this.problems,
+        medId: this.medId
       }
       console.log('参数：', params)
       let res = await getOutList(params)
@@ -195,7 +190,6 @@ export default {
         if (records) {
           records.forEach((val, index) => {
             val.index = index + 1;
-            val.age = this.getAge(val.birthday);
             let arrVal = []
             val.questionTypes.forEach(item => {
               arrVal.push(item.split(','))
@@ -205,6 +199,41 @@ export default {
           this.tableData = records;
         }
       }
+    },
+    querySearchMedInfo(medName, medInfo) {
+      let res_arr = []
+      getMed({
+        medName: medName
+      }).then(res => {
+        let {data} = res
+        if (data) {
+          data.forEach(el => {
+            res_arr.push({
+              value: el.medName,
+              medId: el.medId
+            })
+          });
+        }
+        if (data.length === 0) {
+          this.$message({
+            message: '该药品名称未搜索到相关药品信息，请更换药品名称',
+            type: 'warning'
+          });
+        }
+        if (medInfo) {
+          medInfo(res_arr)
+        }
+      })
+    },
+    handleSelectMedInfo: function(item) {
+      this.medId = item.medId
+    },
+    clearSearch: function() {
+      this.searchName = ''
+      this.searchDate = []
+      this.problems = []
+      this.medId = ''
+      this.getOutList();
     },
     handleClick(v) {
       console.log(v)
@@ -216,7 +245,7 @@ export default {
       let res = await deleteData(data.id)
       if (res.code === 200 && res.success === true) {
         this.$message({showClose: true, message: '删除成功', type: 'success'});
-        this.getOutList()
+        await this.getOutList()
       }
     }
   }
@@ -225,22 +254,11 @@ export default {
 
 <style lang="scss">
 .outpatient-list {
-  padding: 10px 40px 60px 70px;
-  max-width: 1440px;
+  padding: 40px 80px 60px 70px;
 
-  .back-btn {
-    margin: 20px 0;
+  .el-row {
+    margin-bottom: 20px;
   }
 
-  // .search-wrap{
-  //   width: 900px;
-  // }
-  .select-wrap {
-    padding: 17px 0 35px;
-
-    .el-select {
-      margin-right: 10px;
-    }
-  }
 }
 </style>

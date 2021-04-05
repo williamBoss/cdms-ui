@@ -17,7 +17,7 @@
           >
           </el-autocomplete>
         </div>
-        <el-button class="btn-item" type="primary" @click="goList">咨询记录</el-button>
+        <el-button class="btn-item btn-size" type="primary" @click="goList">咨询记录</el-button>
       </div>
       <div class="main-wrap">
         <el-tag
@@ -55,8 +55,8 @@
           </el-input>
         </div>
         <div class="btn-wrap">
-          <el-button type="default">取消</el-button>
-          <el-button type="primary" @click="saveData()">保存</el-button>
+          <el-button class="btn-size" type="default">取消</el-button>
+          <el-button class="btn-size" type="primary" @click="saveData()">保存</el-button>
         </div>
       </div>
     </div>
