@@ -149,17 +149,12 @@ export default {
       });
     },
     async searchUser() {
-      if (/^1[34578]\d{9}$/.test(this.patientInfoVO.phone)) {
-        let res = await getPatientPhone(this.patientInfoVO.phone);
+      if (/^1[34578]\d{9}$/.test(this.patientForm.phone)) {
+        let res = await getPatientPhone(this.patientForm.phone);
         console.log('用户信息：', res);
         let {data} = res;
         if (data) {
           this.fillPatientInfo(data);
-        }
-      } else {
-        this.patientForm = {bmi: 0}
-        this.patientInfoVO = {
-          patientId: ''
         }
       }
       this.$emit('setPatientInfo', this.patientInfoVO)

@@ -55,8 +55,8 @@
           </el-input>
         </div>
         <div class="btn-wrap">
-          <el-button class="btn-size" type="default">取消</el-button>
-          <el-button class="btn-size" type="primary" @click="saveData()">保存</el-button>
+          <el-button class="btn-size" type="default" @click="clearDate">清空</el-button>
+          <el-button class="btn-size" type="primary" size="medium" @click="saveData()">保存</el-button>
         </div>
       </div>
     </div>
@@ -177,6 +177,13 @@ export default {
         this.consultReply = ''
       }
 
+    },
+    clearDate() {
+      this.searchName = ''
+      this.tags = []
+      this.problems = []
+      this.consultContext = ''
+      this.consultReply = ''
     }
   }
 }
