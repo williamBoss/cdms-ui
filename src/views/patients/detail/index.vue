@@ -33,10 +33,13 @@
     <el-tabs type="border-card" v-model="activeTab" @tab-click="changeTab">
       <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key">
       </el-tab-pane>
-      <!-- <ve-line :data="tabData"></ve-line> -->
       <ve-line :grid="lineGrid" :data="tabData"></ve-line>
     </el-tabs>
-    <baseDrawer :drawer="true" v-on:GetInfo="getInfo"></baseDrawer>
+    <PatientAssessmentDrawer ref="patientDrawer"
+                             :visible="visible"
+                             :modal="false"
+                             @closedDrawer="closedDrawer"
+                             @getInfo="getInfo"></PatientAssessmentDrawer>
     <el-drawer
       title=""
       :visible.sync="drawerShow"
@@ -50,7 +53,6 @@
 
 <script>
 import 'echarts/lib/component/legendScroll';
-import baseDrawer from '../components/baseDrawer.vue'
 import VeLine from 'v-charts/lib/line.common'
 import VePie from 'v-charts/lib/pie.common'
 import VeHistogram from 'v-charts/lib/histogram.common'
@@ -69,12 +71,14 @@ import {
   getLipidsUricAcid,
   getLiverFunction
 } from '@/api/patients'
+import PatientAssessmentDrawer from '@/views/patients/components/PatientAssessmentDrawer';
 
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {VeLine, VePie, VeHistogram, baseDrawer, tabPage},
+  components: {PatientAssessmentDrawer, VeLine, VePie, VeHistogram, tabPage},
   data() {
     return {
+      visible: true,
       showLegend: false,
       drawerShow: false,
       assessmentId: '',
@@ -228,6 +232,9 @@ export default {
     this.getTabList()
   },
   methods: {
+    closedDrawer(val) {
+      this.visible = val
+    },
     getInfo(val) {
       this.assessmentId = val.assessmentId.toString()
       this.drawerShow = true

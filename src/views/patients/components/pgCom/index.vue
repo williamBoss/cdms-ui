@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import baseDrawer from '../baseDrawer.vue'
 import {
   getReportInfo
 } from '@/api/patients'
@@ -31,7 +30,7 @@ import jyjc from './jyjc'
 
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, baseDrawer},
+  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc},
   data() {
     return {
       canEdit: true,

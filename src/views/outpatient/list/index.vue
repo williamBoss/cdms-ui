@@ -125,7 +125,6 @@
 </template>
 
 <script>
-import baseDrawer from '@/layout/components/PatientDrawer.vue'
 import {
   getOutList,
   getProb,
@@ -134,7 +133,7 @@ import {
 
 export default {
   name: 'outpatient', // 药学门诊
-  components: {baseDrawer},
+  components: {},
   data() {
     return {
       searchName: '',
