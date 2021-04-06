@@ -8,8 +8,11 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   家族病史
-                  <div class="add-btn" @click="editItem('jzEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.jzEdit?'#DCDFE6':''},{'color':this.jzEdit?'#999':''}]"
+                       @click="editItem('jzEdit')">
+                    <i class="el-icon-plus" v-if="!this.jzEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="jzEdit" class="add-angle"></div>
@@ -31,12 +34,15 @@
                   @clear="clearHistory"
                   @change="searchHistory"
                   v-model="form.familyHistory">
+                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
                 </el-input>
-                <el-checkbox-group v-model="form.familyHistoryIds">
-                  <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
-                    {{ item.diseaseName }}
-                  </el-checkbox>
-                </el-checkbox-group>
+                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
+                  <el-checkbox-group v-model="form.familyHistoryIds">
+                    <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
+                      {{ item.diseaseName }}
+                    </el-checkbox>
+                  </el-checkbox-group>
+                </el-scrollbar>
                 <el-button type="primary" size="mini" @click="saveHistory('saveFamilyHistory')">保存</el-button>
               </el-col>
             </el-row>
@@ -48,8 +54,11 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   既往病史
-                  <div class="add-btn" @click="editItem('jwbEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.jwbEdit?'#DCDFE6':''},{'color':this.jwbEdit?'#999':''}]"
+                       @click="editItem('jwbEdit')">
+                    <i class="el-icon-plus" v-if="!this.jwbEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                   <div v-show="jwbEdit" class="add-angle"></div>
                 </div>
@@ -72,14 +81,17 @@
                   @clear="clearHistory"
                   @change="searchHistory"
                   v-model="form.oldHistory">
+                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
                 </el-input>
-                <el-checkbox-group v-model="form.oldHistoryIds">
-                  <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
-                    {{ item.diseaseName }}
-                    <el-input placeholder="请输入年限" class="check-input" size="mini" type="primary" v-model="item.year"
-                              @change="changeYear(item)"></el-input>
-                  </el-checkbox>
-                </el-checkbox-group>
+                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
+                  <el-checkbox-group v-model="form.oldHistoryIds">
+                    <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
+                      {{ item.diseaseName }}
+                      <el-input placeholder="请输入年限" class="check-input" size="mini" type="primary" v-model="item.year"
+                                @change="changeYear(item)"></el-input>
+                    </el-checkbox>
+                  </el-checkbox-group>
+                </el-scrollbar>
                 <el-button type="primary" size="mini" @click="saveHistory('saveOldHistory')">保存</el-button>
               </el-col>
             </el-row>
@@ -93,8 +105,11 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   既往手术史
-                  <div class="add-btn" @click="editItem('jwssEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.jwssEdit?'#DCDFE6':''},{'color':this.jwssEdit?'#999':''}]"
+                       @click="editItem('jwssEdit')">
+                    <i class="el-icon-plus" v-if="!this.jwssEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="jwssEdit" class="add-angle"></div>
@@ -111,15 +126,19 @@
                   prefix-icon="el-icon-search"
                   class="search-item"
                   size="mini"
+                  clearable
                   @clear="clearHistory"
                   @change="searchHistory"
                   v-model="form.surgical">
+                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
                 </el-input>
-                <el-checkbox-group v-model="form.surgicalIds">
-                  <el-checkbox v-for="item in curSurgicalList" :label="item.surgicalId" :key="item.surgicalId">
-                    {{ item.surgeryName }}
-                  </el-checkbox>
-                </el-checkbox-group>
+                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
+                  <el-checkbox-group v-model="form.surgicalIds">
+                    <el-checkbox v-for="item in curSurgicalList" :label="item.surgicalId" :key="item.surgicalId">
+                      {{ item.surgeryName }}
+                    </el-checkbox>
+                  </el-checkbox-group>
+                </el-scrollbar>
                 <el-button type="primary" size="mini" @click="saveHistory('saveSurgicalHistory')">保存</el-button>
               </el-col>
             </el-row>
@@ -131,11 +150,11 @@
               <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   糖尿病并发症
-                  <!-- <el-switch
-                     v-model="diabetesHistory.length > 0">
-                   </el-switch> -->
-                  <div class="add-btn" style="margin-top: 10px;" @click="editItem('tnbEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.tnbEdit?'#DCDFE6':''},{'color':this.tnbEdit?'#999':''}]"
+                       @click="editItem('tnbEdit')">
+                    <i class="el-icon-plus" v-if="!this.tnbEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="tnbEdit" class="add-angle"></div>
@@ -146,14 +165,12 @@
                 </el-tag>
               </el-col>
               <el-col class="content-item" v-show="tnbEdit" :span="18">
-                <el-checkbox-group v-model="form.complicationsSymptoms">
-                  <el-checkbox v-for="item in diabetesList" :label="item">{{ item }}</el-checkbox>
-                  <el-checkbox :label="form.compSymptom">
-                    <el-input placeholder="其他" class="check-input" size="mini" type="primary"
-                              v-model="form.compSymptom"></el-input>
-                  </el-checkbox>
-                  <!-- <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">{{item.diseaseName}}</el-checkbox> -->
-                </el-checkbox-group>
+                <div style="height: 140px;">
+                  <el-checkbox-group v-model="form.complicationsSymptoms">
+                    <el-checkbox v-for="item in diabetesList" :label="item">{{ item }}</el-checkbox>
+                  </el-checkbox-group>
+                  <el-input placeholder="其他" size="mini" type="primary" v-model="form.compSymptom"></el-input>
+                </div>
                 <el-button type="primary" size="mini" @click="saveHistory('saveDiabetesHistory')">保存</el-button>
               </el-col>
             </el-row>
@@ -174,9 +191,6 @@
                       v-model="gssEdit">
                     </el-switch>
                   </div>
-                  <!-- <div class="add-btn" style="margin-top: 10px;" @click="editItem('gssEdit')">
-                    <i class="el-icon-plus"></i>
-                  </div> -->
                 </div>
                 <div v-show="gssEdit" class="add-angle"></div>
               </el-col>
@@ -205,9 +219,6 @@
                       v-model="sssEdit">
                     </el-switch>
                   </div>
-                  <!-- <div class="add-btn" style="margin-top: 10px;" @click="editItem('sssEdit')">
-                    <i class="el-icon-plus"></i>
-                  </div> -->
                 </div>
                 <div v-show="sssEdit" class="add-angle"></div>
               </el-col>
@@ -434,7 +445,8 @@ export default {
         familyHistoryIds: [],
         oldHistoryIds: [],
         surgicalIds: [],
-        complicationsSymptoms: []
+        complicationsSymptoms: [],
+        compSymptom: ''
       },
       sicknessList: [ {name: '恶心'}, {name: '呕吐'}, {name: '皮疹'}, {name: '便秘'}, {key: 'other', name: ''} ],
       value: '',
@@ -524,13 +536,15 @@ export default {
       getDiabetesHistory(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.diabetesHistory = res.data
-          let diff = ''
+          let compSymptom = []
           res.data.forEach((vv) => {
-            this.form.complicationsSymptoms.push(vv.complicationsSymptom)
             if (this.diabetesList.indexOf(vv.complicationsSymptom) < 0) {
-              this.form.compSymptom = vv.complicationsSymptom
+              compSymptom.push(vv.complicationsSymptom)
+            } else {
+              this.form.complicationsSymptoms.push(vv.complicationsSymptom)
             }
           })
+          this.form.compSymptom = compSymptom.join(',')
         }
       })
       getLiverInfo(param).then((res) => {
@@ -712,6 +726,7 @@ export default {
         }
         case 'saveDiabetesHistory': {
           param.complicationsSymptoms = this.form.complicationsSymptoms
+          param.complicationsSymptoms.push(this.form.compSymptom)
           saveDiabetesHistory(param).then((res) => {
             if (res.code === 200) {
               this.tnbEdit = false
@@ -847,6 +862,10 @@ export default {
 </script>
 <style lang="scss">
 .history {
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
   .el-switch__label * {
     font-size: 12px;
   }
@@ -927,10 +946,6 @@ export default {
     z-index: 1;
   }
 
-  .content-item {
-    overflow: auto;
-  }
-
   .history-item {
     display: inline-block;
     vertical-align: top;
@@ -984,11 +999,6 @@ export default {
   .el-checkbox {
     display: block;
     line-height: 30px;
-  }
-
-  .check-input {
-    margin-left: 10px;
-    width: 100px;
   }
 
   .card-btn {
