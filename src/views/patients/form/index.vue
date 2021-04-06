@@ -66,11 +66,11 @@ export default {
         name: '评估量表',
         key: 'pglb'
       },{
-        name: '药物重整评估记录',
+        name: '药物重整报告',
         key: 'ywpgjl'
       }],
       tabList: [{
-        name: '药物重整评估记录',
+        name: '药物重整报告',
         key: 'ywpgjl'
       },{
         name: '家族病史和既往病史',
