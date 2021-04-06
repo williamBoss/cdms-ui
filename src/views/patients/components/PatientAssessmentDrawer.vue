@@ -46,24 +46,33 @@
                   <el-button type="infor" @click="clearAll" style="width: 100%">清空</el-button>
                 </el-col>
                 <el-col :span="12">
-                  <el-button type="primary" @click="savePatient()" style="width: 100%">保存</el-button>
+                  <el-button type="primary" @click="savePatient()" style="width: 100%">保存修改</el-button>
                 </el-col>
               </el-row>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="评估记录">
-          <div class="record-wrap">
-            <el-timeline>
-              <el-timeline-item v-for="item in activities" :timestamp="item.fillDate" placement="top">
-                <el-button class="time-btn" type="primary" size="mini" @click="goForm(item)">患者评估</el-button>
-                <div class="time-content">
-                  <div class="time-item">药师：{{ item.recorder }}</div>
-                  <div class="time-item">主述: {{ item.mainConsult }}</div>
-                </div>
-              </el-timeline-item>
-            </el-timeline>
-          </div>
+          <el-timeline style="padding: 0">
+            <el-timeline-item v-for="item in activities" :timestamp="item.fillDate" placement="top">
+              <el-row>
+                <el-col :span="12">
+                  <p>
+                    药师：{{ item.recorder }}
+                  </p>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="primary" size="mini" @click="goForm(item)"
+                             style="float: right;margin-top: 10px;">
+                    患者评估
+                  </el-button>
+                </el-col>
+              </el-row>
+              <el-row>
+                <p>主述: {{ item.mainConsult }}</p>
+              </el-row>
+            </el-timeline-item>
+          </el-timeline>
         </el-tab-pane>
       </el-tabs>
     </Drawer>
@@ -76,12 +85,13 @@ import {
   savePatient
 } from '@/api/outpatient'
 import Drawer from '@/layout/components/Drawer';
-import { getPatientInfo, getPatientsByPhone } from '@/api/patients';
+import { asseList, getPatientInfo, getPatientsByPhone } from '@/api/patients';
 
 export default {
   components: {Drawer},
   data() {
     return {
+      patientId: this.$route.params.id,
       patientForm: {},
       rules: {
         patientName: [
@@ -119,7 +129,6 @@ export default {
   },
   created() {
     if (this.$route.query) {
-      this.drawer = true
       this.getPatientInfo()
     }
   },
@@ -129,30 +138,43 @@ export default {
         this.getAsseList()
       }
     },
-    fillPatientInfo: function(data) {
-      data.gender = data.gender.toString()
-      this.patientForm = data
-      this.patientInfoVO = data
+    getPatientInfo: function() {
+      getPatientInfo(this.patientId).then((res) => {
+        if (res.code) {
+          this.patientForm = res.data
+        }
+      })
+    },
+    getAsseList: function() {
+      asseList({patientId: this.patientId}).then((res) => {
+        if (res.code) {
+          this.activities = res.data
+        }
+      })
+    },
+    goForm: function(item) {
+      if (item.assessmentId) {
+        this.$emit('getInfo', {assessmentId: item.assessmentId})
+      }
     },
     async savePatient() {
-      console.log('保存用户信息!');
+      console.log('修改用户信息!');
       this.$refs.patientForm.validate((valid) => {
         if (valid) {
-          let res = savePatient(this.patientForm);
-          let {data} = res
-          if (data) {
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-            this.fillPatientInfo(data);
-          } else {
-            this.patientForm = {bmi: 0}
-            this.patientInfoVO = {
-              patientId: ''
+          this.patientForm.patientId = this.patientId
+          savePatient(this.patientForm).then(res => {
+            if (res.code === 200) {
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '修改失败',
+                type: 'error'
+              });
             }
-          }
-          this.$emit('setPatientInfo', this.patientInfoVO)
+          })
         } else {
           console.log('error submit!!');
           return false;
@@ -166,11 +188,7 @@ export default {
       }
     },
     clearAll() {
-      this.patientForm = {bmi: 0}
-      this.patientInfoVO = {
-        patientId: ''
-      }
-      this.$emit('setPatientInfo', this.patientInfoVO)
+      this.patientForm = {}
     }
   }
 }
