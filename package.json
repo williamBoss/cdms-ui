@@ -1,8 +1,8 @@
 {
-  "name": "mtm",
+  "name": "CDM",
   "version": "1.0.0",
-  "description": "MTM系统",
-  "author": "mtm",
+  "description": "CDM系统",
+  "author": "CDM",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

@@ -128,7 +128,7 @@
           <el-tooltip class="item" effect="dark" content="请先输入并保存用户信息" :disabled="this.form.patientId !== ''"
                       placement="top-start">
             <div style="width: 98px; float: right;margin: 0 10px;">
-              <el-button class="btn-size" type="primary" :disabled="this.form.patientId === ''" @click="goNext">MTM评估
+              <el-button class="btn-size" type="primary" :disabled="this.form.patientId === ''" @click="goNext">CDM评估
               </el-button>
             </div>
           </el-tooltip>
