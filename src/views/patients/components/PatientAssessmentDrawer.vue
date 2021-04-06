@@ -1,4 +1,4 @@
-<template>
+<template xmlns:el-col="http://www.w3.org/1999/html">
   <div>
     <Drawer :visible="this.$attrs.visible"
             :modal="this.$attrs.modal"
@@ -24,8 +24,8 @@
             </el-form-item>
             <el-form-item label="性别" prop="gender">
               <el-radio-group v-model="patientForm.gender">
-                <el-radio-button label="1">男</el-radio-button>
-                <el-radio-button label="2">女</el-radio-button>
+                <el-radio :label="1">男</el-radio>
+                <el-radio :label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="患者ID" prop="patId">
@@ -39,6 +39,61 @@
             </el-form-item>
             <el-form-item label="BMI(正常：18.5~25)" prop="bmi">
               <el-input disabled v-model="patientForm.bmi" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item prop="company" label="工作单位">
+              <el-input v-model="patientForm.company"></el-input>
+            </el-form-item>
+            <el-form-item prop="eduLevel" label="受教育程度">
+              <el-radio-group v-model="patientForm.eduLevel">
+                <el-row :gutter="20" style="margin-bottom: 10px">
+                  <el-col :span="12">
+                    <el-radio :label="1">小学及以下</el-radio>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-radio :label="2">初高中</el-radio>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-radio :label="3">大专及本科</el-radio>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-radio :label="4">硕士及以上</el-radio>
+                  </el-col>
+                </el-row>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item prop="medType" label="医保类型">
+              <el-radio-group v-model="patientForm.medType">
+                <el-row :gutter="20" style="margin-bottom: 10px">
+                  <el-col :span="8">
+                    <el-radio :label="1">自费</el-radio>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-radio :label="2">医保</el-radio>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-radio :label="3">公费</el-radio>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="8">
+                    <el-radio :label="4">新农合</el-radio>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-radio :label="5">其他</el-radio>
+                  </el-col>
+                </el-row>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="patientForm.medType === 5" label="其他医保类型">
+              <el-input v-model="patientForm.otherMedType"></el-input>
+            </el-form-item>
+            <el-form-item prop="emergencyInfusionNum" label="就诊后一年 急诊/输液次数">
+              <el-input type="number" v-model="patientForm.emergencyInfusionNum"></el-input>
+            </el-form-item>
+            <el-form-item prop="hospitalizationNum" label="住院次数">
+              <el-input type="number" v-model="patientForm.hospitalizationNum"></el-input>
             </el-form-item>
             <el-form-item>
               <el-row :gutter="20">
