@@ -142,6 +142,7 @@ export default {
 }
 
 .patients {
+  max-width: 1400px;
   padding: 30px 100px 30px 70px;
 }
 

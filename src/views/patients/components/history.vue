@@ -911,6 +911,7 @@ export default {
     color: #fff;
     font-size: 14px;
     height: 190px;
+    width: 100px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
