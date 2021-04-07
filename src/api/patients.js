@@ -364,6 +364,21 @@ export function saveAllergyHistory(param) {
   })
 }
 
+export function updateAllergyHistory(param, id) {
+  return request({
+    url: `/cdms/assessment/allergy-history/${ id }`,
+    method: 'put',
+    data: param
+  })
+}
+
+export function deleteAllergyHistory(id) {
+  return request({
+    url: `/cdms/assessment/allergy-history/${ id }`,
+    method: 'delete'
+  })
+}
+
 // 患者过敏史列表
 export function getAllergyHistory(param) {
   return request({

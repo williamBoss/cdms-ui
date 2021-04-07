@@ -242,22 +242,50 @@
               <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   过敏史
-                  <div class="add-btn" @click="editItem('gmEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.gmEdit?'#DCDFE6':''},{'color':this.gmEdit?'#999':''}]"
+                       @click="editItem('gmEdit')">
+                    <i class="el-icon-plus" v-if="!this.gmEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="gmEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!gmEdit" :span="21">
-                <div class="history-item" v-for="(item, index) in allergenHistory">
-                  <div class="history-title">
-                    <span class="num">{{ index + 1 }}</span>{{ item.allergen }}
-                  </div>
-                  <div class="history-desc">{{ item.allergySymptoms }}</div>
-                  <div class="history-time">{{ item.allergyDatetime }}</div>
-                </div>
+              <el-col class="content-item" v-if="!gmEdit" :span="21" style="margin:0 auto;">
+                <el-scrollbar>
+                  <el-table :data="allergenHistory"
+                            :height="210"
+                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
+                            style="width: 100%">
+                    <el-table-column fixed prop="allergen" align="center" label="过敏原">
+                    </el-table-column>
+                    <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="allergyDatetime" align="center" label="发生日期" width="150">
+                    </el-table-column>
+                    <el-table-column
+                      fixed="right"
+                      label="操作"
+                      align="center"
+                      width="200">
+                      <template slot-scope="scope">
+                        <el-button @click="editAllergy(scope.row)" type="text">编辑</el-button>
+                        <el-popconfirm
+                          confirm-button-text='好的'
+                          cancel-button-text='不用了'
+                          icon="el-icon-info"
+                          title="确定删除吗？"
+                          @confirm="delAllergy(scope.row)"
+                          style="margin-left: 10px"
+                        >
+                          <el-button slot="reference" type="text">删除</el-button>
+                        </el-popconfirm>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </el-scrollbar>
               </el-col>
-              <el-col class="content-item" v-show="gmEdit" :span="20">
+              <el-col class="content-item" v-if="gmEdit" :span="20">
                 <el-row>
                   <el-col :span="8">
                     <el-form-item label="过敏源">
@@ -284,108 +312,79 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card :style="'overflow:' + (ywfyEdit ? 'inherit' : 'hidden')" style="height: 220px;">
-            <el-row>
+          <el-card style="height: 220px;">
+            <el-row type="flex">
               <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   药物不良反应
-                  <div class="add-btn" @click="editItem('ywfyEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.ywfyEdit?'#DCDFE6':''},{'color':this.ywfyEdit?'#999':''}]"
+                       @click="editItem('ywfyEdit')">
+                    <i class="el-icon-plus" v-if="!this.ywfyEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="ywfyEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!ywfyEdit" :span="21">
-                <div class="history-item" v-for="(item, index) in medSideList">
-                  <div class="history-title">
-                    <span class="num">{{ index + 1 }}</span>{{ item.medName }}
-                  </div>
-                  <div class="history-desc">{{ item.adverseReactionsSymptoms }}</div>
-                  <div class="history-time">{{ item.occurrenceDatetime }}</div>
-                </div>
+              <el-col class="content-item" v-if="!ywfyEdit" :span="21" style="margin:0 auto;">
+                <el-scrollbar>
+                  <el-table :data="medSideList"
+                            :height="210"
+                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
+                            style="width: 100%">
+                    <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="occurrenceDatetime" align="center" label="发生日期" width="150">
+                    </el-table-column>
+                    <el-table-column
+                      fixed="right"
+                      label="操作"
+                      align="center"
+                      width="200">
+                      <template slot-scope="scope">
+                        <el-button @click="editMedSide(scope.row)" type="text">编辑</el-button>
+                        <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
+                                   style="margin-left: 10px;">删除
+                        </el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </el-scrollbar>
               </el-col>
-              <el-col class="content-item table-wrap" style="overflow:inherit;padding: 20px;background: #FFFFFF;"
-                      v-show="ywfyEdit"
-                      :span="21">
-                <div class="search-wrap">
+              <el-col class="content-item" v-if="ywfyEdit" :span="20">
+                <el-form-item label="药品名称" label-width="100px">
                   <el-autocomplete
-                    v-model="searchName"
+                    v-model="form.medSide.medName"
                     :fetch-suggestions="querySearch"
                     :trigger-on-focus="true"
-                    placeholder="输入药品名"
+                    placeholder="输入药品名称，进行搜索"
                     size="mini"
                     @select="handleSelect"
+                    style="width: 220px"
                   >
                   </el-autocomplete>
-                  <el-button type="primary" size="mini" @click="addMed">添加</el-button>
-                </div>
-                <el-table
-                  :data="medSideList"
-                  border
-                  :header-cell-style="{background:'#1e3f7c',color:'white'}"
-                  style="width: 100%;background: rgb(255, 255, 255);">
-                  <el-table-column
-                    fixed
-                    prop="index"
-                    label="序号"
-                    width="60">
-                    <template slot-scope="scope">
-                      {{ scope.$index + 1 }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="medName"
-                    label="药品名称"
-                    width="150">
-                  </el-table-column>
-                  <el-table-column
-                    prop="province"
-                    label="不良反应症状">
-                    <template slot-scope="scope">
-                      <el-checkbox-group class="flex" v-model="scope.row.adverseReactionsSymptomsList">
-                        <el-col>
-                          <el-checkbox v-for="item in scope.row.sicknessList"
-                                       v-show="item.name || (!item.name && item.key)" :label="item.name">
-                            <span v-show="!item.key">{{ item.name }}</span>
-                            <el-input v-show="item.key" size="min" v-model="item.name"
-                                      placeholder="其他不良反应症状"></el-input>
-                          </el-checkbox>
-                        </el-col>
-                      </el-checkbox-group>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="city"
-                    label="发生时间"
-                    width="170">
-                    <template slot-scope="scope">
-                      <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
-                                      placeholder="选择日期" v-model="scope.row.occurrenceDatetime"
-                                      style="width: 100%;"></el-date-picker>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    fixed="right"
-                    label="操作"
-                    width="120">
-                    <template slot-scope="scope">
-                      <el-popover
-                        placement="top"
-                        title=""
-                        width="50"
-                        trigger="click"
-                        v-model="scope.row.medSideSaveVisible"
-                        :content="scope.row.medSideSaveMessage">
-                        <el-button :loading="scope.row.saveVisible" @click="handleClick(scope.row)" type="text"
-                                   size="small" slot="reference">保存
-                        </el-button>
-                      </el-popover>
-                      <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
-                                 style="margin-left: 10px;">删除
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
+                </el-form-item>
+                <el-form-item label="发生日期" label-width="100px">
+                  <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
+                                  placeholder="选择日期" v-model="form.medSide.occurrenceDatetime"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="不良反应症状" label-width="100px">
+                  <el-checkbox-group v-model="form.medSide.adverseReactionsSymptomsList">
+                    <el-col :span="4" v-for="item in sicknessList">
+                      <el-checkbox :label="item" style="line-height: inherit">
+                      </el-checkbox>
+                    </el-col>
+                  </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label-width="100px">
+                  <el-input size="small" v-model="form.medSide.otherAdverseReactionsSymptoms"
+                            placeholder="其他不良反应症状"></el-input>
+                </el-form-item>
+                <el-button class="card-btn" size="mini" type="primary" :loading="form.medSide.saveVisible"
+                           @click="handleClick(form.medSide)">保存
+                </el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -428,7 +427,7 @@ import {
   getAllergyHistory,
   saveMedSideList,
   getMedSideList,
-  delMedSideList
+  delMedSideList, updateAllergyHistory, deleteAllergyHistory
 } from '@/api/patients'
 
 export default {
@@ -446,9 +445,22 @@ export default {
         oldHistoryIds: [],
         surgicalIds: [],
         complicationsSymptoms: [],
-        compSymptom: ''
+        compSymptom: '',
+        allergyId: '',
+        allergen: '',
+        allergyDatetime: '',
+        allergySymptoms: '',
+        medSide: {
+          medicationSideEffectId: '',
+          medId: '',
+          medName: '',
+          occurrenceDatetime: '',
+          adverseReactionsSymptomsList: [],
+          otherAdverseReactionsSymptoms: '',
+          saveVisible: false
+        }
       },
-      sicknessList: [ {name: '恶心'}, {name: '呕吐'}, {name: '皮疹'}, {name: '便秘'}, {key: 'other', name: ''} ],
+      sicknessList: [ '恶心', '呕吐', '皮疹', '便秘' ],
       value: '',
       jzEdit: false,
       jwbEdit: false,
@@ -497,15 +509,15 @@ export default {
           this.curSurgicalList = res.data
         }
       })
-      // getMedList().then((res) => {
-      //   if (res.code === 200  && res.data) {
-      //     this.medList = res.data.records
-      //   }
-      // })
+      /*getMedList().then((res) => {
+        if (res.code === 200 && res.data) {
+          this.medList = res.data.records
+        }
+      })*/
     },
     getHistory() {
       let param = {
-        'assessmentId': this.$route.params.assessmentId,
+        // 'assessmentId': this.$route.params.assessmentId,
         'patientId': this.$route.params.id
       }
       getFamilyHistory(param).then((res) => {
@@ -550,14 +562,14 @@ export default {
       getLiverInfo(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.liverInfo = res.data
-          this.gssEdit = this.liverInfo.liverDamageDesc ? true : false
+          this.gssEdit = !!this.liverInfo.liverDamageDesc
           this.form.liverInfo = res.data.liverDamageDesc
         }
       })
       getKidneyInfo(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.kidneyInfo = res.data
-          this.sssEdit = this.kidneyInfo.kidneyDamageDesc ? true : false
+          this.sssEdit = !!this.kidneyInfo.kidneyDamageDesc
           this.form.kidneyInfo = res.data.kidneyDamageDesc
         }
       })
@@ -573,7 +585,7 @@ export default {
         }
       })
       param.pageNum = 1
-      param.pageSize = 20
+      param.pageSize = 200
       getAllergyHistory(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.allergenHistory = res.data.records
@@ -635,38 +647,40 @@ export default {
       this.curDiseaseList = this.diseaseList
     },
     handleSelect(item) {
-      this.form.medId = item.medId
-      this.form.medName = item.value
-    },
-    addMed() {
-      if (this.form.medId) {
-        this.medSideList.push({
-          medId: this.form.medId,
-          medName: this.form.medName,
-          adverseReactionsSymptomsList: [],
-          sicknessList: JSON.parse(JSON.stringify(this.sicknessList))
-        })
-        this.searchName = ''
-        this.form.medId = ''
-        this.form.medName = ''
-      }
+      this.form.medSide.medId = item.medId
+      this.form.medSide.medName = item.value
     },
     handleClick(item) {
       item.saveVisible = true
       item.assessmentId = this.$route.params.assessmentId
       item.patientId = this.$route.params.id
+      if (item.otherAdverseReactionsSymptoms !== '') {
+        item.adverseReactionsSymptomsList.push(item.otherAdverseReactionsSymptoms);
+      }
       item.adverseReactionsSymptoms = item.adverseReactionsSymptomsList.join(',')
+      if (item.medId === '') {
+        this.$message.warning('请选择药品')
+        return false;
+      }
+      console.log(item);
       saveMedSideList(item).then((res) => {
-        item.medSideSaveVisible = true
         item.saveVisible = false
         if (res.code === 200) {
-          item.medSideSaveMessage = '保存成功'
           this.$message.success('保存成功')
+          this.form.medSide = {
+            medId: '',
+            medName: '',
+            occurrenceDatetime: '',
+            adverseReactionsSymptomsList: [],
+            otherAdverseReactionsSymptoms: '',
+            saveVisible: false
+          }
+          this.ywfyEdit = false
+          this.getHistory()
         } else {
-          item.medSideSaveMessage = res.errorMessage
           this.$message.error(res.errorMessage)
         }
-      })
+      });
     },
     saveHistory(type) {
       let param = {
@@ -762,11 +776,35 @@ export default {
           param.allergen = this.form.allergen
           param.allergyDatetime = this.form.allergyDatetime
           param.allergySymptoms = this.form.allergySymptoms
-          saveAllergyHistory(param).then((res) => {
-            this.gmEdit = false
-            this.$message.success('保存成功')
-            this.getHistory()
-          })
+          if (this.form.allergyId === '') {
+            saveAllergyHistory(param).then((res) => {
+              if (res.code === 200) {
+                this.gmEdit = false;
+                this.$message.success('保存成功')
+                this.form.allergyId = ''
+                this.form.allergen = ''
+                this.form.allergyDatetime = ''
+                this.form.allergySymptoms = ''
+                this.getHistory()
+              } else {
+                this.$message.error('保存失败')
+              }
+            });
+          } else {
+            updateAllergyHistory(param, this.form.allergyId).then(res => {
+              if (res.code === 200) {
+                this.gmEdit = false;
+                this.$message.success('修改成功')
+                this.form.allergyId = ''
+                this.form.allergen = ''
+                this.form.allergyDatetime = ''
+                this.form.allergySymptoms = ''
+                this.getHistory()
+              } else {
+                this.$message.error('修改失败')
+              }
+            })
+          }
         }
       }
     },
@@ -847,15 +885,66 @@ export default {
           })
         })
       }
-    },
-    filterMethod() {
-
+      if (type === 'gmEdit') {
+        this.form.allergyId = ''
+        this.form.allergen = ''
+        this.form.allergyDatetime = ''
+        this.form.allergySymptoms = ''
+      }
+      if (type === 'ywfyEdit') {
+        this.form.medSide = {
+          medicationSideEffectId: '',
+          medId: '',
+          medName: '',
+          occurrenceDatetime: '',
+          adverseReactionsSymptomsList: [],
+          otherAdverseReactionsSymptoms: ''
+        }
+      }
     },
     goNext() {
       this.$emit('update:activeName', 'curSym');
     },
-    onSubmit() {
-
+    editAllergy: function(item) {
+      this.gmEdit = !this.gmEdit
+      this.form.allergyId = item.id
+      this.form.allergen = item.allergen
+      this.form.allergyDatetime = item.allergyDatetime
+      this.form.allergySymptoms = item.allergySymptoms
+    },
+    delAllergy: function(item) {
+      deleteAllergyHistory(item.id).then(res => {
+        if (res.code === 200) {
+          this.$message.success('删除成功')
+        } else {
+          this.$message.error('删除失败')
+        }
+        this.getHistory()
+      })
+    },
+    editMedSide: function(item) {
+      this.form.medSide = {
+        medicationSideEffectId: '',
+        medId: '',
+        medName: '',
+        occurrenceDatetime: '',
+        adverseReactionsSymptomsList: [],
+        otherAdverseReactionsSymptoms: ''
+      }
+      this.ywfyEdit = !this.ywfyEdit
+      this.form.medSide.medicationSideEffectId = item.medicationSideEffectId
+      this.form.medSide.medId = item.medId
+      this.form.medSide.medName = item.medName
+      this.form.medSide.occurrenceDatetime = item.occurrenceDatetime
+      let otherAdverseReactionsSymptoms = []
+      item.adverseReactionsSymptomsList.forEach(v => {
+        if (this.sicknessList.indexOf(v) < 0) {
+          otherAdverseReactionsSymptoms.push(v)
+        } else {
+          this.form.medSide.adverseReactionsSymptomsList.push(v)
+        }
+      })
+      this.form.medSide.otherAdverseReactionsSymptoms = otherAdverseReactionsSymptoms.join(',')
     }
   }
 }
@@ -896,7 +985,7 @@ export default {
 .life-style {
   .cell {
     .el-button {
-      float: left;
+      float: none;
     }
   }
 
@@ -947,52 +1036,6 @@ export default {
     z-index: 1;
   }
 
-  .history-item {
-    display: inline-block;
-    vertical-align: top;
-    width: 255px;
-    margin: 5px;
-    border-right: 1px solid #eee;
-
-    .history-title {
-      height: 50px;
-      line-height: 50px;
-      font-size: 16px;
-      font-weight: normal;
-    }
-
-    .num {
-      font-size: 24px;
-      margin-right: 20px;
-      color: #1E3F7C;
-      font-weight: bold;
-    }
-
-    .history-desc {
-      height: 90px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      line-height: 25px;
-      font-weight: normal;
-      padding: 8px;
-    }
-
-    .history-time {
-      line-height: 50px;
-      font-weight: normal;
-      color: #999;
-      font-size: 12px;
-    }
-  }
-
-  .table-wrap {
-    display: inline-block;
-    padding: 8px 0;
-  }
-
   .search-item {
     margin-bottom: 5px;
   }
@@ -1015,6 +1058,14 @@ export default {
     width: 40px;
     margin: 0 auto;
     position: relative;
+  }
+
+  .el-checkbox-group.flex {
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 75px;
+    padding-top: 10px;
+    align-content: flex-start;
   }
 }
 </style>
