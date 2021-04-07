@@ -20,13 +20,16 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card>
+          <el-card style="height: 210px;">
             <el-row type="flex">
               <el-col class="left-item" :span="3">
                 <div class="item-wrap">
                   诊断
-                  <div class="add-btn" @click="editItem('zdEdit')">
-                    <i class="el-icon-plus"></i>
+                  <div class="add-btn"
+                       :style="[{'background':this.zdEdit?'#DCDFE6':''},{'color':this.zdEdit?'#999':''}]"
+                       @click="editItem('zdEdit')">
+                    <i class="el-icon-plus" v-if="!this.zdEdit"></i>
+                    <i class="el-icon-close" v-else></i>
                   </div>
                 </div>
                 <div v-show="zdEdit" class="add-angle"></div>
@@ -35,23 +38,33 @@
                 <el-tag v-for="item in diagnosisList">{{ item.diseaseName }}</el-tag>
               </el-col>
               <el-col class="content-item" v-show="zdEdit" :span="21">
-                <el-input
-                  placeholder="请输入病种名称"
-                  prefix-icon="el-icon-search"
-                  class="search-item"
-                  size="mini"
-                  clearable
-                  @clear="clearDiagnosis"
-                  @change="searchDiagnosis"
-                  v-model="form.diagnosisKey">
-                </el-input>
-                <el-checkbox-group v-model="form.diagnosis">
-                  <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey"
-                               :value="item.diseaseId">{{ item.diseaseName }}
-                    <el-input v-show="item.checked" placeholder="请输入年限" class="check-input" size="mini"
-                              type="primary"></el-input>
-                  </el-checkbox>
-                </el-checkbox-group>
+                <el-row>
+                  <el-col :span="12">
+                    <el-input
+                      placeholder="请输入病种名称"
+                      prefix-icon="el-icon-search"
+                      class="search-item"
+                      size="mini"
+                      clearable
+                      @clear="clearDiagnosis"
+                      @change="searchDiagnosis"
+                      v-model="form.diagnosisKey">
+                      <el-button slot="append" icon="el-icon-search" @click="searchDiagnosis"></el-button>
+                    </el-input>
+                  </el-col>
+                </el-row>
+                <el-scrollbar class="scrollbar" style="height: 125px;margin-bottom: 5px;">
+                  <el-checkbox-group v-model="form.diagnosis">
+                    <el-tooltip class="item" effect="dark" v-for="item in curDiseaseList" :content="item.diseaseName"
+                                placement="top-start">
+                      <el-checkbox :label="item.diseaseId" :key="item.diseaseKey"
+                                   :title="item.diseaseName"
+                                   :value="item.diseaseId">
+                        {{ item.diseaseName }}
+                      </el-checkbox>
+                    </el-tooltip>
+                  </el-checkbox-group>
+                </el-scrollbar>
                 <el-button type="primary" size="mini" @click="saveDiagnosis">保存</el-button>
               </el-col>
             </el-row>
@@ -77,24 +90,13 @@
                     </div>
                   </el-col>
                   <el-col :span="20">
-                    <!-- <el-input
-                      placeholder="请输入病种名称"
-                      prefix-icon="el-icon-search"
-                      class="search-item"
-                      size="mini"
-                      v-model="form.input2">
-                    </el-input> -->
                     <el-checkbox-group class="flex" v-if="checkList[page.curPage - 1]" v-model="curSym.list">
                       <el-checkbox v-for="item in checkList[page.curPage - 1].list" :label="item.value"
                                    :key="item.value">{{ item.name }}
                         <el-input v-show="item.key" placeholder="" class="check-input" size="mini" type="primary"
                                   v-model="curSym[item.key]"></el-input>
                       </el-checkbox>
-                      <!-- <el-form-item v-if="item.key" label="其他" label-width="40px">
-                        <el-input v-model="form.name"></el-input>
-                      </el-form-item> -->
                     </el-checkbox-group>
-
                   </el-col>
                 </el-row>
                 <el-divider></el-divider>
@@ -234,7 +236,7 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: '/api/questionList'
+        url: '@/../../../api/questionList'
       }).then(function(response) {
         _this.checkList = response.data.data.diagnose
       }).catch(function(error) {
@@ -350,7 +352,19 @@ export default {
   }
 
   .el-checkbox {
-    width: 200px;
+    width: 170px;
+  }
+
+  ::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
+  ::v-deep .el-checkbox__label {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
   }
 
   .vertical-checkbox {
