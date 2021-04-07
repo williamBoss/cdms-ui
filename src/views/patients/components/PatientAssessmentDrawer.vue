@@ -1,5 +1,5 @@
 <template xmlns:el-col="http://www.w3.org/1999/html">
-  <div>
+  <div class="">
     <Drawer :visible="this.$attrs.visible"
             :modal="this.$attrs.modal"
             :with-header="false"
@@ -248,10 +248,8 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.drawer-body {
-  padding: 0;
-
+<style lang="scss" scoped>
+::v-deep .drawer-body {
   .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
     background-color: #1E3F7C;
     color: #fff;

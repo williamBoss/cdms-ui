@@ -105,3 +105,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.drawer-body {
+  padding: 0;
+}
+</style>

@@ -203,8 +203,10 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.drawer-body {
+<style lang="scss" scoped>
+::v-deep .drawer-body {
+  padding: 24px;
+
   .el-autocomplete {
     .el-input__inner {
       width: 243px;

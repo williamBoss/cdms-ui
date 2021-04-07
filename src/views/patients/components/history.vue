@@ -85,11 +85,21 @@
                 </el-input>
                 <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
                   <el-checkbox-group v-model="form.oldHistoryIds">
-                    <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
-                      {{ item.diseaseName }}
-                      <el-input placeholder="请输入年限" class="check-input" size="mini" type="primary" v-model="item.year"
-                                @change="changeYear(item)"></el-input>
-                    </el-checkbox>
+                    <el-row :gutter="20" v-for="item in curDiseaseList">
+                      <el-col :span="18">
+                        <el-tooltip class="item" effect="dark" :content="item.diseaseName" placement="top-start">
+                          <el-checkbox :label="item.diseaseId" :key="item.diseaseKey" :title="item.diseaseName">
+                            {{ item.diseaseName }}
+                          </el-checkbox>
+                        </el-tooltip>
+                      </el-col>
+                      <el-col :span="6">
+                        <el-input placeholder="请输入年限" class="check-input" size="mini" type="primary" v-model="item.year"
+                                  @change="changeYear(item)">
+                          <i slot="suffix" style="font-style:normal;line-height: 28px">年</i>
+                        </el-input>
+                      </el-col>
+                    </el-row>
                   </el-checkbox-group>
                 </el-scrollbar>
                 <el-button type="primary" size="mini" @click="saveHistory('saveOldHistory')">保存</el-button>
@@ -1067,5 +1077,23 @@ export default {
     padding-top: 10px;
     align-content: flex-start;
   }
+}
+
+::v-deep .check-input {
+  .el-input__inner {
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
+  }
+}
+
+::v-deep .el-checkbox__label {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 </style>
