@@ -1,11 +1,18 @@
 <template>
   <div class="life-style pglb-wrap">
-    <el-col :span="12">
-      <el-tag @click="goChoosePg">选择评估量表</el-tag>
-    </el-col>
     <div class="table-all">
-      <el-tag v-for="item in questionList"
-              :effect="curTag.questionnaireName === item.questionnaireName ? 'dark' : 'light'" @click="getTable(item)">
+      <el-tag v-if="questionList.length === 0" effect="plain" @click="goChoosePg">选择评估量表</el-tag>
+      <el-tooltip v-else effect="dark" content="选择评估量表" placement="top-start">
+        <el-tag effect="plain" @click="goChoosePg"
+                style="border-radius: 5px;background: #DCDFE6;color: #999;border-color: #dcdfe6;">
+          <i class="el-icon-plus"></i>
+        </el-tag>
+      </el-tooltip>
+      <el-tag v-for="(item,index) in questionList"
+              :effect="curTag.questionnaireName === item.questionnaireName ? 'dark' : 'plain'"
+              :style="[{borderColor:curTag.questionnaireName === item.questionnaireName ? '' : '#fff'},
+              {color:curTag.questionnaireName === item.questionnaireName ? '' : '#000'}]"
+              @click="getTable(item,index)">
         {{ item.questionnaireName }}
       </el-tag>
     </div>
@@ -14,7 +21,7 @@
         <div class="title">{{ index + 1 }}.{{ item.question }}</div>
         <div class="optins-item">
           <el-radio-group v-model="form[item.value]">
-            <el-radio v-for="ii in item.options" :label="ii.value">{{ ii.label }}</el-radio>
+            <el-radio v-for="ii in item.options" :label="ii.value" style="min-width: 100px">{{ ii.label }}</el-radio>
           </el-radio-group>
         </div>
       </div>
@@ -198,8 +205,7 @@
       </div>
     </div>
     <div class="checkbox-wrap" v-if="curList.name === 'caprini'">
-
-      <div class="quest-item" v-for="(item, index) in curList.list">
+      <div class="quest-item" v-for="item in curList.list">
         <div class="title">{{ item.title }}</div>
         <el-checkbox-group v-model="capriniChoose">
           <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value">{{ ll.question }}</el-checkbox>
@@ -212,9 +218,22 @@
             v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{ rr.name }}</span>
     </div>
     <div class="btn-wrap" v-if="curTag.id">
-      <el-button type="primary" @click="goNext">下一步</el-button>
-      <el-button type="primary" @click="saveInfo" style="margin-right: 10px;">保存</el-button>
+      <el-button class="btn-size" type="primary" v-if="this.chooseTag !== this.questionList.length-1"
+                 @click="goNextQuestion">下一步
+      </el-button>
+      <el-button class="btn-size" type="primary" v-else @click="goNext">下一步</el-button>
+      <el-button class="btn-size" type="primary" @click="saveInfo" style="margin-right: 10px;">保存</el-button>
     </div>
+    <el-dialog
+      title="选择评估量表"
+      :visible.sync="dialogVisible">
+      <PgSet ref="pgSet" @onClose="onClose" />
+      <div slot="footer" class="dialog-footer">
+        <el-button class="btn-size" @click="onClose" style="float: none">取 消</el-button>
+        <el-button class="btn-size" type="primary" @click="$refs.pgSet.saveData()" style="float: none">保存
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -251,8 +270,10 @@ import {
   getCaprini
 } from '@/api/patients'
 import axios from 'axios'
+import PgSet from '@/views/patients/list/pgSet';
 
 export default {
+  components: {PgSet},
   props: {
     activeName: {
       type: String,
@@ -261,6 +282,7 @@ export default {
   },
   data() {
     return {
+      dialogVisible: false,
       form: {
         vasId: 0
       },
@@ -273,7 +295,8 @@ export default {
       tableData: [],
       marks: {0: '0', 2: '2', 4: '4', 6: '6', 8: '8', 10: '10'},
       marksRuler: {1: '1', 2: '2', 3: '3', 4: '4', 5: '5'},
-      showTooltip: false
+      showTooltip: false,
+      chooseTag: 0
     }
   },
   created() {
@@ -333,6 +356,11 @@ export default {
       getAssessmentTable(param).then((res) => {
         if (res.code === 200) {
           this.questionList = res.data
+          if (this.questionList.length === 0) {
+            this.goChoosePg()
+          } else {
+            this.getTable(this.questionList[ 0 ], 0);
+          }
         }
       })
       axios({
@@ -351,7 +379,7 @@ export default {
       }
       if (this.curList.name === 'yyycx') {
         getMorisky(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.form = res.data
             this.scord = parseFloat(res.data.morCountScore)
           }
@@ -359,7 +387,7 @@ export default {
       }
       if (this.curList.name === 'xnxg') {
         getQuestionRisk(param).then((res) => {
-          if (res.code === 200) {
+          if (res.code === 200 && res.data) {
             this.form = res.data
             // this.scord = parseFloat(res.data.morCountScore)
             // console.log(res.data)
@@ -480,7 +508,8 @@ export default {
         })
       }
     },
-    getTable(item) {
+    getTable(item, index) {
+      this.chooseTag = index
       this.curTag = item
       this.form = {}
       this.scord = 0
@@ -494,9 +523,11 @@ export default {
     goNext() {
       this.$emit('update:activeName', 'ywpgjl');
     },
+    goNextQuestion() {
+      this.getTable(this.questionList[ this.chooseTag + 1 ], this.chooseTag + 1)
+    },
     goChoosePg() {
-      this.$router.push(
-        {name: 'pgSet', params: {id: this.$route.params.id, assessmentId: this.$route.params.assessmentId}})
+      this.dialogVisible = true
     },
     saveInfo() {
       this.form.assessmentId = this.$route.params.assessmentId
@@ -639,13 +670,17 @@ export default {
           }
         })
       }
+    },
+    onClose: function() {
+      this.dialogVisible = !this.dialogVisible
+      this.getQuestionList()
     }
   }
 }
 </script>
 <style lang="scss">
 .pglb-wrap {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 
   .el-table thead {
     display: none;
@@ -694,12 +729,12 @@ export default {
 </style>
 <style scoped lang="scss">
 .table-all {
-  padding: 20px;
-  margin-bottom: 40px;
+  padding: 5px;
   background: #e8e8e8;
 
   .el-tag {
     cursor: pointer;
+    margin: 5px 3px;
   }
 }
 
@@ -750,7 +785,6 @@ export default {
 }
 
 .form-wrap {
-  padding: 20px 0;
   margin-bottom: 20px;
 
   .title {

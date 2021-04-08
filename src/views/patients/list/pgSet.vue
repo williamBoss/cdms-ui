@@ -1,31 +1,21 @@
 <template>
   <div class="outpatient">
-    <el-button class="back-btn" size="mini" type="primary" @click="goBack">返回</el-button>
     <div class="flex-wrap">
       <div class="search-wrap">
-        <el-autocomplete
-          v-model="searchName"
-          :fetch-suggestions="querySearch"
-          :trigger-on-focus="false"
-          placeholder="输入名称"
-          @select="handleSelect"
-        >
-          <el-button slot="append" @click="searchMed()">搜索</el-button>
-        </el-autocomplete>
+        <el-input placeholder="请输入内容" v-model="searchName">
+          <el-button slot="append" icon="el-icon-search" @click="this.getProb">搜索</el-button>
+        </el-input>
       </div>
     </div>
     <div class="main-wrap">
       <el-tag
         class="tag-wrap"
-        v-for="(tag, index) in tags"
+        v-for="tag in tags"
         :key="tag.id"
         @click="choseTag(tag)"
         :type="tag.check ? '' : 'info'">
-        {{tag.questionnaireName}}
+        {{ tag.questionnaireName }}
       </el-tag>
-      <div class="btn-wrap">
-        <el-button type="primary" @click="saveData()">保存</el-button>
-      </div>
     </div>
   </div>
 </template>
@@ -38,23 +28,20 @@ import {
   getAssessmentTable,
   saveAssessmentTable
 } from '@/api/patients'
+
 export default {
-  name: 'patient', // 药学门诊
-  data () {
+  name: 'pgSet',
+  data() {
     return {
-      searchName:'',
-      tags: [],
+      searchName: '',
+      tags: []
     }
   },
-  mounted () {
+  mounted() {
     this.getProb()
   },
   methods: {
-    querySearch(queryString, cb) {
-      this.searchMed(cb)
-    },
-    handleSelect() {},
-    getAssessmentTable () {
+    getAssessmentTable() {
       let param = {
         assessmentId: this.$route.params.assessmentId,
         patientId: this.$route.params.id
@@ -63,7 +50,7 @@ export default {
         if (res.code === 200) {
           this.tags.forEach((vv) => {
             res.data.forEach((rr) => {
-              if (parseInt(vv.id) === parseInt(rr.id)) {
+              if (vv.questionnaireKey === rr.questionnaireKey) {
                 vv.check = true
               }
             })
@@ -71,10 +58,10 @@ export default {
         }
       })
     },
-    choseTag (item) {
+    choseTag(item) {
       item.check = !item.check
     },
-    saveData () {
+    saveData() {
       let list = []
       this.tags.forEach((vv) => {
         if (vv.check) {
@@ -86,16 +73,17 @@ export default {
         patientId: this.$route.params.id,
         questionnaireIds: list
       }
-      saveAssessmentTable (param).then((res) => {
+      saveAssessmentTable(param).then((res) => {
         if (res.code === 200) {
           this.$message.success('保存成功')
+          this.$emit('onClose')
         } else {
           this.$message.error(res.errorMessage)
         }
       })
     },
-    getProb () {
-      getQuestionList().then((res) => {
+    getProb() {
+      getQuestionList({questionnaireName: this.searchName}).then((res) => {
         if (res.code === 200) {
           res.data.forEach((vv) => {
             vv.check = false
@@ -104,49 +92,49 @@ export default {
           this.getAssessmentTable()
         }
       })
-    },
-    goBack () {
-      this.$router.push({name: 'patientsForm', params: {id: this.$route.params.id, assessmentId: this.$route.params.assessmentId}, query: {tab: 'ywzlwt'}})
     }
   }
 }
 </script>
 
-<style lang="scss" >
-.outpatient{
-  padding: 30px 40px 60px 70px;
-  .back-btn{
+<style lang="scss">
+.outpatient {
+  .back-btn {
     margin: 0 0 20px;
   }
-  .search-wrap{
-    // width: 750px;
-    // display: inline-block;
-    .el-autocomplete{
+
+  .search-wrap {
+    .el-autocomplete {
       width: 100%;
     }
   }
-  .main-wrap{
-    // width: 750px;
+
+  .main-wrap {
     padding-top: 25px;
-    .tag-wrap{
+
+    .tag-wrap {
       margin-bottom: 13px;
       margin: 0 11px 33px;
       border-radius: 25px;
       cursor: pointer;
     }
   }
-  .select-wrap{
+
+  .select-wrap {
     padding: 15px 0;
     text-align: right;
-    .el-select{
+
+    .el-select {
       margin-left: 8px;
     }
   }
-  .btn-wrap{
+
+  .btn-wrap {
     padding: 20px 0;
     text-align: right;
   }
-  .btn-item{
+
+  .btn-item {
     display: inline-block;
   }
 }

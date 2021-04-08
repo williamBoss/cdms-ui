@@ -52,10 +52,11 @@ export const getDiseaseList = (param) => {
 }
 
 // 获取问卷列表
-export const getQuestionList = () => {
+export const getQuestionList = (param) => {
   return request({
     url: '/cdms/config/questionnaire-dict/list',
-    method: 'get'
+    method: 'get',
+    params: param
   })
 }
 
