@@ -120,21 +120,48 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card>
+          <el-card style="height: 220px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   过敏史
                 </div>
               </el-col>
-              <el-col class="content-item" :span="21">
-                <div class="history-item" v-for="(item, index) in allergenHistory">
-                  <div class="history-title">
-                    <span class="num">{{ index + 1 }}</span>{{ item.allergen }}
-                  </div>
-                  <div class="history-desc">{{ item.allergySymptoms }}</div>
-                  <div class="history-time">{{ item.allergyDatetime }}</div>
-                </div>
+              <el-col class="content-item" v-if="!gmEdit" :span="21" style="margin:0 auto;">
+                <el-scrollbar>
+                  <el-table :data="allergenHistory"
+                            :height="210"
+                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
+                            style="width: 100%">
+                    <el-table-column fixed prop="allergen" align="center" label="过敏原">
+                    </el-table-column>
+                    <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="allergyDatetime" align="center" label="发生日期" width="150">
+                    </el-table-column>
+                  </el-table>
+                </el-scrollbar>
+              </el-col>
+              <el-col class="content-item" v-if="gmEdit" :span="20">
+                <el-row>
+                  <el-col :span="8">
+                    <el-form-item label="过敏源">
+                      <el-input size="mini" v-model="form.allergen"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="发生日期">
+                      <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
+                                      placeholder="选择日期" v-model="form.allergyDatetime"
+                                      style="width: 100%;"></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-form-item label="过敏症状">
+                  <el-input type="textarea" :rows="6" size="mini" v-model="form.allergySymptoms"></el-input>
+                </el-form-item>
+                <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveAllergyHistory')">保存
+                </el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -142,21 +169,72 @@
       </el-row>
       <el-row :gutter="20">
         <el-col>
-          <el-card :style="'overflow:' + (ywfyEdit ? 'inherit' : 'hidden')">
-            <el-row>
-              <el-col class="left-item" :span="3">
+          <el-card style="height: 220px;">
+            <el-row type="flex">
+              <el-col class="left-item" :span="3" style="height: 220px;">
                 <div class="item-wrap">
                   药物不良反应
                 </div>
               </el-col>
-              <el-col class="content-item" :span="21">
-                <div class="history-item" v-for="(item, index) in medSideList">
-                  <div class="history-title">
-                    <span class="num">{{ index + 1 }}</span>{{ item.medName }}
-                  </div>
-                  <div class="history-desc">{{ item.adverseReactionsSymptoms }}</div>
-                  <div class="history-time">{{ item.occurrenceDatetime }}</div>
-                </div>
+              <el-col class="content-item" v-if="!ywfyEdit" :span="21" style="margin:0 auto;">
+                <el-scrollbar>
+                  <el-table :data="medSideList"
+                            :height="210"
+                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
+                            style="width: 100%">
+                    <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column prop="occurrenceDatetime" align="center" label="发生日期" width="150">
+                    </el-table-column>
+                    <el-table-column
+                      fixed="right"
+                      label="操作"
+                      align="center"
+                      width="200">
+                      <template slot-scope="scope">
+                        <el-button @click="editMedSide(scope.row)" type="text">编辑</el-button>
+                        <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
+                                   style="margin-left: 10px;">删除
+                        </el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </el-scrollbar>
+              </el-col>
+              <el-col class="content-item" v-if="ywfyEdit" :span="20">
+                <el-form-item label="药品名称" label-width="100px">
+                  <el-autocomplete
+                    v-model="form.medSide.medName"
+                    :fetch-suggestions="querySearch"
+                    :trigger-on-focus="true"
+                    placeholder="输入药品名称，进行搜索"
+                    size="mini"
+                    @select="handleSelect"
+                    style="width: 220px"
+                  >
+                  </el-autocomplete>
+                </el-form-item>
+                <el-form-item label="发生日期" label-width="100px">
+                  <el-date-picker size="mini" format="yyyy/MM/dd" value-format="yyyy/MM/dd" type="date"
+                                  placeholder="选择日期" v-model="form.medSide.occurrenceDatetime"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="不良反应症状" label-width="100px">
+                  <el-checkbox-group v-model="form.medSide.adverseReactionsSymptomsList">
+                    <el-col :span="4" v-for="item in sicknessList">
+                      <el-checkbox :label="item" style="line-height: inherit">
+                      </el-checkbox>
+                    </el-col>
+                  </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label-width="100px">
+                  <el-input size="small" v-model="form.medSide.otherAdverseReactionsSymptoms"
+                            placeholder="其他不良反应症状"></el-input>
+                </el-form-item>
+                <el-button class="card-btn" size="mini" type="primary" :loading="form.medSide.saveVisible"
+                           @click="handleClick(form.medSide)">保存
+                </el-button>
               </el-col>
             </el-row>
           </el-card>

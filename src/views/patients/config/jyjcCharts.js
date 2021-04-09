@@ -87,17 +87,17 @@ let jyjcList = [
       },
       {
         key: 'tc',
-        name: '总胆固醇TC \n(mmol/L)',
+        name: '总胆固醇TC\n(mmol/L)',
         width: '102px'
       },
       {
         key: 'ldl',
-        name: '低密度脂蛋白LDL-C \n(mmol/L)',
+        name: '低密度脂蛋白LDL-C\n(mmol/L)',
         width: '150px'
       },
       {
         key: 'tg',
-        name: '甘油三酯TG \n(mmol/L)',
+        name: '甘油三酯TG\n(mmol/L)',
         width: '98px'
       },
       {
@@ -107,7 +107,7 @@ let jyjcList = [
       },
       {
         key: 'hdlC',
-        name: '高密度脂蛋白HDL-C \n(mmol/L)',
+        name: '高密度脂蛋白HDL-C\n(mmol/L)',
         width: '155px'
       },
       {
@@ -137,7 +137,7 @@ let jyjcList = [
       },
       {
         key: 'fastingBloodGlucose',
-        name: '空腹血糖 \n(mmol/L)',
+        name: '空腹血糖\n(mmol/L)',
         width: '126px'
       },
       {
@@ -147,7 +147,7 @@ let jyjcList = [
       },
       {
         key: 'randomBloodSugar',
-        name: '随机血糖 \n(mmol/L)',
+        name: '随机血糖\n(mmol/L)',
         width: '119px'
       },
       {
@@ -162,7 +162,7 @@ let jyjcList = [
       },
       {
         key: 'urineMicroalbumin',
-        name: '尿微量白蛋白\n（mg/L）',
+        name: '尿微量白蛋白\n(mg/L)',
         width: '126px'
       }
     ],
@@ -182,12 +182,12 @@ let jyjcList = [
       },
       {
         key: 'alt',
-        name: '谷丙转氨酶 ALT \n（U/L）',
+        name: '谷丙转氨酶 ALT\n(U/L)',
         width: '151px'
       },
       {
         key: 'ast',
-        name: '谷草转氨酶 AST \n (U/L)',
+        name: '谷草转氨酶 AST\n (U/L)',
         width: '135px'
       },
       {
@@ -222,22 +222,22 @@ let jyjcList = [
       },
       {
         key: 'serumCreatinine',
-        name: '血肌酐Cr \n（umol/L）',
+        name: '血肌酐Cr\n(umol/L)',
         width: '179px'
       },
       {
         key: 'twentyFourHourUrineProtein',
-        name: '24h尿蛋白 \n（mg）',
+        name: '24h尿蛋白\n(mg)',
         width: '179px'
       },
       {
         key: 'glomerularFiltrationRate',
-        name: '肾小球滤过率 \n（GFR, ml/min） ',
+        name: '肾小球滤过率\n(GFR, ml/min) ',
         width: '179px'
       },
       {
         key: 'creatinineClearanceRate',
-        name: '肌酐清除率 \n, ml/min）',
+        name: '肌酐清除率\n(CrCL，ml/min)',
         width: '179px'
       },
     ],
@@ -246,8 +246,8 @@ let jyjcList = [
   {
     title: '同型半胱氨酸',
     showChart: false,
-    getTableUrl: '/cdms/assessment/detect-heart-rate/list',
-    saveTableUrl: '/cdms/assessment/detect-heart-rate/',
+    getTableUrl: '/cdms/assessment/detect-homocysteine/list',
+    saveTableUrl: '/cdms/assessment/detect-homocysteine/',
     getChartUrl:'/cdms/assessment/detect-charts/homocysteine',
     tableProps:[
       {
@@ -257,7 +257,7 @@ let jyjcList = [
       },
       {
         key: 'homocysteineValue',
-        name: '同型半胱氨酸 \n(umol/L)',
+        name: '同型半胱氨酸\n(umol/L)',
         width: '210px'
       }
     ],
@@ -287,7 +287,7 @@ let jyjcList = [
       },
       {
         key: 'tfOhVitd',
-        name: '25-OH-维生素D \n（25-OH-Vitd）',
+        name: '25-OH-维生素D\n(25-OH-Vitd)',
         width: '130px'
       }
     ],

@@ -262,38 +262,36 @@
                 <div v-show="gmEdit" class="add-angle"></div>
               </el-col>
               <el-col class="content-item" v-if="!gmEdit" :span="21" style="margin:0 auto;">
-                <el-scrollbar>
-                  <el-table :data="allergenHistory"
-                            :height="210"
-                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
-                            style="width: 100%">
-                    <el-table-column fixed prop="allergen" align="center" label="过敏原">
-                    </el-table-column>
-                    <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
-                    </el-table-column>
-                    <el-table-column prop="allergyDatetime" align="center" label="发生日期" width="150">
-                    </el-table-column>
-                    <el-table-column
-                      fixed="right"
-                      label="操作"
-                      align="center"
-                      width="200">
-                      <template slot-scope="scope">
-                        <el-button @click="editAllergy(scope.row)" type="text">编辑</el-button>
-                        <el-popconfirm
-                          confirm-button-text='好的'
-                          cancel-button-text='不用了'
-                          icon="el-icon-info"
-                          title="确定删除吗？"
-                          @confirm="delAllergy(scope.row)"
-                          style="margin-left: 10px"
-                        >
-                          <el-button slot="reference" type="text">删除</el-button>
-                        </el-popconfirm>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </el-scrollbar>
+                <el-table :data="allergenHistory"
+                          :height="210"
+                          :header-cell-style="{background:'#1e3f7c',color:'white'}"
+                          style="width: 100%">
+                  <el-table-column fixed prop="allergen" align="center" label="过敏原">
+                  </el-table-column>
+                  <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="allergyDatetime" align="center" label="发生日期" width="150">
+                  </el-table-column>
+                  <el-table-column
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    width="200">
+                    <template slot-scope="scope">
+                      <el-button @click="editAllergy(scope.row)" type="text">编辑</el-button>
+                      <el-popconfirm
+                        confirm-button-text='好的'
+                        cancel-button-text='不用了'
+                        icon="el-icon-info"
+                        title="确定删除吗？"
+                        @confirm="delAllergy(scope.row)"
+                        style="margin-left: 10px"
+                      >
+                        <el-button slot="reference" type="text">删除</el-button>
+                      </el-popconfirm>
+                    </template>
+                  </el-table-column>
+                </el-table>
               </el-col>
               <el-col class="content-item" v-if="gmEdit" :span="20">
                 <el-row>
@@ -337,31 +335,28 @@
                 <div v-show="ywfyEdit" class="add-angle"></div>
               </el-col>
               <el-col class="content-item" v-if="!ywfyEdit" :span="21" style="margin:0 auto;">
-                <el-scrollbar>
-                  <el-table :data="medSideList"
-                            :height="210"
-                            :header-cell-style="{background:'#1e3f7c',color:'white'}"
-                            style="width: 100%">
-                    <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
-                    </el-table-column>
-                    <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
-                    </el-table-column>
-                    <el-table-column prop="occurrenceDatetime" align="center" label="发生日期" width="150">
-                    </el-table-column>
-                    <el-table-column
-                      fixed="right"
-                      label="操作"
-                      align="center"
-                      width="200">
-                      <template slot-scope="scope">
-                        <el-button @click="editMedSide(scope.row)" type="text">编辑</el-button>
-                        <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
-                                   style="margin-left: 10px;">删除
-                        </el-button>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </el-scrollbar>
+                <el-table :data="medSideList"
+                          :height="210"
+                          :header-cell-style="{background:'#1e3f7c',color:'white'}">
+                  <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="occurrenceDatetime" align="center" label="发生日期" width="150">
+                  </el-table-column>
+                  <el-table-column
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    width="200">
+                    <template slot-scope="scope">
+                      <el-button @click="editMedSide(scope.row)" type="text">编辑</el-button>
+                      <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
+                                 style="margin-left: 10px;">删除
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
               </el-col>
               <el-col class="content-item" v-if="ywfyEdit" :span="20">
                 <el-form-item label="药品名称" label-width="100px">
@@ -408,36 +403,32 @@
 </template>
 
 <script>
+import { getDisease, getSurgical } from '@/api/param'
+import { getMed } from '@/api/outpatient'
 import {
-  getDisease,
-  getSurgical,
-  getMedList
-} from '@/api/param'
-import {
-  getMed
-} from '@/api/outpatient'
-import {
-  getFamilyHistory,
-  saveFamilyHistory,
-  delFamilyHistory,
-  getOldHistory,
-  saveOldHistory,
-  delOldHistory,
-  getSurgicalHistory,
-  saveSurgicalHistory,
-  delSurgicalHistory,
-  saveDiabetesHistory,
-  getDiabetesHistory,
   delDiabetesHistory,
-  getKidneyInfo,
-  saveKidneyInfo,
-  getLiverInfo,
-  saveLiverInfo,
-  saveAllergyHistory,
+  deleteAllergyHistory,
+  delFamilyHistory,
+  delMedSideList,
+  delOldHistory,
+  delSurgicalHistory,
   getAllergyHistory,
-  saveMedSideList,
+  getDiabetesHistory,
+  getFamilyHistory,
+  getKidneyInfo,
+  getLiverInfo,
   getMedSideList,
-  delMedSideList, updateAllergyHistory, deleteAllergyHistory
+  getOldHistory,
+  getSurgicalHistory,
+  saveAllergyHistory,
+  saveDiabetesHistory,
+  saveFamilyHistory,
+  saveKidneyInfo,
+  saveLiverInfo,
+  saveMedSideList,
+  saveOldHistory,
+  saveSurgicalHistory,
+  updateAllergyHistory
 } from '@/api/patients'
 
 export default {

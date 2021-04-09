@@ -2,11 +2,11 @@
   <div class="life-style jyjc-wrap">
     <div class="view">
       <el-row :gutter="24">
-        <el-col :span="chartIndex < 2 || chartIndex == 6 || chartIndex == 7 ? 12: 24"
+        <el-col :span="chartIndex < 2 || chartIndex === 6 || chartIndex === 7 ? 12: 24"
                 v-for="(chart, chartIndex) in chartList" :key="chartIndex">
           <el-card>
             <el-row type="flex" :gutter="24">
-              <el-col class="left-item" :span="chartIndex < 2 || chartIndex == 6 || chartIndex == 7 ? 4: 2">
+              <el-col class="left-item" :span="chartIndex < 2 || chartIndex === 6 || chartIndex === 7 ? 4: 2">
                 <div class="item-wrap">
                   {{ chart.title }}
                 </div>
@@ -19,17 +19,23 @@
                   </div>
                 </div>
               </el-col>
-              <el-col :span="chartIndex < 2 || chartIndex == 6 || chartIndex == 7 ? 20: 22">
+              <el-col :span="chartIndex < 2 || chartIndex === 6 || chartIndex === 7 ? 20: 22">
                 <div class="table" v-if="!chart.showChart">
                   <el-table
                     :data="chart.tableData"
-                    stripe
-                    style="width: 100%">
+                    :height="235"
+                    stripe>
                     <el-table-column
                       v-for="(prop, propIndex) in chart.tableProps"
                       :key="propIndex"
                       :prop="prop.key"
-                      :label="prop.name">
+                      :label="prop.name"
+                      align="center">
+                      <template
+                        slot="header"
+                        slot-scope="{ column, $index }">
+                        <pre style="margin: 0;padding: 0;">{{ prop.name }}</pre>
+                      </template>
                       <template slot-scope="scope">
                         <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]" placeholder=""
                                   type="number" :min="0"></el-input>
@@ -40,13 +46,23 @@
                           type="date"
                           placeholder="日期">
                         </el-date-picker>
+                        <span v-else-if="chartIndex === 0&&propIndex === 1">{{
+                            scope.row.morningLowPressureValue
+                          }} - {{ scope.row.morningHighPressureValue }}</span>
+                        <span v-else-if="chartIndex === 0&&propIndex === 2">{{
+                            scope.row.noonLowPressureValue
+                          }} - {{ scope.row.noonHighPressureValue }}</span>
+                        <span v-else-if="chartIndex === 0&&propIndex === 3">{{
+                            scope.row.nightLowPressureValue
+                          }} - {{ scope.row.nightHighPressureValue }}</span>
                         <span v-else>{{ scope.row[ prop.key ] }}</span>
                       </template>
                     </el-table-column>
                   </el-table>
                 </div>
                 <div class="charts" v-else>
-                  <line-charts :key="chartIndex" :grid="lineGrid" :chartData="chart.lineData"></line-charts>
+                  <line-graph :ref="'chart'+chartIndex" :id="'chart'+chartIndex"
+                              :graph-style="[{height:'210px'}]" style="padding: 15px;"></line-graph>
                 </div>
               </el-col>
             </el-row>
@@ -59,8 +75,8 @@
 
 <script>
 import request from '@/utils/request'
-import lineCharts from '@/views/components/echarts/lineCharts'
 import chartList from '../../config/jyjcCharts'
+import LineGraph from '@/views/echarts/LineGraph';
 
 export default {
   props: {
@@ -84,7 +100,7 @@ export default {
       }
     }
   },
-  components: {lineCharts},
+  components: {LineGraph},
   watch: {
     'assessmentId': function(val) {
       if (val) {
@@ -119,24 +135,28 @@ export default {
         this.chartList[ chartIndex ].showChart = false
       } else {
         let url = this.chartList[ chartIndex ].getChartUrl
+        this.chartList[ chartIndex ].showChart = true
         this.getData(url).then(res => {
-          console.log('图表：', res)
-          let {data} = res
-          // let lineData = {
-          //   "columns": [
-          //     "日期"
-          //   ],
-          //   "rows": [
-          //     {}
-          //   ]
-          // }
-          // if (data) {
-          //   data.forEach(item => {
-
-          //   })
-          // }
-          this.chartList[ chartIndex ].lineData = data
-          this.chartList[ chartIndex ].showChart = true
+          if (res.code === 200) {
+            let {data} = res
+            let {series} = data
+            if (series.length !== 0) {
+              this.$refs[ `chart${ chartIndex }` ][ 0 ].chartOption = {
+                legend: {
+                  data: data.legendData
+                },
+                xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: data.xaxisData
+                },
+                yAxis: {
+                  type: 'value'
+                },
+                series: series
+              };
+            }
+          }
         })
       }
     }
@@ -146,6 +166,10 @@ export default {
 
 <style lang="scss">
 .life-style.jyjc-wrap {
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
   ::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -167,7 +191,7 @@ export default {
 
   .item-wrap {
     line-height: 40px;
-    margin-top: 40px;
+    margin-top: 60px;
   }
 
   .add-btn {
@@ -206,6 +230,10 @@ export default {
     margin-bottom: 24px;
   }
 
+  .el-card {
+    height: 240px;
+  }
+
   .el-card__body {
     .el-col, .el-row {
       margin: 0 !important;
@@ -221,7 +249,6 @@ export default {
 
   .table {
     height: 100%;
-    overflow-y: auto;
 
     .el-table {
       font-size: 12px;
