@@ -73,7 +73,6 @@
 
 <script>
 import request from '@/utils/request'
-// import VeLine from 'v-charts/lib/line.common'
 import lineCharts from '@/views/components/echarts/lineCharts'
 import chartList from '../config/jyjcCharts'
 export default {

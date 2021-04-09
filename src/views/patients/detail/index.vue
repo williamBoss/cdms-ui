@@ -4,36 +4,52 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card>
-          <div class="title">用药数量</div>
-          <ve-line height="200px" :grid="lineGrid" :legend-visible="showLegend" :data="chartData"></ve-line>
+          <div class="title" slot="header">
+            <span>用药数量</span>
+          </div>
+          <div style="height: 250px">
+            <line-graph ref="useMedGraph" :id="'useMedGraph'" :graph-style="[{height:'250px'}]"></line-graph>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div class="title">药物治疗</div>
-          <ve-pie height="200px" :grid="pieGrid" :extend="pieExtend" :settings="pieSettings" legend-position="left"
-                  :data="pieData"></ve-pie>
+          <div class="title" slot="header">
+            <span>药物治疗</span>
+          </div>
+          <div style="height: 250px">
+            <pie-graph ref="useMedicalTreatment" :id="'useMedicalTreatment'"
+                       :graph-style="[{height:'250px'}]"></pie-graph>
+          </div>
         </el-card>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="10">
         <el-card>
-          <div class="title">费用</div>
-          <ve-histogram :grid="lineGrid" :data="hisData"></ve-histogram>
+          <div class="title" slot="header">
+            <span>费用</span>
+          </div>
+          <div style="height: 250px">
+            <bar-graph ref="fee" :id="'fee'" :graph-style="[{height:'250px'}]"></bar-graph>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="14">
         <el-card>
-          <div class="title">生存质量</div>
-          <ve-line :grid="lineGrid" :data="lineData"></ve-line>
+          <div class="title" slot="header">
+            <span>生存质量</span>
+          </div>
+          <div style="height: 250px">
+            <line-graph ref="qualityLifeGraph" :id="'qualityLifeGraph'" :graph-style="[{height:'250px'}]"></line-graph>
+          </div>
         </el-card>
       </el-col>
     </el-row>
-    <el-tabs type="border-card" v-model="activeTab" @tab-click="changeTab">
-      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.key">
+    <el-tabs type="border-card" stretch v-model="activeTab" @tab-click="changeTab">
+      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.id">
       </el-tab-pane>
-      <ve-line :grid="lineGrid" :data="tabData"></ve-line>
+      <line-graph ref="inspection" :id="'inspection'" :graph-style="[{height:'250px'}]"></line-graph>
     </el-tabs>
     <PatientAssessmentDrawer ref="patientDrawer"
                              :visible="visible"
@@ -52,10 +68,6 @@
 </template>
 
 <script>
-import 'echarts/lib/component/legendScroll';
-import VeLine from 'v-charts/lib/line.common'
-import VePie from 'v-charts/lib/pie.common'
-import VeHistogram from 'v-charts/lib/histogram.common'
 import tabPage from '../components/pgCom/index.vue'
 import {
   getUseMedicine,
@@ -72,164 +84,60 @@ import {
   getLiverFunction
 } from '@/api/patients'
 import PatientAssessmentDrawer from '@/views/patients/components/PatientAssessmentDrawer';
+import BarChart from '@/views/dashboard/BarChart';
+import LineGraph from '@/views/echarts/LineGraph';
+import PieGraph from '@/views/echarts/PieGraph';
+import BarGraph from '@/views/echarts/BarGraph';
 
 export default {
+
   name: 'patientsDetail', // 患者管理详情
-  components: {PatientAssessmentDrawer, VeLine, VePie, VeHistogram, tabPage},
+  components: {BarGraph, PieGraph, LineGraph, BarChart, PatientAssessmentDrawer, tabPage},
   data() {
     return {
       visible: true,
-      showLegend: false,
       drawerShow: false,
       assessmentId: '',
-      lineGrid: {
-        x: 20,
-        y: 20,
-        x2: 20,
-        y2: 20
-      },
-      pieGrid: {
-        x: 20,
-        y: 40,
-        x2: 20,
-        y2: 40
-      },
-      pieSettings: {
-        offsetY: '50%',
-        label: {
-          show: false
-        }
-      },
-      chartData: {
-        columns: [],
-        rows: []
-      },
-      pieExtend: {
-        legend: {
-          orient: 'vertical',
-          type: 'scroll',
-          top: 10,
-          left: 0
-        }
-      },
-      pieData: {
-        'columns': [
-          '日期',
-          '余额',
-          '年龄'
-        ],
-        'rows': [
-          {
-            '日期': '1-1',
-            '余额': 123,
-            '年龄': 3
-          },
-          {
-            '日期': '1-2',
-            '余额': 1223,
-            '年龄': 6
-          },
-          {
-            '日期': '1-3',
-            '余额': 2123,
-            '年龄': 9
-          },
-          {
-            '日期': '1-4',
-            '余额': 4123,
-            '年龄': 12
-          },
-          {
-            '日期': '1-5',
-            '余额': 3123,
-            '年龄': 15
-          },
-          {
-            '日期': '1-6',
-            '余额': 7123,
-            '年龄': 20
-          }
-        ]
-      },
-      hisData: {
-        'columns': [
-          '日期',
-          '余额',
-          '年龄'
-        ],
-        'rows': [
-          {
-            '日期': '1-1',
-            '余额': 123,
-            '年龄': 3
-          },
-          {
-            '日期': '1-2',
-            '余额': 1223,
-            '年龄': 6
-          },
-          {
-            '日期': '1-3',
-            '余额': 2123,
-            '年龄': 9
-          },
-          {
-            '日期': '1-4',
-            '余额': 4123,
-            '年龄': 12
-          },
-          {
-            '日期': '1-5',
-            '余额': 3123,
-            '年龄': 15
-          },
-          {
-            '日期': '1-6',
-            '余额': 7123,
-            '年龄': 20
-          }
-        ]
-      },
-      lineData: {
-        'columns': [],
-        'rows': []
-      },
-      tabData: {
-        'columns': [],
-        'rows': []
-      },
-      activeTab: 'getBloodPressure',
+      activeTab: 'getHeartRate',
       tabList: [
         {
           name: '血压',
-          key: 'getBloodPressure'
+          key: 'getBloodPressure',
+          id: 'bloodPressure'
         }, {
           name: '心率',
-          key: 'getHeartRate'
+          key: 'getHeartRate',
+          id: 'heartRate'
         }, {
           name: '血脂尿酸',
-          key: 'getLipidsUricAcid'
+          key: 'getLipidsUricAcid',
+          id: 'lipidsUricAcid'
         }, {
           name: '血糖',
-          key: 'getBloodSugar'
+          key: 'getBloodSugar',
+          id: 'bloodSugar'
         }, {
           name: '肝功能',
-          key: 'getLiverFunction'
+          key: 'getLiverFunction',
+          id: 'liverFunction'
         }, {
           name: '肾功能',
-          key: 'getKidneyFunction'
+          key: 'getKidneyFunction',
+          id: 'kidneyFunction'
         }, {
           name: '同型半胱氨酸',
-          key: 'getHomocysteine'
+          key: 'getHomocysteine',
+          id: 'homocysteine'
         }, {
           name: '电解质',
-          key: 'getElectrolyte'
+          key: 'getElectrolyte',
+          id: 'electrolyte'
         } ]
     }
   },
   created() {
     this.getList()
-    this.getTabList()
+    this.getTabData(this.activeTab)
   },
   methods: {
     closedDrawer(val) {
@@ -245,71 +153,108 @@ export default {
       }
       getUseMedicine(param).then((res) => {
         if (res.code === 200) {
-          this.chartData.columns = [ 'data', '数量' ]
-          let list = []
-          for (let i = 0; i < res.data.xaxisDatas.length; i++) {
-            let param = {
-              data: res.data.xaxisDatas[ i ],
-              '数量': res.data.series[ 0 ].datas[ i ]
-            }
-            list.push(param)
+          let {data} = res
+          let {series} = data
+          series.forEach(v => {
+            v.smooth = true
+          })
+          if (series.length !== 0) {
+            this.$refs.useMedGraph.chartOption = {
+              legend: {
+                data: data.legendData
+              },
+              xAxis: {
+                type: 'category',
+                data: data.xaxisData
+              },
+              yAxis: {
+                type: 'value'
+              },
+              series: series
+            };
           }
-          this.chartData.rows = list
         }
       })
       getUseMedicalTreatment(param).then((res) => {
-        if (res.code === 200) {
-          this.pieData.columns = [ 'name', 'value' ]
-          this.pieData.rows = res.data.series[ 0 ].dataList
+        let {data} = res
+        if (res.code === 200 && data) {
+          let {series} = data
+          series.forEach(v => {
+            v.smooth = true
+            v.radius = [ 20, 110 ]
+            v.center = [ '60%', '50%' ]
+            v.roseType = 'area'
+            v.data = v.dataList
+            v.itemStyle = {
+              borderRadius: 8
+            }
+          })
+          if (series.length !== 0) {
+            this.$refs.useMedicalTreatment.chartOption = {
+              legend: {
+                data: data.legendData
+              },
+              series: series
+            }
+          }
         }
       })
       getMedicalFee(param).then((res) => {
-        if (res.code === 200) {
-          res.data.legendData.unshift('日期')
-          this.hisData.columns = res.data.legendData
-          let list = []
-          for (let i = 0; i < res.data.xaxisDatas.length; i++) {
-            let param = {
-              '日期': res.data.xaxisDatas[ i ]
+        let {data} = res
+        if (res.code === 200 && data) {
+          let {series} = data
+          if (series.length !== 0) {
+            series.forEach(v => {
+              v.stack = 'total'
+              v.label = {
+                show: true
+              }
+              v.emphasis = {
+                focus: 'series'
+              }
+            });
+            this.$refs.fee.chartOption = {
+              legend: {
+                data: data.legendData
+              },
+              grid: {
+                top: '20%'
+              },
+              xAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value} 万元'
+                }
+              },
+              yAxis: {
+                type: 'category',
+                data: data.xaxisData
+              },
+              series: series
             }
-            res.data.series.forEach((vv) => {
-              param[ vv.name ] = vv.datas[ i ]
-            })
-            list.push(param)
           }
-          this.hisData.rows = list
         }
       })
       getMedicalScale(param).then((res) => {
-        if (res.code === 200) {
-          res.data.legendData.unshift('日期')
-          this.lineData.columns = res.data.legendData
-          let list = []
-          for (let i = 0; i < res.data.xaxisDatas.length; i++) {
-            let param = {
-              '日期': res.data.xaxisDatas[ i ]
-            }
-            res.data.series.forEach((vv) => {
-              param[ vv.name ] = vv.datas[ i ] || 0
-            })
-            list.push(param)
+        let {data} = res
+        if (res.code === 200 && data) {
+          let {series} = data
+          this.$refs.qualityLifeGraph.chartOption = {
+            legend: {
+              data: data.legendData
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: data.xaxisData
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: series
           }
-          this.lineData.rows = list
-          // this.hisData.columns = res.data.legendData.unshift('日期')
-          // console.log(this.hisData.columns)
         }
       })
-    },
-    getTabList(index) {
-      if (!index) {
-        this.tabList.forEach((vv) => {
-          if (vv.key === this.activeTab) {
-            this.getTabData(vv.key)
-          }
-        })
-      } else {
-        this.getTabData(this.tabList[ index ].key)
-      }
     },
     getTabData(key) {
       let param = {
@@ -373,21 +318,23 @@ export default {
       }
     },
     handleTableData(data) {
-      this.tabData.columns = []
-      this.tabData.rows = []
-      data.legendData.unshift('日期')
-      this.tabData.columns = data.legendData
-      let list = []
-      for (let i = 0; i < data.xaxisDatas.length; i++) {
-        let param = {
-          '日期': data.xaxisDatas[ i ]
+      let {series} = data
+      if (series.length !== 0) {
+        this.$refs.inspection.chartOption = {
+          legend: {
+            data: data.legendData
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: data.xaxisData
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: series
         }
-        data.series.forEach((vv) => {
-          param[ vv.name ] = vv.datas[ i ]
-        })
-        list.push(param)
       }
-      this.tabData.rows = list
     },
     changeTab(val) {
       this.activeTab = val.name
@@ -414,10 +361,11 @@ export default {
 </style>
 <style scoped lang="scss">
 .patients {
-  padding: 30px 100px 30px 70px;
+  max-width: 1700px;
+  padding: 30px;
 
-  .el-card {
-    padding: 18px 15px;
+  ::v-deep .el-card__body {
+    padding: 15px;
 
     .title {
       font-size: 14px;
