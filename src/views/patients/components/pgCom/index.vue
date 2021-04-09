@@ -16,9 +16,6 @@
 </template>
 
 <script>
-import {
-  getReportInfo
-} from '@/api/patients'
 import lifeStyle from './lifeStyle'
 import history from './history'
 import curSym from './curSym'

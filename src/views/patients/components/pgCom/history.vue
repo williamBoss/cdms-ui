@@ -167,23 +167,16 @@
 </template>
 
 <script>
+import { getDisease, getSurgical } from '@/api/param'
 import {
-  getDisease,
-  getSurgical,
-  getMedList
-} from '@/api/param'
-import {
-  getMed
-} from '@/api/outpatient'
-import {
-  getFamilyHistory,
-  getOldHistory,
-  getSurgicalHistory,
+  getAllergyHistory,
   getDiabetesHistory,
+  getFamilyHistory,
   getKidneyInfo,
   getLiverInfo,
-  getAllergyHistory,
-  getMedSideList
+  getMedSideList,
+  getOldHistory,
+  getSurgicalHistory
 } from '@/api/patients'
 
 export default {
@@ -390,6 +383,7 @@ export default {
     color: #fff;
     font-size: 14px;
     height: 190px;
+    width: 100px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }

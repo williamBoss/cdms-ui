@@ -5,23 +5,27 @@
         <el-col :span="12">
           <el-card>
             <el-row type="flex">
-              <el-col class="left-item" :span="6">
+              <el-col class="left-item" :span="3">
                 生活方式
               </el-col>
-              <el-col class="content-item" :span="18">
-                <el-row>
+              <el-col class="content-item" :span="20">
+                <el-row style="top: 10%;">
                   <el-col class="life-item" :span="12">
-                    <div>身高：{{userInfo.height}}cm</div>
-                    <div>体重：{{userInfo.weight}}kg</div>
-                    <div>BMI：{{userInfo.bmi}}</div>
+                    <div>身高：{{ userInfo.height }}cm</div>
+                    <div>体重：{{ userInfo.weight }}kg</div>
+                    <div>BMI：{{ userInfo.bmi }}</div>
                   </el-col>
                   <el-col class="set-item" :span="12">
-                    <div class="extra">1年内体重(kg)</div>
+                    <div>1年内体重(kg)</div>
                     <el-form-item label="减少" label-width="40px">
-                      <el-input disabled size="mini" v-model="form.weightLossValue"></el-input>
+                      <el-input disabled size="mini" v-model="form.weightLossValue">
+                        <i slot="suffix">kg</i>
+                      </el-input>
                     </el-form-item>
                     <el-form-item label="增加" label-width="40px">
-                      <el-input disabled size="mini" v-model="form.weightGainValue"></el-input>
+                      <el-input disabled size="mini" v-model="form.weightGainValue">
+                        <i slot="suffix">kg</i>
+                      </el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -32,10 +36,10 @@
         <el-col :span="12">
           <el-card>
             <el-row type="flex">
-              <el-col class="left-item" :span="6">
+              <el-col class="left-item" :span="3">
                 饮食
               </el-col>
-              <el-col class="content-item" :span="18">
+              <el-col class="content-item" :span="20">
                 <el-row>
                   <el-form-item label="每日的主食量约(kg)" label-width="136px">
                     <el-input disabled size="mini" v-model="form.dailyBasicFoodAmount"></el-input>
@@ -88,10 +92,10 @@
         <el-col :span="12">
           <el-card>
             <el-row type="flex">
-              <el-col class="left-item" :span="6">
+              <el-col class="left-item" :span="3">
                 运动
               </el-col>
-              <el-col class="content-item" :span="18">
+              <el-col class="content-item" :span="20">
                 <el-form-item label="通常运动项目" label-width="96px">
                   <el-input disabled size="mini" v-model="form.usualSports"></el-input>
                 </el-form-item>
@@ -111,10 +115,10 @@
         <el-col :span="12">
           <el-card>
             <el-row type="flex">
-              <el-col class="left-item" :span="6">
+              <el-col class="left-item" :span="3">
                 睡眠
               </el-col>
-              <el-col class="content-item" :span="18">
+              <el-col class="content-item" :span="20">
                 <el-form-item label="有睡眠障碍吗？" label-width="110px">
                   <el-radio-group disabled v-model="form.isSleepDisorder">
                     <el-radio label="1">没有</el-radio>
@@ -143,58 +147,84 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-card>
-            <el-row type="flex">
-              <el-col class="left-item" :span="6">
+            <el-row>
+              <el-col class="left-item" :span="3">
                 费用
               </el-col>
-              <el-col class="content-item" :span="18">
-                <el-row type="flex">
-                  <label class="name-item">就诊前</label>
-                  <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input disabled size="mini" v-model="form.beforeTotal"></el-input>
-                  </el-form-item>
-                  <el-form-item label="药费" label-width="60px">
-                    <el-input disabled size="mini" v-model="form.beforeMedicalExpenses"></el-input>
-                  </el-form-item>
-                </el-row>
-                <el-row type="flex">
-                  <label class="name-item">就诊3个月后</label>
-                  <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input disabled size="mini"  v-model="form.afterThreeTotal"></el-input>
-                  </el-form-item>
-                  <el-form-item label="药费" label-width="60px">
-                    <el-input disabled size="mini"  v-model="form.afterThreeMedicalExpenses"></el-input>
-                  </el-form-item>
-                </el-row>
-                <el-row type="flex">
-                  <label class="name-item">就诊6个月后</label>
-                  <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input disabled size="mini"  v-model="form.afterSixTotal"></el-input>
-                  </el-form-item>
-                  <el-form-item label="药费" label-width="60px">
-                    <el-input disabled size="mini"  v-model="form.afterSixMedicalExpenses"></el-input>
-                  </el-form-item>
-                </el-row>
-                <el-row type="flex">
-                  <label class="name-item">就诊12个月后</label>
-                  <el-form-item label="每月医疗费" label-width="82px">
-                    <el-input disabled size="mini"  v-model="form.afterTwelveTotal"></el-input>
-                  </el-form-item>
-                  <el-form-item label="药费" label-width="60px">
-                    <el-input disabled size="mini"  v-model="form.afterTwelveMedicalExpenses"></el-input>
-                  </el-form-item>
-                </el-row>
-              </el-col>
+              <el-scrollbar style="height: 178px;">
+                <el-col class="content-item" :span="21" style="width: 100%">
+                  <el-row>
+                    <el-col>
+                      <label class="name-item">就诊前</label>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="每月医疗费" label-width="82px">
+                        <el-input disable size="mini" v-model="form.beforeTotal"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="药费" label-width="60px">
+                        <el-input disable size="mini" v-model="form.beforeMedicalExpenses"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col>
+                      <label class="name-item">就诊3个月后</label>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="每月医疗费" label-width="82px">
+                        <el-input disable size="mini" v-model="form.afterThreeTotal"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="药费" label-width="60px">
+                        <el-input disable size="mini" v-model="form.afterThreeMedicalExpenses"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col>
+                      <label class="name-item">就诊6个月后</label>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="每月医疗费" label-width="82px">
+                        <el-input disable size="mini" v-model="form.afterSixTotal"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="药费" label-width="60px">
+                        <el-input disable size="mini" v-model="form.afterSixMedicalExpenses"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col>
+                      <label class="name-item">就诊12个月后</label>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="每月医疗费" label-width="82px">
+                        <el-input disable size="mini" v-model="form.afterTwelveTotal"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="药费" label-width="60px">
+                        <el-input disable size="mini" v-model="form.afterTwelveMedicalExpenses"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-scrollbar>
             </el-row>
           </el-card>
         </el-col>
         <el-col :span="12">
           <el-card>
             <el-row type="flex">
-              <el-col class="left-item" :span="6">
+              <el-col class="left-item" :span="3">
                 总结
               </el-col>
-              <el-col class="content-item" :span="18">
+              <el-col class="content-item" :span="20">
                 <el-form-item label="描述" label-width="40px">
                   <el-input disabled type="textarea" :rows="7" v-model="form.lifestyleSummary"></el-input>
                 </el-form-item>
@@ -208,142 +238,154 @@
 </template>
 
 <script>
-  import {
-    getLifestyle,
-    getPatientInfo,
-  } from '@/api/patients'
-  export default {
-    props: {
-      activeName: {
-        type: String,
-        default: '',
-      },
-      assessmentId: {
-        type: String,
-        default: '',
-      }
+import { getLifestyle, getPatientInfo } from '@/api/patients'
+
+export default {
+  props: {
+    activeName: {
+      type: String,
+      default: ''
     },
-    data() {
-      return {
-        form: {},
-        checkList: [],
-        userInfo: {}
-      }
-    },
-    watch: {
-      'assessmentId': function (val) {
-        if (val) {
-          this.assessmentId = val
-          this.getPatientInfo()
-          this.getLifestyle()
-        }
-      }
-    },
-    created () {
-      this.getPatientInfo()
-      this.getLifestyle()
-    },
-    methods: {
-      getLifestyle () {
-        let param = {
-          "assessmentId": this.assessmentId,
-          "patientId": this.$route.params.id
-        }
-        getLifestyle(param).then((res) => {
-          if (res.code === 200) {
-            if (res.data) {
-              res.data.dailyFatAmount = res.data.dailyFatAmount.toString()
-              res.data.dailySaltAmount = res.data.dailySaltAmount.toString()
-              res.data.dailyVegetableFruitAmount = res.data.dailyVegetableFruitAmount.toString()
-              res.data.isDrinking = res.data.isDrinking.toString()
-              res.data.isExercise = res.data.isExercise.toString()
-              res.data.isFall = res.data.isFall.toString()
-              res.data.isSleepDisorder = res.data.isSleepDisorder.toString()
-              res.data.isSmoke = res.data.isSmoke.toString()
-              this.form = res.data
-            }
-          } else {
-            this.$message.error(res.errorMessage)
-          }
-        })
-      },
-      getPatientInfo () {
-        getPatientInfo(this.$route.params.id).then((res) => {
-          if (res.code === 200) {
-            this.userInfo = res.data
-            if (res.data.gender === 1) {
-              res.data.sexName = '男'
-            } else {
-              res.data.sexName = res.data.gender === 2 ? '女' : '未知'
-            }
-          }
-        })
+    assessmentId: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      form: {},
+      checkList: [],
+      userInfo: {}
+    }
+  },
+  watch: {
+    'assessmentId': function(val) {
+      if (val) {
+        this.assessmentId = val
+        this.getPatientInfo()
+        this.getLifestyle()
       }
     }
+  },
+  created() {
+    this.getPatientInfo()
+    this.getLifestyle()
+  },
+  methods: {
+    getLifestyle() {
+      let param = {
+        'assessmentId': this.assessmentId,
+        'patientId': this.$route.params.id
+      }
+      getLifestyle(param).then((res) => {
+        if (res.code === 200) {
+          if (res.data) {
+            res.data.dailyFatAmount = res.data.dailyFatAmount.toString()
+            res.data.dailySaltAmount = res.data.dailySaltAmount.toString()
+            res.data.dailyVegetableFruitAmount = res.data.dailyVegetableFruitAmount.toString()
+            res.data.isDrinking = res.data.isDrinking.toString()
+            res.data.isExercise = res.data.isExercise.toString()
+            res.data.isFall = res.data.isFall.toString()
+            res.data.isSleepDisorder = res.data.isSleepDisorder.toString()
+            res.data.isSmoke = res.data.isSmoke.toString()
+            this.form = res.data
+          }
+        } else {
+          this.$message.error(res.errorMessage)
+        }
+      })
+    },
+    getPatientInfo() {
+      getPatientInfo(this.$route.params.id).then((res) => {
+        if (res.code === 200) {
+          this.userInfo = res.data
+          if (res.data.gender === 1) {
+            res.data.sexName = '男'
+          } else {
+            res.data.sexName = res.data.gender === 2 ? '女' : '未知'
+          }
+        }
+      })
+    }
   }
+}
 </script>
 
 <style scoped lang="scss">
-  .life-style {
-    .left-item {
-      text-align: center;
-      background: #1e3f7c;
-      color: #fff;
-      font-size: 14px;
-      line-height: 13;
+.life-style {
+  .left-item {
+    width: 80px;
+    text-align: center;
+    background: #1e3f7c;
+    color: #fff;
+    font-size: 14px;
+    line-height: 13;
+  }
+
+  .el-card {
+    min-height: 180px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #606266;
+  }
+
+  .life-item {
+    line-height: 44px;
+    border-right: 1px solid #e1e1e1;
+  }
+
+  .el-form > .el-row {
+    margin-bottom: 20px;
+  }
+
+  ::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
+  .content-item {
+    padding: 8px 20px;
+
+    .el-form-item {
+      margin-bottom: 5px;
     }
-    .el-card{
-      min-height: 180px;
-      font-size:14px;
-      font-weight: 700;
-      color: #606266;
+
+    .food-item {
+      line-height: 35px;
     }
-    .life-item{
-      line-height: 44px;
-      border-right: 1px solid #e1e1e1;
+
+    .name-item {
+      width: 185px;
+      line-height: 36px;
     }
-    .extra{
-      padding-left: 20px;
-      margin: 8px 0;
-    }
-    .el-form>.el-row{
-      margin-bottom: 20px;
-    }
-    .content-item {
-      padding: 8px 20px;
-      .el-form-item{
-        margin-bottom: 5px;
-      }
-      .food-item{
-        line-height: 35px;
-      }
-      .name-item{
-        width: 185px;
-        line-height: 36px;
-      }
-      .el-textarea,.el-textarea__inner{
-        min-height: 160px;
-        background: #f0f0f0;
-        border: 0;
-      }
-    }
-    .el-button{
-      float: right;
-    }
-    .el-radio{
-      margin-right: 10px;
-    }
-    .el-radio__label{
-      padding-left: 5px;
+
+    .el-textarea, .el-textarea__inner {
+      min-height: 160px;
+      background: #f0f0f0;
+      border: 0;
     }
   }
-  .set-item{
-    padding: 0 20px;
+
+  .el-button {
+    float: right;
   }
+
+  .el-radio {
+    margin-right: 10px;
+  }
+
+  .el-radio__label {
+    padding-left: 5px;
+  }
+}
+
+.set-item {
+  line-height: 44px;
+  padding: 0 20px;
+}
 </style>
 <style lang="scss">
-.content-item{
-  .el-textarea,.el-textarea__inner{
+.content-item {
+  .el-textarea, .el-textarea__inner {
     min-height: 160px;
     background: #f0f0f0;
     border: 0;

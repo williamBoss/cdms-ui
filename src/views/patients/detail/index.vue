@@ -103,7 +103,7 @@ export default {
       visible: true,
       drawerShow: false,
       assessmentId: '',
-      activeTab: 'getHeartRate',
+      activeTab: 'getBloodPressure',
       tabList: [
         {
           name: '血压',
