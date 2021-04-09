@@ -4,8 +4,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-blood-pressure/list',
     saveTableUrl: '/cdms/assessment/detect-blood-pressure/',
-    getChartUrl:'/cdms/assessment/detect-charts/blood-pressure',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/blood-pressure',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -27,29 +28,16 @@ let jyjcList = [
         width: '64px'
       }
     ],
-    tableData: [
-      {
-        detectDate: '2016-05-02',
-        morningValue: '120',
-        nightValue: '120',
-        noonValue: '90',
-        id: 200333
-      },
-      {
-        detectDate: '2016-05-02',
-        morningValue: '110',
-        nightValue: '120',
-        noonValue: '90'
-      }
-    ]
+    tableData: []
   },
   {
     title: '心率',
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-heart-rate/list',
     saveTableUrl: '/cdms/assessment/detect-heart-rate/',
-    getChartUrl:'/cdms/assessment/detect-charts/heart-rate',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/heart-rate',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -78,8 +66,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-blood-lipids-uric-acid/list',
     saveTableUrl: '/cdms/assessment/detect-blood-lipids-uric-acid/',
-    getChartUrl:'/cdms/assessment/detect-charts/lipids-uric-acid',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/lipids-uric-acid',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -128,8 +117,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-blood-sugar/list',
     saveTableUrl: '/cdms/assessment/detect-blood-sugar/',
-    getChartUrl:'/cdms/assessment/detect-charts/blood-sugar',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/blood-sugar',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -173,8 +163,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-liver-function/list',
     saveTableUrl: '/cdms/assessment/detect-liver-function/',
-    getChartUrl:'/cdms/assessment/detect-charts/liver-function',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/liver-function',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -213,8 +204,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-kidney-function/list',
     saveTableUrl: '/cdms/assessment/detect-kidney-function/',
-    getChartUrl:'/cdms/assessment/detect-charts/kidney-function',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/kidney-function',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -239,7 +231,7 @@ let jyjcList = [
         key: 'creatinineClearanceRate',
         name: '肌酐清除率\n(CrCL，ml/min)',
         width: '179px'
-      },
+      }
     ],
     tableData: []
   },
@@ -248,8 +240,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-homocysteine/list',
     saveTableUrl: '/cdms/assessment/detect-homocysteine/',
-    getChartUrl:'/cdms/assessment/detect-charts/homocysteine',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/homocysteine',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',
@@ -268,8 +261,9 @@ let jyjcList = [
     showChart: false,
     getTableUrl: '/cdms/assessment/detect-electrolyte/list',
     saveTableUrl: '/cdms/assessment/detect-electrolyte/',
-    getChartUrl:'/cdms/assessment/detect-charts/electrolyte',
-    tableProps:[
+    getChartUrl: '/cdms/assessment/detect-charts/electrolyte',
+    insert: false,
+    tableProps: [
       {
         key: 'detectDate',
         name: '日期',

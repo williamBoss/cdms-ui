@@ -1,6 +1,6 @@
 <template>
   <div class="life-style jyjc-wrap">
-    <div class="view">
+    <div>
       <el-row :gutter="24">
         <el-col :span="chartIndex < 2 || chartIndex === 6 || chartIndex === 7 ? 12: 24"
                 v-for="(chart, chartIndex) in chartList" :key="chartIndex">
@@ -40,8 +40,8 @@
                         <pre style="margin: 0;padding: 0;">{{ prop.name }}</pre>
                       </template>
                       <template slot-scope="scope">
-                        <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]" placeholder=""
-                                  type="number" :min="0"></el-input>
+                        <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]"
+                                  :placeholder="chartIndex === 0?'低压 - 高压':''"></el-input>
                         <el-date-picker
                           v-else-if="!scope.row.id && propIndex === 0"
                           v-model="scope.row[prop.key]"
@@ -64,7 +64,8 @@
                     <el-table-column
                       prop="act"
                       label="编辑"
-                      align="center">
+                      align="center"
+                      v-if="chart.insert">
                       <template slot-scope="scope" v-if="!scope.row.id">
                         <div>
                           <el-button :disabled="saveBtn" @click="saveData(chartIndex, scope.$index)" type="text"
@@ -155,6 +156,7 @@ export default {
     // 插入数据
     pushData(chartIndex) {
       let pushData = {}
+      this.chartList[ chartIndex ].insert = true
       this.chartList[ chartIndex ].tableProps.forEach(item => {
         pushData[ item.key ] = ''
       })
@@ -163,17 +165,28 @@ export default {
     // 取消数据
     cancelData(chartIndex, delindex) {
       this.chartList[ chartIndex ].tableData.splice(delindex, 1)
+      this.chartList[ chartIndex ].insert = false
     },
     // 保存数据
     saveData(chartIndex, saveIndex) {
       this.saveBtn = !this.saveBtn
       let url = this.chartList[ chartIndex ].saveTableUrl
       let params = this.chartList[ chartIndex ].tableData[ saveIndex ]
+      let morningValue = params.morningValue.split('-')
+      let nightValue = params.nightValue.split('-')
+      let noonValue = params.noonValue.split('-')
+      params.morningLowPressureValue = morningValue[ 0 ]
+      params.morningHighPressureValue = morningValue[ 1 ]
+      params.noonLowPressureValue = noonValue[ 0 ]
+      params.noonHighPressureValue = noonValue[ 1 ]
+      params.nightLowPressureValue = nightValue[ 0 ]
+      params.nightHighPressureValue = nightValue[ 1 ]
       this.saveTableData(url, params).then(res => {
         if (res.code === 200 && res.success) {
           this.getAllTableData()
           this.saveBtn = !this.saveBtn
           this.$message.success('保存成功')
+          this.chartList[ chartIndex ].insert = false
         }
       })
     },
@@ -221,7 +234,7 @@ export default {
     overflow-x: hidden;
   }
 
-  ::-webkit-scrollbar {
+  /*::-webkit-scrollbar {
     width: 3px;
     height: 3px;
   }
@@ -234,7 +247,7 @@ export default {
   ::-webkit-scrollbar-track {
     border-radius: 3px;
     background: #ededed;
-  }
+  }*/
 
   .flex {
     display: flex;

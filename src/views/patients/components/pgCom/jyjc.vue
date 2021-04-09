@@ -170,7 +170,7 @@ export default {
     overflow-x: hidden;
   }
 
-  ::-webkit-scrollbar {
+  /*::-webkit-scrollbar {
     width: 3px;
     height: 3px;
   }
@@ -183,7 +183,7 @@ export default {
   ::-webkit-scrollbar-track {
     border-radius: 3px;
     background: #ededed;
-  }
+  }*/
 
   .flex {
     display: flex;
