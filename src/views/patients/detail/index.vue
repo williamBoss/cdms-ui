@@ -1,69 +1,74 @@
 <template>
-  <div class="patients">
-    <el-button type="primary" size="medium" @click="back" style="margin-bottom: 20px">返回</el-button>
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <el-card>
-          <div class="title" slot="header">
-            <span>用药数量</span>
-          </div>
-          <div style="height: 250px">
-            <line-graph ref="useMedGraph" :id="'useMedGraph'" :graph-style="[{height:'250px'}]"></line-graph>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card>
-          <div class="title" slot="header">
-            <span>药物治疗</span>
-          </div>
-          <div style="height: 250px">
-            <pie-graph ref="useMedicalTreatment" :id="'useMedicalTreatment'"
-                       :graph-style="[{height:'250px'}]"></pie-graph>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="10">
-        <el-card>
-          <div class="title" slot="header">
-            <span>费用</span>
-          </div>
-          <div style="height: 250px">
-            <bar-graph ref="fee" :id="'fee'" :graph-style="[{height:'250px'}]"></bar-graph>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="14">
-        <el-card>
-          <div class="title" slot="header">
-            <span>生存质量</span>
-          </div>
-          <div style="height: 250px">
-            <line-graph ref="qualityLifeGraph" :id="'qualityLifeGraph'" :graph-style="[{height:'250px'}]"></line-graph>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-tabs type="border-card" stretch v-model="activeTab" @tab-click="changeTab">
-      <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.id">
-      </el-tab-pane>
-      <line-graph ref="inspection" :id="'inspection'" :graph-style="[{height:'250px'}]"></line-graph>
-    </el-tabs>
-    <PatientAssessmentDrawer ref="patientDrawer"
-                             :visible="visible"
-                             :modal="false"
-                             @closedDrawer="closedDrawer"
-                             @getInfo="getInfo"></PatientAssessmentDrawer>
-    <el-drawer
-      title=""
-      :visible.sync="drawerShow"
-      direction="ltr"
-      class="drawer-tab"
-      size="70%">
-      <tab-page :assessmentId="assessmentId"></tab-page>
-    </el-drawer>
+  <div>
+    <div class="patients">
+      <el-button type="primary" size="medium" @click="back" style="margin-bottom: 20px">返回</el-button>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-card>
+            <div class="title" slot="header">
+              <span>用药数量</span>
+            </div>
+            <div class="el-card-body" style="height: 250px">
+              <line-graph ref="useMedGraph" :id="'useMedGraph'" :graph-style="[{height:'220px'}]"></line-graph>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card>
+            <div class="title" slot="header">
+              <span>药物治疗</span>
+            </div>
+            <div class="el-card-body" style="height: 250px">
+              <pie-graph ref="useMedicalTreatment" :id="'useMedicalTreatment'"
+                         :graph-style="[{height:'220px'}]"></pie-graph>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="10">
+          <el-card>
+            <div class="title" slot="header">
+              <span>费用</span>
+            </div>
+            <div class="el-card-body" style="height: 250px">
+              <bar-graph ref="fee" :id="'fee'" :graph-style="[{height:'220px'}]"></bar-graph>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="14">
+          <el-card>
+            <div class="title" slot="header">
+              <span>生存质量</span>
+            </div>
+            <div class="el-card-body" style="height: 250px">
+              <line-graph ref="qualityLifeGraph" :id="'qualityLifeGraph'"
+                          :graph-style="[{height:'220px'}]"></line-graph>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-tabs type="border-card" stretch v-model="activeTab" @tab-click="changeTab">
+        <el-tab-pane v-for="item in tabList" :label="item.name" :name="item.key" :key="item.id">
+        </el-tab-pane>
+        <line-graph ref="inspection" :id="'inspection'" :graph-style="[{height:'300px'}]"></line-graph>
+      </el-tabs>
+      <PatientAssessmentDrawer ref="patientDrawer"
+                               :visible="visible"
+                               :modal="false"
+                               @closedDrawer="closedDrawer"
+                               @getInfo="getInfo"></PatientAssessmentDrawer>
+    </div>
+    <div>
+      <el-drawer
+        title=""
+        :visible.sync="drawerShow"
+        direction="ltr"
+        class="drawer-tab"
+        size="70%">
+        <tab-page :assessmentId="assessmentId"></tab-page>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
@@ -365,11 +370,15 @@ export default {
   padding: 30px;
 
   ::v-deep .el-card__body {
-    padding: 15px;
 
     .title {
       font-size: 14px;
     }
+
+    .el-card-body {
+      padding: 15px;
+    }
+
   }
 
   .el-row {

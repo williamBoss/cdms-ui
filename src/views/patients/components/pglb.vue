@@ -229,7 +229,7 @@
       :visible.sync="dialogVisible">
       <PgSet ref="pgSet" @onClose="onClose" />
       <div slot="footer" class="dialog-footer">
-        <el-button class="btn-size" @click="onClose" style="float: none">取 消</el-button>
+        <el-button class="btn-size" @click="dialogVisible =false" style="float: none">取 消</el-button>
         <el-button class="btn-size" type="primary" @click="$refs.pgSet.saveData()" style="float: none">保存
         </el-button>
       </div>
