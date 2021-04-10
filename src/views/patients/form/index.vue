@@ -130,7 +130,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .drawer-tab {
   .el-drawer__body {
     overflow: auto;

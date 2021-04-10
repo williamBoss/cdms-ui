@@ -21,7 +21,9 @@
         <div class="title">{{ index + 1 }}.{{ item.question }}</div>
         <div class="optins-item">
           <el-radio-group v-model="form[item.value]">
-            <el-radio v-for="ii in item.options" :label="ii.value" style="min-width: 100px">{{ ii.label }}</el-radio>
+            <el-row v-for="ii in item.options" style="padding: 10px">
+              <el-radio :label="ii.value" style="min-width: 100px">{{ ii.label }}</el-radio>
+            </el-row>
           </el-radio-group>
         </div>
       </div>
@@ -208,7 +210,10 @@
       <div class="quest-item" v-for="item in curList.list">
         <div class="title">{{ item.title }}</div>
         <el-checkbox-group v-model="capriniChoose">
-          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value">{{ ll.question }}</el-checkbox>
+          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value" style="width: 220px">{{
+              ll.question
+            }}
+          </el-checkbox>
         </el-checkbox-group>
       </div>
     </div>
@@ -219,7 +224,7 @@
     </div>
     <div class="btn-wrap" v-if="curTag.id">
       <el-button class="btn-size" type="primary" v-if="this.chooseTag !== this.questionList.length-1"
-                 @click="goNextQuestion">下一步
+                 @click="goNextQuestion">跳过
       </el-button>
       <el-button class="btn-size" type="primary" v-else @click="goNext">下一步</el-button>
       <el-button class="btn-size" type="primary" @click="saveInfo" style="margin-right: 10px;">保存</el-button>
@@ -540,6 +545,7 @@ export default {
         saveMorisky(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
+            this.scord = res.data.morCountScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -558,6 +564,7 @@ export default {
       if (this.curList.name === 'eq5d3l') {
         saveEq5d3l(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.eq5d3lScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -567,6 +574,7 @@ export default {
       if (this.curList.name === 'eq5d5l') {
         saveEq5d5l(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.eq5d5lScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -576,6 +584,7 @@ export default {
       if (this.curList.name === 'vas') {
         saveVas(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.vasScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -585,6 +594,7 @@ export default {
       if (this.curList.name === 'haq') {
         saveHaq(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.easyHaqScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -594,6 +604,7 @@ export default {
       if (this.curList.name === 'essen') {
         saveEssen(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.essenScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -603,6 +614,7 @@ export default {
       if (this.curList.name === 'sas') {
         saveSas(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.sasScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -623,6 +635,7 @@ export default {
       if (this.curList.name === 'chads') {
         saveChads(this.form).then((res) => {
           if (res.code === 200) {
+            this.scord = res.data.chadsScore
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -643,8 +656,7 @@ export default {
       if (this.curList.name === 'af') {
         saveAf(this.form).then((res) => {
           if (res.code === 200) {
-            this.form = res.data
-            this.scord = parseFloat(res.data.afScore)
+            // this.form = res.data
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)

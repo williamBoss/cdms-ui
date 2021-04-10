@@ -73,42 +73,41 @@
       </el-row>
       <el-row class="cur-wrap" :gutter="20">
         <el-col>
-          <el-card>
+          <el-card style="height:100%">
             <el-row type="flex">
               <el-col class="left-item" :span="3">
                 当前症状描述
               </el-col>
               <el-col class="content-item no-scroll" :span="21">
-                <el-row>
-                  <el-col :span="4">
-                    <div class="page-item">
-                      {{ page.curPage }}<span> / {{ checkList.length }}</span>
-                    </div>
-                    <div class="title-item">{{
-                        checkList[ page.curPage - 1 ] && checkList[ page.curPage - 1 ].nickname
-                      }}
-                    </div>
-                  </el-col>
-                  <el-col :span="20">
-                    <el-checkbox-group class="flex" v-if="checkList[page.curPage - 1]" v-model="curSym.list">
-                      <el-checkbox v-for="item in checkList[page.curPage - 1].list" :label="item.value"
-                                   :key="item.value">{{ item.name }}
-                        <el-input v-show="item.key" placeholder="" class="check-input" size="mini" type="primary"
-                                  v-model="curSym[item.key]"></el-input>
-                      </el-checkbox>
-                    </el-checkbox-group>
-                  </el-col>
+                <el-row v-for="(item,index) in checkList">
+                  <el-row style="padding: 10px">
+                    <el-col :span="4">
+                      <div class="page-item">
+                        {{ index + 1 }}<span> / {{ checkList.length }}</span>
+                      </div>
+                      <div class="title-item">{{ item && item.nickname }}</div>
+                    </el-col>
+                    <el-col :span="20" style="min-height: 90px">
+                      <el-checkbox-group v-model="curSym[item.name]">
+                        <el-checkbox v-if="!v.key" v-for="v in item.list" :label="v.value" :key="v.value">{{
+                            v.name
+                          }}
+                        </el-checkbox>
+                      </el-checkbox-group>
+                    </el-col>
+                    <el-col>
+                      <div v-for="v in item.list" v-if="v.key" style="float:right;display: inline-flex">
+                        <div style="width: 40px;line-height: 28px;">{{ v.name }}</div>
+                        <el-input class="check-input" size="mini" type="primary" v-model="curSym[v.key]"
+                                  placeholder="请输入其他症状">
+                        </el-input>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-divider></el-divider>
                 </el-row>
-                <el-divider></el-divider>
                 <el-row style="margin-top: 10px;height: 30px;">
                   <el-button class="card-btn" type="primary" size="mini" @click="onSubmit">保存</el-button>
-                  <el-pagination
-                    small
-                    layout="prev, pager, next"
-                    :page-size="1"
-                    @current-change="changePage"
-                    :total="checkList.length">
-                  </el-pagination>
                 </el-row>
               </el-col>
             </el-row>
@@ -123,19 +122,9 @@
 </template>
 
 <script>
-import {
-  getDisease,
-  getQuestionList
-} from '@/api/param'
+import { getDisease } from '@/api/param'
 import axios from 'axios'
-import {
-  getConsult,
-  saveConsult,
-  getDiagnosis,
-  saveDiagnosis,
-  getSymptom,
-  saveSymptom
-} from '@/api/patients'
+import { getConsult, getDiagnosis, getSymptom, saveConsult, saveDiagnosis, saveSymptom } from '@/api/patients'
 
 export default {
   props: {
@@ -152,8 +141,6 @@ export default {
         diagnosisKey: ''
       },
       curSym: {
-        list: [],
-        desc: '',
         cardiovascular: [],
         digestiveSystem: [],
         endocrine: [],
@@ -263,9 +250,6 @@ export default {
     editItem(type) {
       this[ type ] = !this[ type ]
     },
-    filterMethod() {
-
-    },
     goNext() {
       this.$emit('update:activeName', 'lifeStyle');
     },
@@ -284,7 +268,6 @@ export default {
       })
     },
     onSubmit() {
-      this.curSym[ this.checkList[ this.page.curPage - 1 ].name ] = this.curSym.list
       this.curSym.assessmentId = this.$route.params.assessmentId
       this.curSym.patientId = this.$route.params.id
       saveSymptom(this.curSym).then((res) => {
@@ -352,7 +335,7 @@ export default {
   }
 
   .el-checkbox {
-    width: 170px;
+    width: 150px;
   }
 
   ::v-deep .el-scrollbar__wrap {
@@ -420,9 +403,13 @@ export default {
     line-height: 30px;
   }
 
-  .check-input {
-    margin-left: 10px;
-    width: 200px;
+  ::v-deep.el-input__inner {
+    width: 243px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
   }
 
   .card-btn {
@@ -441,7 +428,7 @@ export default {
   .page-item {
     font-size: 40px;
     color: #1890FF;
-    padding-top: 20px;
+    padding-top: 1px;
     font-weight: normal;
 
     span {

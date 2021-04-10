@@ -13,8 +13,10 @@
       <div class="question-item" v-for="(item, index) in curList.list">
         <div class="title">{{ index + 1 }}.{{ item.question }}</div>
         <div class="optins-item">
-          <el-radio-group disabled v-model="form[item.value]">
-            <el-radio v-for="ii in item.options" :label="ii.value" style="min-width: 100px">{{ ii.label }}</el-radio>
+          <el-radio-group v-model="form[item.value]">
+            <el-row v-for="ii in item.options" style="padding: 10px">
+              <el-radio :label="ii.value" style="min-width: 100px">{{ ii.label }}</el-radio>
+            </el-row>
           </el-radio-group>
         </div>
       </div>
@@ -217,7 +219,7 @@
       <div class="quest-item" v-for="item in curList.list">
         <div class="title">{{ item.title }}</div>
         <el-checkbox-group disabled v-model="capriniChoose">
-          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value">{{ ll.question }}</el-checkbox>
+          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value" style="width: 220px">{{ ll.question }}</el-checkbox>
         </el-checkbox-group>
       </div>
     </div>
