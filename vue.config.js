@@ -49,14 +49,7 @@ module.exports = {
       }
     },
     disableHostCheck: true,
-    before(app) {
-      app.get('/api/questionList', (req, res) => {
-        res.json({
-          erron: 0,
-          data: questionList
-        })
-      })
-    }
+    before(app) { }
   },
   configureWebpack: {
     name: name,

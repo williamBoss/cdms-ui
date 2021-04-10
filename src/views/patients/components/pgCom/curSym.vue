@@ -200,9 +200,9 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: '/api/questionList'
+        url: '/question.json'
       }).then(function(response) {
-        _this.checkList = response.data.data.diagnose
+        _this.checkList = response.data.diagnose
       }).catch(function(error) {
         console.log(error);
       });

@@ -327,13 +327,21 @@ export default {
       var x = document.getElementsByClassName('el-table__header')[ 0 ].rows[ 0 ].cells;
       x[ 1 ].colSpan = 2;
     },
-    getQuestionList() {
+    async getQuestionList() {
       var _this = this
       let param = {
         'assessmentId': this.$route.params.assessmentId || this.assessmentId,
         'patientId': this.$route.params.id
       }
-      getAssessmentTable(param).then((res) => {
+      await axios({
+        method: 'get',
+        url: '/question.json'
+      }).then(function(response) {
+        _this.allQuestion = response.data.data
+      }).catch(function(error) {
+        console.log(error);
+      });
+      await getAssessmentTable(param).then((res) => {
         if (res.code === 200) {
           this.questionList = res.data
           if (this.questionList.length === 0) {
@@ -343,14 +351,6 @@ export default {
           }
         }
       })
-      axios({
-        method: 'get',
-        url: '/api/questionList'
-      }).then(function(response) {
-        _this.allQuestion = response.data.data.data
-      }).catch(function(error) {
-        console.log(error);
-      });
     },
     getList() {
       let param = {
@@ -488,7 +488,8 @@ export default {
         })
       }
     },
-    getTable(item) {
+    getTable(item, index) {
+      this.chooseTag = index
       this.curTag = item
       this.form = {}
       this.scord = 0

@@ -239,35 +239,35 @@
 
 <script>
 import {
-  getAssessmentTable,
-  saveMorisky,
-  getMorisky,
-  saveQuestionRisk,
-  getQuestionRisk,
-  saveEq5d3l,
-  getEq5d3l,
-  saveEq5d5l,
-  getEq5d5l,
-  saveVas,
-  getVas,
-  saveHaq,
-  getHaq,
-  getEssen,
-  saveEssen,
-  getSas,
-  saveSas,
-  getSds,
-  saveSds,
-  saveChads,
-  getChads,
   getAcr,
+  getAf,
+  getAssessmentTable,
+  getCaprini,
+  getCat,
+  getChads,
+  getEq5d3l,
+  getEq5d5l,
+  getEssen,
+  getHaq,
+  getMorisky,
+  getQuestionRisk,
+  getSas,
+  getSds,
+  getVas,
   saveAcr,
   saveAf,
-  getAf,
-  saveCat,
-  getCat,
   saveCaprini,
-  getCaprini
+  saveCat,
+  saveChads,
+  saveEq5d3l,
+  saveEq5d5l,
+  saveEssen,
+  saveHaq,
+  saveMorisky,
+  saveQuestionRisk,
+  saveSas,
+  saveSds,
+  saveVas
 } from '@/api/patients'
 import axios from 'axios'
 import PgSet from '@/views/patients/list/pgSet';
@@ -347,13 +347,21 @@ export default {
       var x = document.getElementsByClassName('el-table__header')[ 0 ].rows[ 0 ].cells;
       x[ 1 ].colSpan = 2;
     },
-    getQuestionList() {
+    async getQuestionList() {
       var _this = this
       let param = {
         'assessmentId': this.$route.params.assessmentId,
         'patientId': this.$route.params.id
       }
-      getAssessmentTable(param).then((res) => {
+      await axios({
+        method: 'get',
+        url: '/question.json'
+      }).then(function(response) {
+        _this.allQuestion = response.data.data
+      }).catch(function(error) {
+        console.log(error);
+      });
+      await getAssessmentTable(param).then((res) => {
         if (res.code === 200) {
           this.questionList = res.data
           if (this.questionList.length === 0) {
@@ -363,14 +371,6 @@ export default {
           }
         }
       })
-      axios({
-        method: 'get',
-        url: '/api/questionList'
-      }).then(function(response) {
-        _this.allQuestion = response.data.data.data
-      }).catch(function(error) {
-        console.log(error);
-      });
     },
     getList() {
       let param = {
@@ -509,12 +509,16 @@ export default {
       }
     },
     getTable(item, index) {
+      console.log('getTable:{}{}', item, index)
+      console.log(this.allQuestion)
       this.chooseTag = index
       this.curTag = item
       this.form = {}
       this.scord = 0
       this.allQuestion.forEach((vv) => {
+        console.log(vv);
         if (vv.nickName.indexOf(item.questionnaireName) > -1 || item.questionnaireName.indexOf(vv.nickName) > -1) {
+          console.log(1);
           this.curList = vv
         }
       })
