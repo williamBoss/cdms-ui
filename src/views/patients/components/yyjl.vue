@@ -94,7 +94,7 @@
     </el-table>
     <el-form>
       <el-form-item style="margin-top: 20px;float: right;">
-        <el-button type="primary" style="margin-right: 10px;" @click="saveInfo">下一步</el-button>
+        <el-button class="btn-size" type="primary" style="margin-right: 10px;" @click="saveInfo">下一步</el-button>
       </el-form-item>
     </el-form>
     <el-dialog title="用药记录" :visible.sync="dialogVisible">

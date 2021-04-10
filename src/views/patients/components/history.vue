@@ -266,6 +266,16 @@
                           :height="210"
                           :header-cell-style="{background:'#1e3f7c',color:'white'}"
                           style="width: 100%">
+                  <el-table-column
+                    prop="index"
+                    label="序号"
+                    width="70"
+                    align="center"
+                    fixed>
+                    <template slot-scope="scope">
+                      {{ scope.$index + 1 }}
+                    </template>
+                  </el-table-column>
                   <el-table-column fixed prop="allergen" align="center" label="过敏原">
                   </el-table-column>
                   <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
@@ -338,6 +348,16 @@
                 <el-table :data="medSideList"
                           :height="210"
                           :header-cell-style="{background:'#1e3f7c',color:'white'}">
+                  <el-table-column
+                    prop="index"
+                    label="序号"
+                    width="70"
+                    align="center"
+                    fixed>
+                    <template slot-scope="scope">
+                      {{ scope.$index + 1 }}
+                    </template>
+                  </el-table-column>
                   <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
                   </el-table-column>
                   <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
@@ -351,9 +371,16 @@
                     width="200">
                     <template slot-scope="scope">
                       <el-button @click="editMedSide(scope.row)" type="text">编辑</el-button>
-                      <el-button @click="delItem(scope.row, scope.$index)" type="text" size="small"
-                                 style="margin-left: 10px;">删除
-                      </el-button>
+                      <el-popconfirm
+                        confirm-button-text='好的'
+                        cancel-button-text='不用了'
+                        icon="el-icon-info"
+                        title="确定删除吗？"
+                        @confirm="delItem(scope.row, scope.$index)"
+                        style="margin-left: 10px"
+                      >
+                        <el-button slot="reference" type="text">删除</el-button>
+                      </el-popconfirm>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -396,7 +423,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="goNext">下一步</el-button>
+        <el-button class="btn-size" type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -774,7 +801,11 @@ export default {
           break;
         }
         case 'saveAllergyHistory': {
-          param.allergen = this.form.allergen
+          if (this.form.allergen) {
+            this.$message.warning('请输入过敏原')
+            return false
+          }
+          param.allergen = this.form.allergen;
           param.allergyDatetime = this.form.allergyDatetime
           param.allergySymptoms = this.form.allergySymptoms
           if (this.form.allergyId === '') {
@@ -817,19 +848,13 @@ export default {
       })
     },
     delItem(item, index) {
-      this.$confirm('您确定删除此条记录', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        delMedSideList({id: item.medicationSideEffectId}).then((res) => {
-          if (res.code === 200) {
-            this.$message.success('删除成功')
-            this.medSideList.splice(index, 1)
-          } else {
-            this.$message.error(res.errorMessage)
-          }
-        })
+      delMedSideList({id: item.medicationSideEffectId}).then((res) => {
+        if (res.code === 200) {
+          this.$message.success('删除成功')
+          this.medSideList.splice(index, 1)
+        } else {
+          this.$message.error(res.errorMessage)
+        }
       })
     },
     handleClose(item, index, type) {

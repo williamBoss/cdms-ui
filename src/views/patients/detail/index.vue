@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="patients">
-      <el-button type="primary" size="medium" @click="back" style="margin-bottom: 20px">返回</el-button>
+      <el-button class="btn-size" type="primary" size="medium" @click="back" style="margin-bottom: 20px">返回</el-button>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-card>
@@ -75,10 +75,6 @@
 <script>
 import tabPage from '../components/pgCom/index.vue'
 import {
-  getUseMedicine,
-  getUseMedicalTreatment,
-  getMedicalFee,
-  getMedicalScale,
   getBloodPressure,
   getBloodSugar,
   getElectrolyte,
@@ -86,7 +82,11 @@ import {
   getHomocysteine,
   getKidneyFunction,
   getLipidsUricAcid,
-  getLiverFunction
+  getLiverFunction,
+  getMedicalFee,
+  getMedicalScale,
+  getUseMedicalTreatment,
+  getUseMedicine
 } from '@/api/patients'
 import PatientAssessmentDrawer from '@/views/patients/components/PatientAssessmentDrawer';
 import BarChart from '@/views/dashboard/BarChart';

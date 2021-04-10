@@ -116,7 +116,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="goNext">下一步</el-button>
+        <el-button class="btn-size" type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>

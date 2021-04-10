@@ -91,7 +91,7 @@
       </el-row>
     </div>
     <div style="margin: 20px 0;float: right;">
-      <el-button type="primary" style="margin-right: 10px;" @click="goNext">下一步</el-button>
+      <el-button class="btn-size" type="primary" style="margin-right: 10px;" @click="goNext">下一步</el-button>
     </div>
   </div>
 </template>
@@ -181,6 +181,7 @@ export default {
       params.noonHighPressureValue = noonValue[ 1 ]
       params.nightLowPressureValue = nightValue[ 0 ]
       params.nightHighPressureValue = nightValue[ 1 ]
+      params.assessmentId = this.assessmentId
       this.saveTableData(url, params).then(res => {
         if (res.code === 200 && res.success) {
           this.getAllTableData()
