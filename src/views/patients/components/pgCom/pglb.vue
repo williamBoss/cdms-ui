@@ -228,10 +228,11 @@
     </div>
     <div v-show="score!==''">
       <div class="result-wrap" v-for="rr in curList.rule"
-           v-if="(score > rr.min || score === rr.min) && (score < rr.max || score === rr.max)" :style="rr.color">
-        {{ curList.nickName }}得分：{{ score }}{{ rr.name }}
+           v-if="(score > rr.min || score === rr.min) && (rr.max === 'null'? !(score < rr.max):score < rr.max || score === rr.max)"
+           :style="rr.color">
+        {{ curList.nickName }}得分：{{ score }}  {{ rr.name }}
       </div>
-      <div class="result-wrap" v-if="curList.rule && curList.rule.length === 0">
+      <div class="result-wrap" v-if="curList.rule.length === 0">
         {{ curList.nickName }}得分：{{ score }}
       </div>
     </div>
