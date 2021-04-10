@@ -217,10 +217,15 @@
         </el-checkbox-group>
       </div>
     </div>
-    <div class="result-wrap" v-show="scord">
-      {{ curList.nickName }}得分：{{ scord }}
-      <span v-for="rr in curList.rule"
-            v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{ rr.name }}</span>
+    <div v-show="score!==''">
+      <div class="result-wrap" v-for="rr in curList.rule"
+           v-if="(score > rr.min || score === rr.min) && (rr.max === 'null'? !(score < rr.max):score < rr.max || score === rr.max)"
+           :style="rr.color">
+        {{ curList.nickName }}得分：{{ score }}  {{ rr.name }}
+      </div>
+      <div class="result-wrap" v-if="curList.rule.length === 0">
+        {{ curList.nickName }}得分：{{ score }}
+      </div>
     </div>
     <div class="btn-wrap" v-if="curTag.id">
       <el-button class="btn-size" type="primary" v-if="this.chooseTag !== this.questionList.length-1"
@@ -288,15 +293,13 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      form: {
-        vasId: 0
-      },
+      form: {},
       capriniChoose: [],
       questionList: [],
       allQuestion: [],
       curTag: {},
       curList: [],
-      scord: 0,
+      score: '',
       tableData: [],
       marks: {0: '0', 2: '2', 4: '4', 6: '6', 8: '8', 10: '10'},
       marksRuler: {1: '1', 2: '2', 3: '3', 4: '4', 5: '5'},
@@ -322,7 +325,6 @@ export default {
       //           }
       //         }
       if (columnIndex === 0) {
-        console.log(rowIndex)
         if (rowIndex % 6 === 0) {
           return {
             rowspan: 6, // 行
@@ -382,11 +384,12 @@ export default {
         'assessmentId': this.$route.params.assessmentId,
         'patientId': this.$route.params.id
       }
+      this.score = ''
       if (this.curList.name === 'yyycx') {
         getMorisky(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.morCountScore)
+            this.score = parseFloat(res.data.morCountScore)
           }
         })
       }
@@ -394,8 +397,7 @@ export default {
         getQuestionRisk(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            // this.scord = parseFloat(res.data.morCountScore)
-            // console.log(res.data)
+            // this.score = parseFloat(res.data.morCountScore)
           }
         })
       }
@@ -403,8 +405,7 @@ export default {
         getEq5d3l(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.eq5d3lScore)
-            // console.log(res.data)
+            this.score = parseFloat(res.data.eq5d3lScore)
           }
         })
       }
@@ -412,7 +413,7 @@ export default {
         getEq5d5l(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.eq5d5lScore)
+            this.score = parseFloat(res.data.eq5d5lScore)
           }
         })
       }
@@ -421,109 +422,95 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.vasScore = parseInt(res.data.vasScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.vasScore)
+            this.score = parseInt(res.data.vasScore)
           }
         })
       }
       if (this.curList.name === 'haq') {
         getHaq(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.easyHaqScore = parseInt(res.data.easyHaqScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.easyHaqScore)
+            this.score = parseFloat(res.data.easyHaqScore)
           }
         })
       }
       if (this.curList.name === 'essen') {
         getEssen(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.essenScore = parseInt(res.data.essenScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.essenScore)
+            this.score = parseFloat(res.data.essenScore)
           }
         })
       }
       if (this.curList.name === 'sas') {
         getSas(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.sasScore = parseInt(res.data.sasScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.sasScore)
+            this.score = parseFloat(res.data.sasScore)
           }
         })
       }
       if (this.curList.name === 'sds') {
         getSds(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.sdsScore = parseInt(res.data.sdsScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.sdsScore)
+            this.score = parseFloat(res.data.sdsScore)
           }
         })
       }
       if (this.curList.name === 'chads') {
         getChads(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.chadsScore = parseInt(res.data.chadsScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.chadsScore)
-            console.log(this.scord)
+            this.score = parseFloat(res.data.chadsScore)
           }
         })
       }
       if (this.curList.name === 'acr') {
         getAcr(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.acrScore = parseInt(res.data.acrScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.acrScore)
+            this.score = parseFloat(res.data.acrScore)
           }
         })
       }
       if (this.curList.name === 'af') {
         getAf(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.afScore = parseInt(res.data.afScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.afScore)
+            // this.score = parseFloat(res.data.afScore)
           }
         })
       }
       if (this.curList.name === 'cat') {
         getCat(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.catScore = parseInt(res.data.catScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.catScore)
+            this.score = parseFloat(res.data.catScore)
           }
         })
       }
       if (this.curList.name === 'caprini') {
         getCaprini(param).then((res) => {
           if (res.code === 200 && res.data) {
-            res.data.capriniScore = parseInt(res.data.capriniScore)
             this.capriniChoose = []
             res.data.capriniChoose.forEach((vv) => {
               vv = parseInt(vv)
               this.capriniChoose.push(vv)
             })
             this.form = res.data
-            this.scord = parseFloat(res.data.capriniScore)
+            this.score = parseFloat(res.data.capriniScore)
           }
         })
       }
     },
     getTable(item, index) {
-      console.log('getTable:{}{}', item, index)
-      console.log(this.allQuestion)
       this.chooseTag = index
       this.curTag = item
       this.form = {}
-      this.scord = 0
+      this.score = 0
       this.allQuestion.forEach((vv) => {
-        console.log(vv);
         if (vv.nickName.indexOf(item.questionnaireName) > -1 || item.questionnaireName.indexOf(vv.nickName) > -1) {
-          console.log(1);
           this.curList = vv
         }
       })
@@ -545,7 +532,7 @@ export default {
         saveMorisky(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
-            this.scord = res.data.morCountScore
+            this.score = parseFloat(res.data.morCountScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -564,7 +551,7 @@ export default {
       if (this.curList.name === 'eq5d3l') {
         saveEq5d3l(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.eq5d3lScore
+            this.score = parseFloat(res.data.eq5d3lScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -574,7 +561,7 @@ export default {
       if (this.curList.name === 'eq5d5l') {
         saveEq5d5l(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.eq5d5lScore
+            this.score = parseFloat(res.data.eq5d5lScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -584,7 +571,7 @@ export default {
       if (this.curList.name === 'vas') {
         saveVas(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.vasScore
+            this.score = parseFloat(res.data.vasScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -594,7 +581,7 @@ export default {
       if (this.curList.name === 'haq') {
         saveHaq(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.easyHaqScore
+            this.score = parseFloat(res.data.easyHaqScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -604,7 +591,7 @@ export default {
       if (this.curList.name === 'essen') {
         saveEssen(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.essenScore
+            this.score = parseFloat(res.data.essenScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -614,7 +601,7 @@ export default {
       if (this.curList.name === 'sas') {
         saveSas(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.sasScore
+            this.score = parseFloat(res.data.sasScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -625,7 +612,7 @@ export default {
         saveSds(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
-            this.scord = parseFloat(res.data.sdsScore)
+            this.score = parseFloat(res.data.sdsScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -635,7 +622,7 @@ export default {
       if (this.curList.name === 'chads') {
         saveChads(this.form).then((res) => {
           if (res.code === 200) {
-            this.scord = res.data.chadsScore
+            this.score = parseFloat(res.data.chadsScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -646,7 +633,7 @@ export default {
         saveAcr(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
-            this.scord = parseFloat(res.data.acrScore)
+            this.score = parseFloat(res.data.acrScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -657,6 +644,7 @@ export default {
         saveAf(this.form).then((res) => {
           if (res.code === 200) {
             // this.form = res.data
+            // this.score = parseFloat(res.data.afScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -667,7 +655,7 @@ export default {
         saveCat(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
-            this.scord = parseFloat(res.data.catScore)
+            this.score = parseFloat(res.data.catScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
@@ -679,7 +667,7 @@ export default {
         saveCaprini(this.form).then((res) => {
           if (res.code === 200) {
             this.form = res.data
-            this.scord = parseFloat(res.data.capriniScore)
+            this.score = parseFloat(res.data.capriniScore)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)

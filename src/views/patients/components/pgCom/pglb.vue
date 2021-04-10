@@ -219,14 +219,21 @@
       <div class="quest-item" v-for="item in curList.list">
         <div class="title">{{ item.title }}</div>
         <el-checkbox-group disabled v-model="capriniChoose">
-          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value" style="width: 220px">{{ ll.question }}</el-checkbox>
+          <el-checkbox v-for="ll in item.list" :label="ll.value" :key="ll.value" style="width: 220px">{{
+              ll.question
+            }}
+          </el-checkbox>
         </el-checkbox-group>
       </div>
     </div>
-    <div class="result-wrap" v-show="scord">
-      {{ curList.nickName }}得分：{{ scord }}
-      <span v-for="rr in curList.rule"
-            v-show="(scord > rr.min || scord === rr.min) && (scord < rr.max || scord === rr.max)">{{ rr.name }}</span>
+    <div v-show="score!==''">
+      <div class="result-wrap" v-for="rr in curList.rule"
+           v-if="(score > rr.min || score === rr.min) && (score < rr.max || score === rr.max)" :style="rr.color">
+        {{ curList.nickName }}得分：{{ score }}{{ rr.name }}
+      </div>
+      <div class="result-wrap" v-if="curList.rule && curList.rule.length === 0">
+        {{ curList.nickName }}得分：{{ score }}
+      </div>
     </div>
   </div>
 </template>
@@ -265,15 +272,13 @@ export default {
   data() {
     return {
       canEdit: true,
-      form: {
-        vasId: 0
-      },
+      form: {},
       capriniChoose: [],
       questionList: [],
       allQuestion: [],
       curTag: {},
       curList: [],
-      scord: 0,
+      score: '',
       tableData: [],
       marks: {0: '0', 2: '2', 4: '4', 6: '6', 8: '8', 10: '10'},
       marksRuler: {1: '1', 2: '2', 3: '3', 4: '4', 5: '5'},
@@ -359,11 +364,12 @@ export default {
         'assessmentId': this.$route.params.assessmentId || this.assessmentId,
         'patientId': this.$route.params.id
       }
+      this.score = ''
       if (this.curList.name === 'yyycx') {
         getMorisky(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.morCountScore)
+            this.score = parseFloat(res.data.morCountScore)
           }
         })
       }
@@ -371,8 +377,7 @@ export default {
         getQuestionRisk(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            // this.scord = parseFloat(res.data.morCountScore)
-            // console.log(res.data)
+            // this.score = parseFloat(res.data.morCountScore)
           }
         })
       }
@@ -380,8 +385,7 @@ export default {
         getEq5d3l(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.eq5d3lScore)
-            // console.log(res.data)
+            this.score = parseFloat(res.data.eq5d3lScore)
           }
         })
       }
@@ -389,7 +393,7 @@ export default {
         getEq5d5l(param).then((res) => {
           if (res.code === 200 && res.data) {
             this.form = res.data
-            this.scord = parseFloat(res.data.eq5d5lScore)
+            this.score = parseFloat(res.data.eq5d5lScore)
           }
         })
       }
@@ -398,7 +402,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.vasScore = parseInt(res.data.vasScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.vasScore)
+            this.score = parseInt(res.data.vasScore)
           }
         })
       }
@@ -407,7 +411,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.easyHaqScore = parseInt(res.data.easyHaqScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.easyHaqScore)
+            this.score = parseFloat(res.data.easyHaqScore)
           }
         })
       }
@@ -416,7 +420,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.essenScore = parseInt(res.data.essenScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.essenScore)
+            this.score = parseFloat(res.data.essenScore)
           }
         })
       }
@@ -425,7 +429,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.sasScore = parseInt(res.data.sasScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.sasScore)
+            this.score = parseFloat(res.data.sasScore)
           }
         })
       }
@@ -434,7 +438,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.sdsScore = parseInt(res.data.sdsScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.sdsScore)
+            this.score = parseFloat(res.data.sdsScore)
           }
         })
       }
@@ -443,8 +447,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.chadsScore = parseInt(res.data.chadsScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.chadsScore)
-            console.log(this.scord)
+            this.score = parseFloat(res.data.chadsScore)
           }
         })
       }
@@ -453,7 +456,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.acrScore = parseInt(res.data.acrScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.acrScore)
+            this.score = parseFloat(res.data.acrScore)
           }
         })
       }
@@ -462,7 +465,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.afScore = parseInt(res.data.afScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.afScore)
+            // this.score = parseFloat(res.data.afScore)
           }
         })
       }
@@ -471,7 +474,7 @@ export default {
           if (res.code === 200 && res.data) {
             res.data.catScore = parseInt(res.data.catScore)
             this.form = res.data
-            this.scord = parseFloat(res.data.catScore)
+            this.score = parseFloat(res.data.catScore)
           }
         })
       }
@@ -485,7 +488,7 @@ export default {
               this.capriniChoose.push(vv)
             })
             this.form = res.data
-            this.scord = parseFloat(res.data.capriniScore)
+            this.score = parseFloat(res.data.capriniScore)
           }
         })
       }
@@ -494,7 +497,7 @@ export default {
       this.chooseTag = index
       this.curTag = item
       this.form = {}
-      this.scord = 0
+      this.score = 0
       this.allQuestion.forEach((vv) => {
         if (vv.nickName.indexOf(item.questionnaireName) > -1 || item.questionnaireName.indexOf(vv.nickName) > -1) {
           this.curList = vv

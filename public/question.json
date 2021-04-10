@@ -1,2123 +1,2891 @@
 {
-  "data": [{
-    "type": "form",
-    "name": "yyycx",
-    "nickName": "用药依从性问卷",
-    "rule": [{
-      "name": "依从性差",
-      "max": 5.99,
-      "min": 0
-    }, {
-      "name": "依从性中等",
-      "max": 6,
-      "min": 7.99
-    }, {
-      "name": "依从性好",
-      "max": 8,
-      "min": 8
-    }],
-    "list": [{
-      "question": "您是否有时忘记服药？",
-      "value": "moriskyQuestion1",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "在过去的２周内，是否有一天或几天您忘记服药？",
-      "value": "moriskyQuestion2",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "治疗期间，当您觉得症状加重或出现其他症状时，您是否未告知医生而自行减少药量或停止服药？",
-      "value": "moriskyQuestion3",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "当您外出旅行或长时间离家时，您是否有时忘记随身携带药物？",
-      "value": "moriskyQuestion4",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "昨天您服药了吗？",
-      "value": "moriskyQuestion5",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "当您觉得自己的疾病已经得到控制时，您是否停止过服药？",
-      "value": "moriskyQuestion6",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "您是否觉得要坚持治疗计划有困难？",
-      "value": "moriskyQuestion7",
-      "options": [{
-        "label": "是",
-        "value": 0
-      },{
-        "label": "否",
-        "value": 1
-      }]
-    },{
-      "question": "您觉得要记住按时按量服药很难吗？",
-      "value": "moriskyQuestion8",
-      "options": [{
-        "label": "从不",
-        "value": 1
-      },{
-        "label": "偶尔",
-        "value": 2
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 4
-      },{
-        "label": "所有时间",
-        "value": 5
-      }]
-    }]
-  },{
-    "type": "form",
-    "name": "eq5d3l",
-    "nickName": "EQ-5D-3L",
-    "rule": [],
-    "list": [{
-      "question": "行动能力",
-      "value": "actionQ",
-      "options": [{
-        "label": "我可以四处走动, 没有任何困难。",
-        "value": 1
-      },{
-        "label": "我四处走动有些不方便。",
-        "value": 2
-      },{
-        "label": "我不能下床活动。",
-        "value": 3
-      }]
-    },{
-      "question": "自己照顾自己",
-      "value": "lookAfterSelfQ",
-      "options": [{
-        "label": "我能自己照顾自己, 没有任何困难。",
-        "value": 1
-      },{
-        "label": "我在洗脸、刷牙、洗澡或穿衣方面有些困难。",
-        "value": 2
-      },{
-        "label": "我无法自己洗脸、刷牙、洗澡或穿衣。",
-        "value": 3
-      }]
-    },{
-      "question": "日常活动 (如工作, 学习, 家务事, 家庭或休闲活动)",
-      "value": "dailyActQ",
-      "options": [{
-        "label": "我能进行日常活动, 没有任何困难。",
-        "value": 1
-      },{
-        "label": "我在进行日常活动方面有些困难。",
-        "value": 2
-      },{
-        "label": "我无法进行日常活动。",
-        "value": 3
-      }]
-    },{
-      "question": "疼痛 / 不舒服",
-      "value": "painQ",
-      "options": [{
-        "label": "我没有任何疼痛或不舒服。",
-        "value": 1
-      },{
-        "label": "我觉得中度疼痛或不舒服。",
-        "value": 2
-      },{
-        "label": "我觉得极度疼痛或不舒服。",
-        "value": 3
-      }]
-    },{
-      "question": "焦虑 (如紧张、担心、不安等等) / 抑郁 (如做事情缺乏兴趣、没乐趣、提不起精神等等)",
-      "value": "anxietyQ",
-      "options": [{
-        "label": "我不觉得焦虑或抑郁。",
-        "value": 1
-      },{
-        "label": "我觉得中度焦虑或抑郁。",
-        "value": 2
-      },{
-        "label": "我觉得极度焦虑或抑郁。",
-        "value": 3
-      }]
-    }]
-  },{
-    "type": "form",
-    "name": "sas",
-    "nickName": "SAS焦虑自评",
-    "param": "*1.25",
-    "rule": [{
-      "name": "正常",
-      "max": 49,
-      "min": 0
-    }, {
-      "name": "轻度焦虑",
-      "max": 60,
-      "min": 50
-    }, {
-      "name": "中度焦虑",
-      "max": 70,
-      "min": 61
-    }, {
-      "name": "重度焦虑",
-      "max": "null",
-      "min": 71
-    }],
-    "list": [{
-      "question": "我觉得比平常容易紧张和着急。",
-      "value": "sasQ1",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我无缘无故地感到害怕。",
-      "value": "sasQ2",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我容易心里烦乱或觉得惊慌。",
-      "value": "sasQ3",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我觉得我可能将要发疯。",
-      "value": "sasQ4",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我觉得一切都很好，也不会发生什么不幸。",
-      "value": "sasQ5",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 4
-      },{
-        "label": "小部分时间",
-        "value": 3
-      },{
-        "label": "相当多时间",
-        "value": 2
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 1
-      }]
-    },{
-      "question": "我手脚发抖打颤。",
-      "value": "sasQ6",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我因为头痛、头颈痛和背痛而苦恼。",
-      "value": "sasQ7",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我感觉容易衰弱和疲乏。",
-      "value": "sasQ8",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我觉得心平气和，并且容易安静地坐着。",
-      "value": "sasQ9",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 4
-      },{
-        "label": "小部分时间",
-        "value": 3
-      },{
-        "label": "相当多时间",
-        "value": 2
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 1
-      }]
-    },{
-      "question": "我觉得心跳得很快。",
-      "value": "sasQ10",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我因为一阵阵头晕而苦恼。",
-      "value": "sasQ11",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我有晕倒发作，或觉得要晕倒似的。",
-      "value": "sasQ12",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我吸气呼气都感到很容易。",
-      "value": "sasQ13",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 4
-      },{
-        "label": "小部分时间",
-        "value": 3
-      },{
-        "label": "相当多时间",
-        "value": 2
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 1
-      }]
-    },{
-      "question": "我手脚麻木和刺痛。",
-      "value": "sasQ14",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我因为胃痛和消化不良而苦恼。",
-      "value": "sasQ15",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我常常要小便。",
-      "value": "sasQ16",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我的手常常是干燥温暖的。",
-      "value": "sasQ17",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 4
-      },{
-        "label": "小部分时间",
-        "value": 3
-      },{
-        "label": "相当多时间",
-        "value": 2
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 1
-      }]
-    },{
-      "question": "我脸红发热。",
-      "value": "sasQ18",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    },{
-      "question": "我容易入睡并且一夜睡得很好。",
-      "value": "sasQ19",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 4
-      },{
-        "label": "小部分时间",
-        "value": 3
-      },{
-        "label": "相当多时间",
-        "value": 2
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 1
-      }]
-    },{
-      "question": "我作恶梦。",
-      "value": "sasQ20",
-      "options": [{
-        "label": "没有或很少时间",
-        "value": 1
-      },{
-        "label": "小部分时间",
-        "value": 2
-      },{
-        "label": "相当多时间",
-        "value": 3
-      },{
-        "label": "绝大部分或全部时间",
-        "value": 4
-      }]
-    }]
-  },{
-    "type": "form",
-    "name": "sds",
-    "nickName": "SDS焦虑抑郁量表",
-    "param": "*1.25",
-    "rule": [{
-      "name": "您非常健康呢",
-      "max": 49,
-      "min": 0
-    }, {
-      "name": "有抑郁症状",
-      "max": 52,
-      "min": 50
-    }, {
-      "name": "您有轻度抑郁，但是请别担心，请适当调整",
-      "max": 62,
-      "min": 53
-    }, {
-      "name": "您有中度抑郁，请及时调整自己的心态或寻求专业帮助",
-      "max": 72,
-      "min": 63
-    }, {
-      "name": "您有重度抑郁，已经影响到了您的日常生活，建议您立即接受专业心理咨询师的帮助。",
-      "max": "null",
-      "min": 73
-    }],
-    "list": [{
-      "question": "我感到情绪沮丧，郁闷？",
-      "value": "sdsQ1",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我感到早晨心情最好？",
-      "value": "sdsQ2",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我要哭或想哭？",
-      "value": "sdsQ3",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我晚上睡眠不好？",
-      "value": "sdsQ4",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我吃得和平时一样多？",
-      "value": "sdsQ5",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "异性接触时和以往一样感到愉快？",
-      "value": "sdsQ6",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我感到体重减轻？",
-      "value": "sdsQ7",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我有便秘的苦恼？",
-      "value": "sdsQ8",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我的心跳比平时快？",
-      "value": "sdsQ9",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我无故感到疲劳？",
-      "value": "sdsQ10",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我的头脑象往常一样清楚？",
-      "value": "sdsQ11",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我做事情象平时一样不感到困难？",
-      "value": "sdsQ12",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我坐卧不安,难以保持平静？",
-      "value": "sdsQ13",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我对未来感到有希望？",
-      "value": "sdsQ14",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我比平时更容易激怒？",
-      "value": "sdsQ15",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我觉得决定什么事很容易？",
-      "value": "sdsQ16",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "感到自己是有用的和不可缺少的人？",
-      "value": "sdsQ17",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "我的生活很有意义？",
-      "value": "sdsQ18",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    },{
-      "question": "假若我死了别人会过得更好？",
-      "value": "sdsQ19",
-      "options": [{
-        "label": "很少",
-        "value": 1
-      },{
-        "label": "有时",
-        "value": 2
-      },{
-        "label": "经常",
-        "value": 3
-      },{
-        "label": "持续",
-        "value": 4
-      }]
-    },{
-      "question": "我仍旧喜爱自己平时喜爱的东西？",
-      "value": "sdsQ20",
-      "options": [{
-        "label": "很少",
-        "value": 4
-      },{
-        "label": "有时",
-        "value": 3
-      },{
-        "label": "经常",
-        "value": 2
-      },{
-        "label": "持续",
-        "value": 1
-      }]
-    }]
-  },{
-    "type": "form",
-    "name": "eq5d5l",
-    "nickName": "EQ-5D-5L",
-    "param": "",
-    "rule": [],
-    "list": [{
-      "question": "行动能力——我四处活动",
-      "value": "actionQ",
-      "options": [{
-        "label": "没有困难",
-        "value": 1
-      },{
-        "label": "有一点困难",
-        "value": 2
-      },{
-        "label": "有中度困难",
-        "value": 3
-      },{
-        "label": "有严重困难",
-        "value": 4
-      },{
-        "label": "我无法四处活动",
-        "value": 5
-      }]
-    },{
-      "question": "自我照顾——我自己洗澡或穿衣",
-      "value": "lookAfterSelfQ",
-      "options": [{
-        "label": "没有困难",
-        "value": 1
-      },{
-        "label": "有一点困难",
-        "value": 2
-      },{
-        "label": "有中度困难",
-        "value": 3
-      },{
-        "label": "有严重困难",
-        "value": 4
-      },{
-        "label": "我无法照顾自己",
-        "value": 5
-      }]
-    },{
-      "question": "日常活动（如工作、学习、家务、家庭或休闲活动）",
-      "value": "dailyActQ",
-      "options": [{
-        "label": "没有困难",
-        "value": 1
-      },{
-        "label": "有一点困难",
-        "value": 2
-      },{
-        "label": "有中度困难",
-        "value": 3
-      },{
-        "label": "有严重困难",
-        "value": 4
-      },{
-        "label": "我无法进行日常活动",
-        "value": 5
-      }]
-    },{
-      "question": "疼痛或不舒服",
-      "value": "painQ",
-      "options": [{
-        "label": "没有疼痛或不舒服",
-        "value": 1
-      },{
-        "label": "有一点疼痛或不舒服",
-        "value": 2
-      },{
-        "label": "有中度疼痛或不舒服",
-        "value": 3
-      },{
-        "label": "有严重疼痛或不舒服",
-        "value": 4
-      },{
-        "label": "有非常严重的疼痛或不舒服",
-        "value": 5
-      }]
-    },{
-      "question": "焦虑或沮丧",
-      "value": "anxietyQ",
-      "options": [{
-        "label": "没有焦虑或沮丧",
-        "value": 1
-      },{
-        "label": "有一点焦虑或沮丧",
-        "value": 2
-      },{
-        "label": "有中度焦虑或沮丧",
-        "value": 3
-      },{
-        "label": "有严重的焦虑或沮丧",
-        "value": 4
-      },{
-        "label": "有非常严重的焦虑或沮丧",
-        "value": 5
-      }]
-    }]
-  },{
-    "type": "table",
-    "name": "caprini",
-    "nickName": "caprini静脉血栓评分表",
-    "param": "",
-    "value": "capriniChoose",
-    "rule": [{
-      "name": "低危",
-      "max": 2,
-      "min": 0
-    },{
-      "name": "中危",
-      "max": 4,
-      "min": 3
-    },{
-      "name": "高危",
-      "max": "null",
-      "min": 5
-    }],
-    "list": [{
-      "title": "以下每项风险因素记1分",
-      "value": "capriniChoose1",
-      "list": [{
-        "question": "年龄41-60岁",
-        "type": "checkbox",
-        "value": 1
-      },{
-        "question": "BMI≥25kg/㎡",
-        "type": "checkbox",
-        "value": 2
-      }, {
-        "question": "下肢水肿",
-        "type": "checkbox",
-        "value": 3
-      }, {
-        "question": "静脉曲张",
-        "type": "checkbox",
-        "value": 4
-      }, {
-        "question": "妊娠期或产后（＜1个月）",
-        "type": "checkbox",
-        "value": 5
-      }, {
-        "question": "不明原因或习惯性流产史",
-        "type": "checkbox",
-        "value": 6
-      }, {
-        "question": "服避孕药或雌激素替代治疗",
-        "type": "checkbox",
-        "value": 7
-      }, {
-        "question": "脓毒症（＜1个月）",
-        "type": "checkbox",
-        "value": 8
-      }, {
-        "question": "严重肺病，含肺炎（＜1个月）",
-        "type": "checkbox",
-        "value": 9
-      }, {
-        "question": "肺功能异常（COPD）",
-        "type": "checkbox",
-        "value": 10
-      }, {
-        "question": "急性心肌梗死",
-        "type": "checkbox",
-        "value": 11
-      }, {
-        "question": "充血性心力衰竭（＜1个月）",
-        "type": "checkbox",
-        "value": 12
-      }, {
-        "question": "炎性肠病史",
-        "type": "checkbox",
-        "value": 13
-      }, {
-        "question": "卧床内科患者",
-        "type": "checkbox",
-        "value": 14
-      }, {
-        "question": "小手术",
-        "type": "checkbox",
-        "value": 15
-      }, {
-        "question": "其他风险因素",
-        "type": "checkbox",
-        "value": 16
-      }]
-    }, {
-      "title": "以下每项风险因素记2分",
-      "value": "capriniChoose2",
-      "list": [{
-        "question": "年龄61-74岁",
-        "type": "checkbox",
-        "value": 17
-      },{
-        "question": "恶性肿瘤（既往或现患）",
-        "type": "checkbox",
-        "value": 18
-      }, {
-        "question": "石膏固定（＜1个月）",
-        "type": "checkbox",
-        "value": 19
-      }, {
-        "question": "限制卧床（＞72小时）",
-        "type": "checkbox",
-        "value": 20
-      }, {
-        "question": "中心静脉置管",
-        "type": "checkbox",
-        "value": 21
-      }, {
-        "question": "大手术（＞45分）",
-        "type": "checkbox",
-        "value": 22
-      }, {
-        "question": "关节镜手术",
-        "type": "checkbox",
-        "value": 23
-      }, {
-        "question": "腹腔镜手术数（＞45分）",
-        "type": "checkbox",
-        "value": 24
-      }]
-    }, {
-      "title": "以下每项风险因素记3分",
-      "value": "capriniChoose3",
-      "list": [{
-        "question": "年龄≥75岁",
-        "type": "checkbox",
-        "value": 25
-      },{
-        "question": "血栓家族史",
-        "type": "checkbox",
-        "value": 26
-      }, {
-        "question": "DVT/PTE史",
-        "type": "checkbox",
-        "value": 27
-      }, {
-        "question": "未列出的先天或后天血栓形成",
-        "type": "checkbox",
-        "value": 28
-      }, {
-        "question": "凝血酶原20210A阳性",
-        "type": "checkbox",
-        "value": 29
-      }, {
-        "question": "因子V Leiden阳性",
-        "type": "checkbox",
-        "value": 30
-      }, {
-        "question": "狼疮抗凝物阳性",
-        "type": "checkbox",
-        "value": 31
-      }, {
-        "question": "血清同型半胱氨酸升高",
-        "type": "checkbox",
-        "value": 32
-      }, {
-        "question": "抗心磷脂抗体升高",
-        "type": "checkbox",
-        "value": 33
-      }, {
-        "question": "肝素引起的血小板减少HIT",
-        "type": "checkbox",
-        "value": 34
-      }]
-    }, {
-      "title": "以下每项风险因素记5分",
-      "value": "capriniChoose4",
-      "list": [{
-        "question": "脑卒中（＜1个月）",
-        "type": "checkbox",
-        "value": 35
-      },{
-        "question": "急性脊髓损伤（瘫痪）（＜1个月）",
-        "type": "checkbox",
-        "value": 36
-      }, {
-        "question": "多发性创伤（＜1个月）",
-        "type": "checkbox",
-        "value": 37
-      }, {
-        "question": "髋关节、骨盆或下肢骨折",
-        "type": "checkbox",
-        "value": 38
-      }, {
-        "question": "选择性下肢关节置换术",
-        "type": "checkbox",
-        "value": 39
-      }]
-    }]
-  },{
-    "type": "ruler",
-    "name": "vas",
-    "nickName": "VAS疼痛评分表",
-    "param": "",
-    "rule": [{
-      "name": "无痛",
-      "max": 0,
-      "min": 0
-    },{
-      "name": "有轻微的疼痛，能忍受",
-      "max": 3,
-      "min": 1
-    },{
-      "name": "患者疼痛并影响到睡眠，尚能忍受",
-      "max": 6,
-      "min": 4
-    },{
-      "name": "患者出现强烈的疼痛，难以忍受，影响睡眠和食欲",
-      "max": 10,
-      "min": 7
-    }],
-    "list": [{
-      "question": "最近您的疼痛得分是？",
-      "min": 0,
-      "max": 10,
-      "step": 2
-    }]
-  },{
-    "type": "form",
-    "name": "haq",
-    "nickName": "HAQ健康评估",
-    "param": "",
-    "rule": [],
-    "list": [{
-      "question": "能自己穿衣吗？包括系鞋带和扣扣。",
-      "value": "easyHaq1",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能上床、起床吗？",
-      "value": "easyHaq2",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能将装满水的水杯送到嘴边吗？",
-      "value": "easyHaq3",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能出门在平路上行走吗？",
-      "value": "easyHaq4",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能洗澡并擦干身体吗？",
-      "value": "easyHaq5",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能弯腰从地上拾起衣物吗？",
-      "value": "easyHaq6",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能关水龙头或瓶塞吗？",
-      "value": "easyHaq7",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    },{
-      "question": "能上下公交车或出租车吗？",
-      "value": "easyHaq8",
-      "options": [{
-        "label": "无困难",
-        "value": 0
-      },{
-        "label": "有些困难",
-        "value": 1
-      },{
-        "label": "很困难",
-        "value": 2
-      },{
-        "label": "不能做",
-        "value": 3
-      }]
-    }]
-  },{
-    "type": "table",
-    "name": "essen",
-    "nickName": "ESSEN卒中风险评分",
-    "param": "",
-    "rule": [{
-      "name": "低危",
-      "max": 2,
-      "min": 0
-    },{
-      "name": "中危",
-      "max": 6,
-      "min": 3
-    },{
-      "name": "高危",
-      "max": 9,
-      "min": 7
-    }],
-    "list": [{
-      "question": "年龄",
-      "value": "age",
-      "options": [{
-        "label": "＜65岁",
-        "value": 0
-      },{
-        "label": "65~75岁",
-        "value": 1
-      },{
-        "label": "＞75岁",
-        "value": 2
-      }]
-    },{
-      "question": "高血压",
-      "value": "hypertension",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "糖尿病",
-      "value": "diabetes",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "既往心肌梗死",
-      "value": "previousMyocardialInfarction",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "其他心血管疾病（心房颤动、心肌梗死除外）",
-      "value": "otherCardiovascularDiseases",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "外周动脉疾病",
-      "value": "peripheralArterialDisease",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "吸烟",
-      "value": "smoking",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "既往缺血性脑卒中/TIA/血栓史",
-      "value": "pastIschemicStroke",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    }]
-  },{
-    "type": "table",
-    "name": "chads",
-    "nickName": "CHADS_2房颤患者卒中危险分层",
-    "param": "",
-    "rule": [{
-      "name": "低危",
-      "max": 1,
-      "min": 0
-    },{
-      "name": "中危",
-      "max": 3,
-      "min": 2
-    },{
-      "name": "高危",
-      "max": 6,
-      "min": 4
-    }],
-    "list": [{
-      "question": "充血性心衰史",
-      "value": "congestiveHeartFailure",
-      "name": "C（congestive heart failure）",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "血压持续高于140/90mmHg或接受抗高血压药物治疗",
-      "value": "hypertension",
-      "name": "H（Hypertension）",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "年龄大于75岁",
-      "value": "age",
-      "name": "A（Age）",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "糖尿病",
-      "value": "diabetesMellitus",
-      "name": "D（Diabetes Mellitus）",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "既往卒中或TIA病史",
-      "value": "priorStrokeTia",
-      "name": "S2（Prior Stroke or TIA）",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    }]
-  },{
-    "type": "ruler",
-    "name": "cat",
-    "nickName": "CAT慢阻肺疾病评估",
-    "param": "",
-    "rule": [{
-      "name": "轻微影响",
-      "max": 10,
-      "min": 0
-    },{
-      "name": "中等影响",
-      "max": 20,
-      "min": 11
-    },{
-      "name": "严重影响",
-      "max": 30,
-      "min": 21
-    },{
-      "name": "非常严重影响",
-      "max": 40,
-      "min": 31
-    }],
-    "list": [{
-      "question": "",
-      "value": "catQ1",
-      "startName": "我从不咳嗽",
-      "endName": "我一直咳嗽",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ2",
-      "startName": "我一点痰也没有",
-      "endName": "我有很多很多痰",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ3",
-      "startName": "我一点也没有胸闷的感觉",
-      "endName": "我有很重的胸闷的感觉",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ4",
-      "startName": "当我爬坡或爬一层楼时，我并不感到喘不过气来",
-      "endName": "当我爬坡或爬一层楼时，我感觉非常喘不过气来",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ5",
-      "startName": "我在家里的任何劳动都不受慢阻肺的影响",
-      "endName": "我在家里的任何活动都很受慢阻肺的影响",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ6",
-      "startName": "每当我外出时就外出",
-      "endName": "因为我有慢阻肺，我所以从来没有外出过",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ7",
-      "startName": "我睡眠非常好",
-      "endName": "因为我有慢阻肺，我的睡眠非常不好",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    },{
-      "question": "",
-      "value": "catQ8",
-      "startName": "我精力旺盛",
-      "endName": "我一点精力都没有",
-      "min": 1,
-      "max": 5,
-      "step": 1
-    }]
-  }, {
-    "type": "table",
-    "name": "xnxg",
-    "nickName": "心脑血管病风险评估",
-    "obj1": {
-      "name": "心脑血管病10年发病风险评估结果",
-      "desc": "理想危险因素状态：总胆固醇 < 200 mg/dl(5.18 mmol/L)，高密度脂蛋白胆固醇 ≥ 40 mg/dl(1.04 mmol/L)，未治疗的收缩压 < 120 mmHg，舒张压 < 80mmHg，腰围男性 < 90cm、女性 < 85cm，当前不吸烟，没有糖尿病，无心脑血管病家族史。年龄、性别和现居住地区使用用户输入的数值。",
-      "list": [{
-        "name": "10年发病风险",
-        "type": "select",
-        "value": "riskTenYearLevel",
-        "options": [{
-          "name": "低危",
-          "value": 1
-        }, {
-          "name": "中危",
-          "value": 2
-        }, {
-          "name": "高危",
-          "value": 3
-        }]
-      }, {
-        "name": "理想危险因素状态下，您的心脑血管病10年发病风险应小于",
-        "value": "riskTenYear",
-        "type": "input"
-      }]
+  "data": [
+    {
+      "type": "form",
+      "name": "yyycx",
+      "nickName": "用药依从性问卷",
+      "rule": [
+        {
+          "name": "依从性差",
+          "max": 5.99,
+          "min": 0,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        },
+        {
+          "name": "依从性中等",
+          "max": 6,
+          "min": 7.99,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "依从性好",
+          "max": 8,
+          "min": 8,
+          "color": "background: #39C35429;color: #39C354;"
+        }
+      ],
+      "list": [
+        {
+          "question": "您是否有时忘记服药？",
+          "value": "moriskyQuestion1",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "在过去的２周内，是否有一天或几天您忘记服药？",
+          "value": "moriskyQuestion2",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "治疗期间，当您觉得症状加重或出现其他症状时，您是否未告知医生而自行减少药量或停止服药？",
+          "value": "moriskyQuestion3",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "当您外出旅行或长时间离家时，您是否有时忘记随身携带药物？",
+          "value": "moriskyQuestion4",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "昨天您服药了吗？",
+          "value": "moriskyQuestion5",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "当您觉得自己的疾病已经得到控制时，您是否停止过服药？",
+          "value": "moriskyQuestion6",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "您是否觉得要坚持治疗计划有困难？",
+          "value": "moriskyQuestion7",
+          "options": [
+            {
+              "label": "是",
+              "value": 0
+            },
+            {
+              "label": "否",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "您觉得要记住按时按量服药很难吗？",
+          "value": "moriskyQuestion8",
+          "options": [
+            {
+              "label": "从不",
+              "value": 1
+            },
+            {
+              "label": "偶尔",
+              "value": 2
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 4
+            },
+            {
+              "label": "所有时间",
+              "value": 5
+            }
+          ]
+        }
+      ]
     },
-   "obj2": {
-     "name": "心脑血管病终生发病风险评估结果",
-     "tips": "（从目前生存至85岁时发生心脑血管病的风险，只在60岁以下人群中计算）",
-     "list": [{
-       "name": "终生发病风险",
-       "type": "select",
-       "value": "riskLifetimeLevel",
-       "options": [{
-         "name": "低危",
-         "value": 1
-       }, {
-         "name": "中危",
-         "value": 2
-       }, {
-         "name": "高危",
-         "value": 3
-       }]
-     }, {
-       "name": "理想危险因素状态下，您的心脑血管病终生发病风险应小于",
-       "value": "riskLifetime",
-       "type": "input"
-     }]
-   }
-  }, {
-    "type": "table",
-    "name": "acr",
-    "nickName": "ACR缓解标准",
-    "list": [{
-      "question": "关节疼痛",
-      "value": "arthralgia",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "关节触痛或活动时疼痛",
-      "value": "jointTenderness",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "关节及腱鞘软组织胀痛",
-      "value": "softTissuePain",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "晨僵时间>15min",
-      "value": "morningStiffness",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "血沉男性>30mm/h",
-      "value": "esrMale",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "血沉女性>20mm/h",
-      "value": "esrFemale",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    }]
-  }, {
-    "type": "table",
-    "name": "af",
-    "nickName": "房颤事件记录表",
-    "list": [{
-      "question": "是否发生过栓塞事件",
-      "type": "血栓事件",
-      "date": "embolismDate",
-      "value": "embolism",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "脑梗死",
-      "type": "血栓事件",
-      "date": "cerebralInfarctionDate",
-      "value": "cerebralInfarction",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "下肢栓塞",
-      "type": "血栓事件",
-      "date": "lowerLimbEmbolismDate",
-      "value": "lowerLimbEmbolism",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "心肌梗死",
-      "type": "血栓事件",
-      "date": "myocardialInfarctionDate",
-      "value": "myocardialInfarction",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "肺梗塞",
-      "type": "血栓事件",
-      "date": "pulmonaryInfarctionDate",
-      "value": "pulmonaryInfarction",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "其他",
-      "type": "血栓事件",
-      "input": true,
-      "date": "otherThromboticEventsDate",
-      "value": "otherThromboticEvents"
-    },{
-      "question": "是否发生过出血事件",
-      "type": "出血事件",
-      "date": "bleedingEventDate",
-      "value": "bleedingEvent",
-      "options": [{
-        "label": "是",
-        "value": 1
-      },{
-        "label": "否",
-        "value": 0
-      }]
-    },{
-      "question": "其他",
-      "type": "出血事件",
-      "input": true,
-      "date": "otherBleedingEventsDate",
-      "value": "otherBleedingEvents"
-    }]
-  }],
-  "diagnose": [{
-    "name": "cardiovascular",
-    "nickname": "心血管",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "心痛",
-      "value": "2"
-    },{
-      "name": "高血压",
-      "value": "3"
-    },{
-      "name": "心律失常",
-      "value": "4"
-    },{
-      "name": "心悸",
-      "value": "5"
-    },{
-      "name": "腿部水肿",
-      "value": "6"
-    },{
-      "name": "平躺时呼吸困难",
-      "value": "7"
-    },{
-      "name": "其他",
-      "key": "cardiovascularOtherDesc",
-      "value": "8"
-    }]
-  },{
-    "name": "digestiveSystem",
-    "nickname": "消化系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "便秘",
-      "value": "2"
-    },{
-      "name": "胃食管返流",
-      "value": "3"
-    },{
-      "name": "烧心",
-      "value": "4"
-    },{
-      "name": "胃肠溃疡",
-      "value": "5"
-    },{
-      "name": "肝炎",
-      "value": "6"
-    },{
-      "name": "恶心/呕吐",
-      "value": "7"
-    },{
-      "name": "其他",
-      "key": "digestiveSystemOtherDesc",
-      "value": "8"
-    }]
-  },{
-    "name": "endocrine",
-    "nickname": "内分泌",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "腺体肿胀",
-      "value": "2"
-    },{
-      "name": "甲状腺问题",
-      "value": "3"
-    },{
-      "name": "糖尿病",
-      "value": "4"
-    },{
-      "name": "其他",
-      "key": "endocrineOtherDesc",
-      "value": "5"
-    }]
-  },{
-    "name": "facialFeatures",
-    "nickname": "五官",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "视力问题",
-      "value": "2"
-    },{
-      "name": "重影",
-      "value": "3"
-    },{
-      "name": "青光眼",
-      "value": "4"
-    },{
-      "name": "白内障",
-      "value": "5"
-    },{
-      "name": "听力障碍",
-      "value": "6"
-    },{
-      "name": "耳鸣",
-      "value": "7"
-    },{
-      "name": "耳痛",
-      "value": "8"
-    },{
-      "name": "眩晕",
-      "value": "9"
-    },{
-      "name": "鼻塞",
-      "value": "10"
-    },{
-      "name": "流涕",
-      "value": "11"
-    },{
-      "name": "鼻血",
-      "value": "12"
-    },{
-      "name": "感染",
-      "value": "13"
-    },{
-      "name": "吞咽困难",
-      "value": "14"
-    },{
-      "name": "声音嘶哑",
-      "value": "15"
-    },{
-      "name": "喉咙痛",
-      "value": "16"
-    },{
-      "name": "牙龈出血 ",
-      "value": "17"
-    },{
-      "name": "其他",
-      "key": "facialFeaturesOtherDesc",
-      "value": "18"
-    }]
-  },{
-    "name": "hemolymphSystem",
-    "nickname": "血液淋巴系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "出血",
-      "value": "2"
-    },{
-      "name": "血栓",
-      "value": "3"
-    },{
-      "name": "腺体肿胀",
-      "value": "4"
-    },{
-      "name": "其他",
-      "key": "hemolymphSystemOtherDesc",
-      "value": "5"
-    }]
-  },{
-    "name": "immuneSystem",
-    "nickname": "免疫系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "过敏",
-      "value": "2"
-    },{
-      "name": "皮疹",
-      "value": "3"
-    },{
-      "name": "感染",
-      "value": "4"
-    },{
-      "name": "其他",
-      "key": "immuneSystemOtherDesc",
-      "value": "5"
-    }]
-  },{
-    "name": "musculoskeletalSystem",
-    "nickname": "肌肉骨骼系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "关节痛",
-      "value": "2"
-    },{
-      "name": "肌无力",
-      "value": "3"
-    },{
-      "name": "腿部无力",
-      "value": "4"
-    },{
-      "name": "肌肉抽筋",
-      "value": "5"
-    },{
-      "name": "其他",
-      "key": "musculoskeletalSystemOtherDesc",
-      "value": "6"
-    }]
-  },{
-    "name": "nervousSystem",
-    "nickname": "神经系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "头痛",
-      "value": "2"
-    },{
-      "name": "偏头痛",
-      "value": "3"
-    },{
-      "name": "癫痫",
-      "value": "4"
-    },{
-      "name": "麻木",
-      "value": "5"
-    },{
-      "name": "震颤",
-      "value": "6"
-    },{
-      "name": "晕厥",
-      "value": "7"
-    },{
-      "name": "其他",
-      "key": "nervousSystemOtherDesc",
-      "value": "8"
-    }]
-  },{
-    "name": "physique",
-    "nickname": "体质",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "体重减轻",
-      "value": "2"
-    },{
-      "name": "体重增加",
-      "value": "3"
-    },{
-      "name": "盗汗",
-      "value": "4"
-    },{
-      "name": "疲劳",
-      "value": "5"
-    },{
-      "name": "其他",
-      "key": "physiqueOtherDesc",
-      "value": "6"
-    }]
-  },{
-    "name": "psychological",
-    "nickname": "心理",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "抑郁",
-      "value": "2"
-    },{
-      "name": "哭闹",
-      "value": "3"
-    },{
-      "name": "焦虑",
-      "value": "4"
-    },{
-      "name": "嗜睡",
-      "value": "5"
-    },{
-      "name": "睡眠障碍",
-      "value": "6"
-    },{
-      "name": "其他",
-      "key": "psychologicalOtherDesc",
-      "value": "7"
-    }]
-  },{
-    "name": "respiratorySystem",
-    "nickname": "呼吸系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "咳嗽",
-      "value": "2"
-    },{
-      "name": "呼吸急促",
-      "value": "3"
-    },{
-      "name": "咯痰",
-      "value": "4"
-    },{
-      "name": "哮喘",
-      "value": "5"
-    },{
-      "name": "吸烟",
-      "value": "6"
-    },{
-      "name": "其他",
-      "key": "respiratorySystemOtherDesc",
-      "value": "7"
-    }]
-  },{
-    "name": "urogenitalSystem",
-    "nickname": "泌尿生殖系统",
-    "list": [{
-      "name": "无",
-      "value": "1"
-    },{
-      "name": "尿频",
-      "value": "2"
-    },{
-      "name": "尿痛",
-      "value": "3"
-    },{
-      "name": "血尿",
-      "value": "4"
-    },{
-      "name": "尿失禁",
-      "value": "5"
-    },{
-      "name": "其他",
-      "key": "urogenitalSystemOtherDesc",
-      "value": "6"
-    }]
-  }]
+    {
+      "type": "form",
+      "name": "eq5d3l",
+      "nickName": "EQ-5D-3L",
+      "rule": [],
+      "list": [
+        {
+          "question": "行动能力",
+          "value": "actionQ",
+          "options": [
+            {
+              "label": "我可以四处走动, 没有任何困难。",
+              "value": 1
+            },
+            {
+              "label": "我四处走动有些不方便。",
+              "value": 2
+            },
+            {
+              "label": "我不能下床活动。",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "自己照顾自己",
+          "value": "lookAfterSelfQ",
+          "options": [
+            {
+              "label": "我能自己照顾自己, 没有任何困难。",
+              "value": 1
+            },
+            {
+              "label": "我在洗脸、刷牙、洗澡或穿衣方面有些困难。",
+              "value": 2
+            },
+            {
+              "label": "我无法自己洗脸、刷牙、洗澡或穿衣。",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "日常活动 (如工作, 学习, 家务事, 家庭或休闲活动)",
+          "value": "dailyActQ",
+          "options": [
+            {
+              "label": "我能进行日常活动, 没有任何困难。",
+              "value": 1
+            },
+            {
+              "label": "我在进行日常活动方面有些困难。",
+              "value": 2
+            },
+            {
+              "label": "我无法进行日常活动。",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "疼痛 / 不舒服",
+          "value": "painQ",
+          "options": [
+            {
+              "label": "我没有任何疼痛或不舒服。",
+              "value": 1
+            },
+            {
+              "label": "我觉得中度疼痛或不舒服。",
+              "value": 2
+            },
+            {
+              "label": "我觉得极度疼痛或不舒服。",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "焦虑 (如紧张、担心、不安等等) / 抑郁 (如做事情缺乏兴趣、没乐趣、提不起精神等等)",
+          "value": "anxietyQ",
+          "options": [
+            {
+              "label": "我不觉得焦虑或抑郁。",
+              "value": 1
+            },
+            {
+              "label": "我觉得中度焦虑或抑郁。",
+              "value": 2
+            },
+            {
+              "label": "我觉得极度焦虑或抑郁。",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "sas",
+      "nickName": "SAS焦虑自评",
+      "param": "*1.25",
+      "rule": [
+        {
+          "name": "正常",
+          "max": 49,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "轻度焦虑",
+          "max": 60,
+          "min": 50,
+          "color": ""
+        },
+        {
+          "name": "中度焦虑",
+          "max": 70,
+          "min": 61,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "重度焦虑",
+          "max": "null",
+          "min": 71,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "我觉得比平常容易紧张和着急。",
+          "value": "sasQ1",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我无缘无故地感到害怕。",
+          "value": "sasQ2",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我容易心里烦乱或觉得惊慌。",
+          "value": "sasQ3",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我觉得我可能将要发疯。",
+          "value": "sasQ4",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我觉得一切都很好，也不会发生什么不幸。",
+          "value": "sasQ5",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 4
+            },
+            {
+              "label": "小部分时间",
+              "value": 3
+            },
+            {
+              "label": "相当多时间",
+              "value": 2
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我手脚发抖打颤。",
+          "value": "sasQ6",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我因为头痛、头颈痛和背痛而苦恼。",
+          "value": "sasQ7",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我感觉容易衰弱和疲乏。",
+          "value": "sasQ8",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我觉得心平气和，并且容易安静地坐着。",
+          "value": "sasQ9",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 4
+            },
+            {
+              "label": "小部分时间",
+              "value": 3
+            },
+            {
+              "label": "相当多时间",
+              "value": 2
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我觉得心跳得很快。",
+          "value": "sasQ10",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我因为一阵阵头晕而苦恼。",
+          "value": "sasQ11",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我有晕倒发作，或觉得要晕倒似的。",
+          "value": "sasQ12",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我吸气呼气都感到很容易。",
+          "value": "sasQ13",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 4
+            },
+            {
+              "label": "小部分时间",
+              "value": 3
+            },
+            {
+              "label": "相当多时间",
+              "value": 2
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我手脚麻木和刺痛。",
+          "value": "sasQ14",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我因为胃痛和消化不良而苦恼。",
+          "value": "sasQ15",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我常常要小便。",
+          "value": "sasQ16",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我的手常常是干燥温暖的。",
+          "value": "sasQ17",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 4
+            },
+            {
+              "label": "小部分时间",
+              "value": 3
+            },
+            {
+              "label": "相当多时间",
+              "value": 2
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我脸红发热。",
+          "value": "sasQ18",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我容易入睡并且一夜睡得很好。",
+          "value": "sasQ19",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 4
+            },
+            {
+              "label": "小部分时间",
+              "value": 3
+            },
+            {
+              "label": "相当多时间",
+              "value": 2
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我作恶梦。",
+          "value": "sasQ20",
+          "options": [
+            {
+              "label": "没有或很少时间",
+              "value": 1
+            },
+            {
+              "label": "小部分时间",
+              "value": 2
+            },
+            {
+              "label": "相当多时间",
+              "value": 3
+            },
+            {
+              "label": "绝大部分或全部时间",
+              "value": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "sds",
+      "nickName": "SDS焦虑抑郁量表",
+      "param": "*1.25",
+      "rule": [
+        {
+          "name": "您非常健康呢",
+          "max": 49,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "有抑郁症状",
+          "max": 52,
+          "min": 50,
+          "color": ""
+        },
+        {
+          "name": "您有轻度抑郁，但是请别担心，请适当调整",
+          "max": 62,
+          "min": 53,
+          "color": "background: #F5E43529;color: #F5E435;"
+        },
+        {
+          "name": "您有中度抑郁，请及时调整自己的心态或寻求专业帮助",
+          "max": 72,
+          "min": 63,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "您有重度抑郁，已经影响到了您的日常生活，建议您立即接受专业心理咨询师的帮助。",
+          "max": "null",
+          "min": 73,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "我感到情绪沮丧，郁闷？",
+          "value": "sdsQ1",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我感到早晨心情最好？",
+          "value": "sdsQ2",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我要哭或想哭？",
+          "value": "sdsQ3",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我晚上睡眠不好？",
+          "value": "sdsQ4",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我吃得和平时一样多？",
+          "value": "sdsQ5",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "异性接触时和以往一样感到愉快？",
+          "value": "sdsQ6",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我感到体重减轻？",
+          "value": "sdsQ7",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我有便秘的苦恼？",
+          "value": "sdsQ8",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我的心跳比平时快？",
+          "value": "sdsQ9",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我无故感到疲劳？",
+          "value": "sdsQ10",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我的头脑象往常一样清楚？",
+          "value": "sdsQ11",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我做事情象平时一样不感到困难？",
+          "value": "sdsQ12",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我坐卧不安,难以保持平静？",
+          "value": "sdsQ13",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我对未来感到有希望？",
+          "value": "sdsQ14",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我比平时更容易激怒？",
+          "value": "sdsQ15",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我觉得决定什么事很容易？",
+          "value": "sdsQ16",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "感到自己是有用的和不可缺少的人？",
+          "value": "sdsQ17",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "我的生活很有意义？",
+          "value": "sdsQ18",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "question": "假若我死了别人会过得更好？",
+          "value": "sdsQ19",
+          "options": [
+            {
+              "label": "很少",
+              "value": 1
+            },
+            {
+              "label": "有时",
+              "value": 2
+            },
+            {
+              "label": "经常",
+              "value": 3
+            },
+            {
+              "label": "持续",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "question": "我仍旧喜爱自己平时喜爱的东西？",
+          "value": "sdsQ20",
+          "options": [
+            {
+              "label": "很少",
+              "value": 4
+            },
+            {
+              "label": "有时",
+              "value": 3
+            },
+            {
+              "label": "经常",
+              "value": 2
+            },
+            {
+              "label": "持续",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "eq5d5l",
+      "nickName": "EQ-5D-5L",
+      "param": "",
+      "rule": [],
+      "list": [
+        {
+          "question": "行动能力——我四处活动",
+          "value": "actionQ",
+          "options": [
+            {
+              "label": "没有困难",
+              "value": 1
+            },
+            {
+              "label": "有一点困难",
+              "value": 2
+            },
+            {
+              "label": "有中度困难",
+              "value": 3
+            },
+            {
+              "label": "有严重困难",
+              "value": 4
+            },
+            {
+              "label": "我无法四处活动",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "question": "自我照顾——我自己洗澡或穿衣",
+          "value": "lookAfterSelfQ",
+          "options": [
+            {
+              "label": "没有困难",
+              "value": 1
+            },
+            {
+              "label": "有一点困难",
+              "value": 2
+            },
+            {
+              "label": "有中度困难",
+              "value": 3
+            },
+            {
+              "label": "有严重困难",
+              "value": 4
+            },
+            {
+              "label": "我无法照顾自己",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "question": "日常活动（如工作、学习、家务、家庭或休闲活动）",
+          "value": "dailyActQ",
+          "options": [
+            {
+              "label": "没有困难",
+              "value": 1
+            },
+            {
+              "label": "有一点困难",
+              "value": 2
+            },
+            {
+              "label": "有中度困难",
+              "value": 3
+            },
+            {
+              "label": "有严重困难",
+              "value": 4
+            },
+            {
+              "label": "我无法进行日常活动",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "question": "疼痛或不舒服",
+          "value": "painQ",
+          "options": [
+            {
+              "label": "没有疼痛或不舒服",
+              "value": 1
+            },
+            {
+              "label": "有一点疼痛或不舒服",
+              "value": 2
+            },
+            {
+              "label": "有中度疼痛或不舒服",
+              "value": 3
+            },
+            {
+              "label": "有严重疼痛或不舒服",
+              "value": 4
+            },
+            {
+              "label": "有非常严重的疼痛或不舒服",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "question": "焦虑或沮丧",
+          "value": "anxietyQ",
+          "options": [
+            {
+              "label": "没有焦虑或沮丧",
+              "value": 1
+            },
+            {
+              "label": "有一点焦虑或沮丧",
+              "value": 2
+            },
+            {
+              "label": "有中度焦虑或沮丧",
+              "value": 3
+            },
+            {
+              "label": "有严重的焦虑或沮丧",
+              "value": 4
+            },
+            {
+              "label": "有非常严重的焦虑或沮丧",
+              "value": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "caprini",
+      "nickName": "caprini静脉血栓评分表",
+      "param": "",
+      "value": "capriniChoose",
+      "rule": [
+        {
+          "name": "低危",
+          "max": 2,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "中危",
+          "max": 4,
+          "min": 3,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "高危",
+          "max": "null",
+          "min": 5,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "title": "以下每项风险因素记1分",
+          "value": "capriniChoose1",
+          "list": [
+            {
+              "question": "年龄41-60岁",
+              "type": "checkbox",
+              "value": 1
+            },
+            {
+              "question": "BMI≥25kg/㎡",
+              "type": "checkbox",
+              "value": 2
+            },
+            {
+              "question": "下肢水肿",
+              "type": "checkbox",
+              "value": 3
+            },
+            {
+              "question": "静脉曲张",
+              "type": "checkbox",
+              "value": 4
+            },
+            {
+              "question": "妊娠期或产后（＜1个月）",
+              "type": "checkbox",
+              "value": 5
+            },
+            {
+              "question": "不明原因或习惯性流产史",
+              "type": "checkbox",
+              "value": 6
+            },
+            {
+              "question": "服避孕药或雌激素替代治疗",
+              "type": "checkbox",
+              "value": 7
+            },
+            {
+              "question": "脓毒症（＜1个月）",
+              "type": "checkbox",
+              "value": 8
+            },
+            {
+              "question": "严重肺病，含肺炎（＜1个月）",
+              "type": "checkbox",
+              "value": 9
+            },
+            {
+              "question": "肺功能异常（COPD）",
+              "type": "checkbox",
+              "value": 10
+            },
+            {
+              "question": "急性心肌梗死",
+              "type": "checkbox",
+              "value": 11
+            },
+            {
+              "question": "充血性心力衰竭（＜1个月）",
+              "type": "checkbox",
+              "value": 12
+            },
+            {
+              "question": "炎性肠病史",
+              "type": "checkbox",
+              "value": 13
+            },
+            {
+              "question": "卧床内科患者",
+              "type": "checkbox",
+              "value": 14
+            },
+            {
+              "question": "小手术",
+              "type": "checkbox",
+              "value": 15
+            },
+            {
+              "question": "其他风险因素",
+              "type": "checkbox",
+              "value": 16
+            }
+          ]
+        },
+        {
+          "title": "以下每项风险因素记2分",
+          "value": "capriniChoose2",
+          "list": [
+            {
+              "question": "年龄61-74岁",
+              "type": "checkbox",
+              "value": 17
+            },
+            {
+              "question": "恶性肿瘤（既往或现患）",
+              "type": "checkbox",
+              "value": 18
+            },
+            {
+              "question": "石膏固定（＜1个月）",
+              "type": "checkbox",
+              "value": 19
+            },
+            {
+              "question": "限制卧床（＞72小时）",
+              "type": "checkbox",
+              "value": 20
+            },
+            {
+              "question": "中心静脉置管",
+              "type": "checkbox",
+              "value": 21
+            },
+            {
+              "question": "大手术（＞45分）",
+              "type": "checkbox",
+              "value": 22
+            },
+            {
+              "question": "关节镜手术",
+              "type": "checkbox",
+              "value": 23
+            },
+            {
+              "question": "腹腔镜手术数（＞45分）",
+              "type": "checkbox",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "title": "以下每项风险因素记3分",
+          "value": "capriniChoose3",
+          "list": [
+            {
+              "question": "年龄≥75岁",
+              "type": "checkbox",
+              "value": 25
+            },
+            {
+              "question": "血栓家族史",
+              "type": "checkbox",
+              "value": 26
+            },
+            {
+              "question": "DVT/PTE史",
+              "type": "checkbox",
+              "value": 27
+            },
+            {
+              "question": "未列出的先天或后天血栓形成",
+              "type": "checkbox",
+              "value": 28
+            },
+            {
+              "question": "凝血酶原20210A阳性",
+              "type": "checkbox",
+              "value": 29
+            },
+            {
+              "question": "因子V Leiden阳性",
+              "type": "checkbox",
+              "value": 30
+            },
+            {
+              "question": "狼疮抗凝物阳性",
+              "type": "checkbox",
+              "value": 31
+            },
+            {
+              "question": "血清同型半胱氨酸升高",
+              "type": "checkbox",
+              "value": 32
+            },
+            {
+              "question": "抗心磷脂抗体升高",
+              "type": "checkbox",
+              "value": 33
+            },
+            {
+              "question": "肝素引起的血小板减少HIT",
+              "type": "checkbox",
+              "value": 34
+            }
+          ]
+        },
+        {
+          "title": "以下每项风险因素记5分",
+          "value": "capriniChoose4",
+          "list": [
+            {
+              "question": "脑卒中（＜1个月）",
+              "type": "checkbox",
+              "value": 35
+            },
+            {
+              "question": "急性脊髓损伤（瘫痪）（＜1个月）",
+              "type": "checkbox",
+              "value": 36
+            },
+            {
+              "question": "多发性创伤（＜1个月）",
+              "type": "checkbox",
+              "value": 37
+            },
+            {
+              "question": "髋关节、骨盆或下肢骨折",
+              "type": "checkbox",
+              "value": 38
+            },
+            {
+              "question": "选择性下肢关节置换术",
+              "type": "checkbox",
+              "value": 39
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ruler",
+      "name": "vas",
+      "nickName": "VAS疼痛评分表",
+      "param": "",
+      "rule": [
+        {
+          "name": "无痛",
+          "max": 0,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "有轻微的疼痛，能忍受",
+          "max": 3,
+          "min": 1,
+          "color": ""
+        },
+        {
+          "name": "患者疼痛并影响到睡眠，尚能忍受",
+          "max": 6,
+          "min": 4,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "患者出现强烈的疼痛，难以忍受，影响睡眠和食欲",
+          "max": 10,
+          "min": 7,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "最近您的疼痛得分是？",
+          "min": 0,
+          "max": 10,
+          "step": 2,
+          "value": "vasScore"
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "haq",
+      "nickName": "HAQ健康评估",
+      "param": "",
+      "rule": [],
+      "list": [
+        {
+          "question": "能自己穿衣吗？包括系鞋带和扣扣。",
+          "value": "easyHaq1",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能上床、起床吗？",
+          "value": "easyHaq2",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能将装满水的水杯送到嘴边吗？",
+          "value": "easyHaq3",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能出门在平路上行走吗？",
+          "value": "easyHaq4",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能洗澡并擦干身体吗？",
+          "value": "easyHaq5",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能弯腰从地上拾起衣物吗？",
+          "value": "easyHaq6",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能关水龙头或瓶塞吗？",
+          "value": "easyHaq7",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "question": "能上下公交车或出租车吗？",
+          "value": "easyHaq8",
+          "options": [
+            {
+              "label": "无困难",
+              "value": 0
+            },
+            {
+              "label": "有些困难",
+              "value": 1
+            },
+            {
+              "label": "很困难",
+              "value": 2
+            },
+            {
+              "label": "不能做",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "essen",
+      "nickName": "ESSEN卒中风险评分",
+      "param": "",
+      "rule": [
+        {
+          "name": "低危",
+          "max": 2,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "中危",
+          "max": 6,
+          "min": 3,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "高危",
+          "max": 9,
+          "min": 7,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "年龄",
+          "value": "age",
+          "options": [
+            {
+              "label": "＜65岁",
+              "value": 0
+            },
+            {
+              "label": "65~75岁",
+              "value": 1
+            },
+            {
+              "label": "＞75岁",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "question": "高血压",
+          "value": "hypertension",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "糖尿病",
+          "value": "diabetes",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "既往心肌梗死",
+          "value": "previousMyocardialInfarction",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "其他心血管疾病（心房颤动、心肌梗死除外）",
+          "value": "otherCardiovascularDiseases",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "外周动脉疾病",
+          "value": "peripheralArterialDisease",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "吸烟",
+          "value": "smoking",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "既往缺血性脑卒中/TIA/血栓史",
+          "value": "pastIschemicStroke",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "chads",
+      "nickName": "CHADS_2房颤患者卒中危险分层",
+      "param": "",
+      "rule": [
+        {
+          "name": "低危",
+          "max": 1,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "中危",
+          "max": 3,
+          "min": 2,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "高危",
+          "max": 6,
+          "min": 4,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "充血性心衰史",
+          "value": "congestiveHeartFailure",
+          "name": "C（congestive heart failure）",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "血压持续高于140/90mmHg或接受抗高血压药物治疗",
+          "value": "hypertension",
+          "name": "H（Hypertension）",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "年龄大于75岁",
+          "value": "age",
+          "name": "A（Age）",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "糖尿病",
+          "value": "diabetesMellitus",
+          "name": "D（Diabetes Mellitus）",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "既往卒中或TIA病史",
+          "value": "priorStrokeTia",
+          "name": "S2（Prior Stroke or TIA）",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ruler",
+      "name": "cat",
+      "nickName": "CAT慢阻肺疾病评估",
+      "param": "",
+      "rule": [
+        {
+          "name": "轻微影响",
+          "max": 10,
+          "min": 0,
+          "color": "background: #39C35429;color: #39C354;"
+        },
+        {
+          "name": "中等影响",
+          "max": 20,
+          "min": 11,
+          "color": ""
+        },
+        {
+          "name": "严重影响",
+          "max": 30,
+          "min": 21,
+          "color": "background: #ED944729;color: #ED9447;"
+        },
+        {
+          "name": "非常严重影响",
+          "max": 40,
+          "min": 31,
+          "color": "background: #C32F4C29;color: #C32F4C;"
+        }
+      ],
+      "list": [
+        {
+          "question": "",
+          "value": "catQ1",
+          "startName": "我从不咳嗽",
+          "endName": "我一直咳嗽",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ2",
+          "startName": "我一点痰也没有",
+          "endName": "我有很多很多痰",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ3",
+          "startName": "我一点也没有胸闷的感觉",
+          "endName": "我有很重的胸闷的感觉",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ4",
+          "startName": "当我爬坡或爬一层楼时，我并不感到喘不过气来",
+          "endName": "当我爬坡或爬一层楼时，我感觉非常喘不过气来",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ5",
+          "startName": "我在家里的任何劳动都不受慢阻肺的影响",
+          "endName": "我在家里的任何活动都很受慢阻肺的影响",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ6",
+          "startName": "每当我外出时就外出",
+          "endName": "因为我有慢阻肺，我所以从来没有外出过",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ7",
+          "startName": "我睡眠非常好",
+          "endName": "因为我有慢阻肺，我的睡眠非常不好",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "question": "",
+          "value": "catQ8",
+          "startName": "我精力旺盛",
+          "endName": "我一点精力都没有",
+          "min": 1,
+          "max": 5,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "xnxg",
+      "nickName": "心脑血管病风险评估",
+      "rule": [],
+      "obj1": {
+        "name": "心脑血管病10年发病风险评估结果",
+        "desc": "理想危险因素状态：总胆固醇 < 200 mg/dl(5.18 mmol/L)，高密度脂蛋白胆固醇 ≥ 40 mg/dl(1.04 mmol/L)，未治疗的收缩压 < 120 mmHg，舒张压 < 80mmHg，腰围男性 < 90cm、女性 < 85cm，当前不吸烟，没有糖尿病，无心脑血管病家族史。年龄、性别和现居住地区使用用户输入的数值。",
+        "list": [
+          {
+            "name": "10年发病风险",
+            "type": "select",
+            "value": "riskTenYearLevel",
+            "options": [
+              {
+                "name": "低危",
+                "value": 1
+              },
+              {
+                "name": "中危",
+                "value": 2
+              },
+              {
+                "name": "高危",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "name": "理想危险因素状态下，您的心脑血管病10年发病风险应小于",
+            "value": "riskTenYear",
+            "type": "input"
+          }
+        ]
+      },
+      "obj2": {
+        "name": "心脑血管病终生发病风险评估结果",
+        "tips": "（从目前生存至85岁时发生心脑血管病的风险，只在60岁以下人群中计算）",
+        "list": [
+          {
+            "name": "终生发病风险",
+            "type": "select",
+            "value": "riskLifetimeLevel",
+            "options": [
+              {
+                "name": "低危",
+                "value": 1
+              },
+              {
+                "name": "中危",
+                "value": 2
+              },
+              {
+                "name": "高危",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "name": "理想危险因素状态下，您的心脑血管病终生发病风险应小于",
+            "value": "riskLifetime",
+            "type": "input"
+          }
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "name": "acr",
+      "nickName": "ACR缓解标准",
+      "rule": [],
+      "list": [
+        {
+          "question": "关节疼痛",
+          "value": "arthralgia",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "关节触痛或活动时疼痛",
+          "value": "jointTenderness",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "关节及腱鞘软组织胀痛",
+          "value": "softTissuePain",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "晨僵时间>15min",
+          "value": "morningStiffness",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "血沉男性>30mm/h",
+          "value": "esrMale",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "血沉女性>20mm/h",
+          "value": "esrFemale",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "name": "af",
+      "nickName": "房颤事件记录表",
+      "rule": [],
+      "list": [
+        {
+          "question": "是否发生过栓塞事件",
+          "type": "血栓事件",
+          "date": "embolismDate",
+          "value": "embolism",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "脑梗死",
+          "type": "血栓事件",
+          "date": "cerebralInfarctionDate",
+          "value": "cerebralInfarction",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "下肢栓塞",
+          "type": "血栓事件",
+          "date": "lowerLimbEmbolismDate",
+          "value": "lowerLimbEmbolism",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "心肌梗死",
+          "type": "血栓事件",
+          "date": "myocardialInfarctionDate",
+          "value": "myocardialInfarction",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "肺梗塞",
+          "type": "血栓事件",
+          "date": "pulmonaryInfarctionDate",
+          "value": "pulmonaryInfarction",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "其他",
+          "type": "血栓事件",
+          "input": true,
+          "date": "otherThromboticEventsDate",
+          "value": "otherThromboticEvents"
+        },
+        {
+          "question": "是否发生过出血事件",
+          "type": "出血事件",
+          "date": "bleedingEventDate",
+          "value": "bleedingEvent",
+          "options": [
+            {
+              "label": "是",
+              "value": 1
+            },
+            {
+              "label": "否",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "question": "其他",
+          "type": "出血事件",
+          "input": true,
+          "date": "otherBleedingEventsDate",
+          "value": "otherBleedingEvents"
+        }
+      ]
+    }
+  ],
+  "diagnose": [
+    {
+      "name": "cardiovascular",
+      "nickname": "心血管",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "心痛",
+          "value": "2"
+        },
+        {
+          "name": "高血压",
+          "value": "3"
+        },
+        {
+          "name": "心律失常",
+          "value": "4"
+        },
+        {
+          "name": "心悸",
+          "value": "5"
+        },
+        {
+          "name": "腿部水肿",
+          "value": "6"
+        },
+        {
+          "name": "平躺时呼吸困难",
+          "value": "7"
+        },
+        {
+          "name": "其他",
+          "key": "cardiovascularOtherDesc",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "name": "digestiveSystem",
+      "nickname": "消化系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "便秘",
+          "value": "2"
+        },
+        {
+          "name": "胃食管返流",
+          "value": "3"
+        },
+        {
+          "name": "烧心",
+          "value": "4"
+        },
+        {
+          "name": "胃肠溃疡",
+          "value": "5"
+        },
+        {
+          "name": "肝炎",
+          "value": "6"
+        },
+        {
+          "name": "恶心/呕吐",
+          "value": "7"
+        },
+        {
+          "name": "其他",
+          "key": "digestiveSystemOtherDesc",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "name": "endocrine",
+      "nickname": "内分泌",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "腺体肿胀",
+          "value": "2"
+        },
+        {
+          "name": "甲状腺问题",
+          "value": "3"
+        },
+        {
+          "name": "糖尿病",
+          "value": "4"
+        },
+        {
+          "name": "其他",
+          "key": "endocrineOtherDesc",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "name": "facialFeatures",
+      "nickname": "五官",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "视力问题",
+          "value": "2"
+        },
+        {
+          "name": "重影",
+          "value": "3"
+        },
+        {
+          "name": "青光眼",
+          "value": "4"
+        },
+        {
+          "name": "白内障",
+          "value": "5"
+        },
+        {
+          "name": "听力障碍",
+          "value": "6"
+        },
+        {
+          "name": "耳鸣",
+          "value": "7"
+        },
+        {
+          "name": "耳痛",
+          "value": "8"
+        },
+        {
+          "name": "眩晕",
+          "value": "9"
+        },
+        {
+          "name": "鼻塞",
+          "value": "10"
+        },
+        {
+          "name": "流涕",
+          "value": "11"
+        },
+        {
+          "name": "鼻血",
+          "value": "12"
+        },
+        {
+          "name": "感染",
+          "value": "13"
+        },
+        {
+          "name": "吞咽困难",
+          "value": "14"
+        },
+        {
+          "name": "声音嘶哑",
+          "value": "15"
+        },
+        {
+          "name": "喉咙痛",
+          "value": "16"
+        },
+        {
+          "name": "牙龈出血 ",
+          "value": "17"
+        },
+        {
+          "name": "其他",
+          "key": "facialFeaturesOtherDesc",
+          "value": "18"
+        }
+      ]
+    },
+    {
+      "name": "hemolymphSystem",
+      "nickname": "血液淋巴系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "出血",
+          "value": "2"
+        },
+        {
+          "name": "血栓",
+          "value": "3"
+        },
+        {
+          "name": "腺体肿胀",
+          "value": "4"
+        },
+        {
+          "name": "其他",
+          "key": "hemolymphSystemOtherDesc",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "name": "immuneSystem",
+      "nickname": "免疫系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "过敏",
+          "value": "2"
+        },
+        {
+          "name": "皮疹",
+          "value": "3"
+        },
+        {
+          "name": "感染",
+          "value": "4"
+        },
+        {
+          "name": "其他",
+          "key": "immuneSystemOtherDesc",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "name": "musculoskeletalSystem",
+      "nickname": "肌肉骨骼系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "关节痛",
+          "value": "2"
+        },
+        {
+          "name": "肌无力",
+          "value": "3"
+        },
+        {
+          "name": "腿部无力",
+          "value": "4"
+        },
+        {
+          "name": "肌肉抽筋",
+          "value": "5"
+        },
+        {
+          "name": "其他",
+          "key": "musculoskeletalSystemOtherDesc",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "name": "nervousSystem",
+      "nickname": "神经系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "头痛",
+          "value": "2"
+        },
+        {
+          "name": "偏头痛",
+          "value": "3"
+        },
+        {
+          "name": "癫痫",
+          "value": "4"
+        },
+        {
+          "name": "麻木",
+          "value": "5"
+        },
+        {
+          "name": "震颤",
+          "value": "6"
+        },
+        {
+          "name": "晕厥",
+          "value": "7"
+        },
+        {
+          "name": "其他",
+          "key": "nervousSystemOtherDesc",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "name": "physique",
+      "nickname": "体质",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "体重减轻",
+          "value": "2"
+        },
+        {
+          "name": "体重增加",
+          "value": "3"
+        },
+        {
+          "name": "盗汗",
+          "value": "4"
+        },
+        {
+          "name": "疲劳",
+          "value": "5"
+        },
+        {
+          "name": "其他",
+          "key": "physiqueOtherDesc",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "name": "psychological",
+      "nickname": "心理",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "抑郁",
+          "value": "2"
+        },
+        {
+          "name": "哭闹",
+          "value": "3"
+        },
+        {
+          "name": "焦虑",
+          "value": "4"
+        },
+        {
+          "name": "嗜睡",
+          "value": "5"
+        },
+        {
+          "name": "睡眠障碍",
+          "value": "6"
+        },
+        {
+          "name": "其他",
+          "key": "psychologicalOtherDesc",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "respiratorySystem",
+      "nickname": "呼吸系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "咳嗽",
+          "value": "2"
+        },
+        {
+          "name": "呼吸急促",
+          "value": "3"
+        },
+        {
+          "name": "咯痰",
+          "value": "4"
+        },
+        {
+          "name": "哮喘",
+          "value": "5"
+        },
+        {
+          "name": "吸烟",
+          "value": "6"
+        },
+        {
+          "name": "其他",
+          "key": "respiratorySystemOtherDesc",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "urogenitalSystem",
+      "nickname": "泌尿生殖系统",
+      "list": [
+        {
+          "name": "无",
+          "value": "1"
+        },
+        {
+          "name": "尿频",
+          "value": "2"
+        },
+        {
+          "name": "尿痛",
+          "value": "3"
+        },
+        {
+          "name": "血尿",
+          "value": "4"
+        },
+        {
+          "name": "尿失禁",
+          "value": "5"
+        },
+        {
+          "name": "其他",
+          "key": "urogenitalSystemOtherDesc",
+          "value": "6"
+        }
+      ]
+    }
+  ]
 }
