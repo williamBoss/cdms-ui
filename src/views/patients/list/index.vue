@@ -146,6 +146,13 @@
           </template>
         </el-table-column>
       </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="param.pageNum"
+        :limit.sync="param.pageSize"
+        @pagination="goSearch"
+      />
     </div>
     <el-dialog title="导出" :visible.sync="dialogExportVisible">
       <el-table
@@ -181,7 +188,7 @@
 </template>
 
 <script>
-import { getPatients, delPatient, getAssessment } from '@/api/patients'
+import { delPatient, getAssessment, getPatients } from '@/api/patients'
 import { getDisease } from '@/api/param'
 
 export default {
@@ -191,7 +198,11 @@ export default {
       tableData: [],
       diseaseList: [],
       diseaseIdsList: [],
+      // 总条数
+      total: 0,
       param: {
+        pageNum: 1,
+        pageSize: 10,
         phone: '',
         idCard: '',
         patientName: '',
@@ -256,6 +267,7 @@ export default {
             }
           })
           this.tableData = res.data.records
+          this.total = parseInt(res.data.total)
         }
       })
     },

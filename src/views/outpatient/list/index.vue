@@ -121,21 +121,27 @@
         </el-table-column>
       </el-table>
     </el-row>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="pageNum"
+      :limit.sync="pageSize"
+      @pagination="getOutList"
+    />
   </div>
 </template>
 
 <script>
-import {
-  getOutList,
-  getProb,
-  deleteData, getMed
-} from '@/api/outpatient'
+import { deleteData, getMed, getOutList, getProb } from '@/api/outpatient'
 
 export default {
   name: 'outpatient', // 药学门诊
   components: {},
   data() {
     return {
+      total: 0,
+      pageNum: 1,
+      pageSize: 10,
       searchName: '',
       medName: '',
       medId: '',
@@ -178,7 +184,9 @@ export default {
         beginTime: this.searchDate[ 0 ] || '',
         endTime: this.searchDate[ 1 ] || '',
         questionTypes: this.problems,
-        medId: this.medId
+        medId: this.medId,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
       }
       console.log('参数：', params)
       let res = await getOutList(params)
@@ -196,6 +204,7 @@ export default {
             val.questionTypes = arrVal
           });
           this.tableData = records;
+          this.total = parseInt(data.total)
         }
       }
     },
