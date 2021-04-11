@@ -1,6 +1,6 @@
 <template>
   <div class="life-style jyjc-wrap">
-    <div class="view">
+    <div>
       <el-row :gutter="24">
         <el-col :span="chartIndex < 2 || chartIndex === 6 || chartIndex === 7 ? 12: 24"
                 v-for="(chart, chartIndex) in chartList" :key="chartIndex">
@@ -37,8 +37,8 @@
                         <pre style="margin: 0;padding: 0;">{{ prop.name }}</pre>
                       </template>
                       <template slot-scope="scope">
-                        <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]" placeholder=""
-                                  type="number" :min="0"></el-input>
+                        <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]"
+                                  :placeholder="chartIndex === 0?'收缩压 - 舒张压':''"></el-input>
                         <el-date-picker
                           v-else-if="!scope.row.id && propIndex === 0"
                           v-model="scope.row[prop.key]"
@@ -262,6 +262,11 @@ export default {
         height: 23px;
         padding: 0 5px;
         font-size: 12px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        border-bottom-width: 1px;
+        border-radius: 0;
       }
 
       .el-date-editor.el-input {

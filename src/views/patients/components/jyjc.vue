@@ -41,7 +41,7 @@
                       </template>
                       <template slot-scope="scope">
                         <el-input v-if="!scope.row.id && propIndex > 0" v-model="scope.row[prop.key]"
-                                  :placeholder="chartIndex === 0?'低压 - 高压':''"></el-input>
+                                  :placeholder="chartIndex === 0?'收缩压 - 舒张压':''"></el-input>
                         <el-date-picker
                           v-else-if="!scope.row.id && propIndex === 0"
                           v-model="scope.row[prop.key]"
