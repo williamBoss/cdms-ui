@@ -1,6 +1,6 @@
 <template>
   <div class="life-style yyjl-wrap">
-    <el-card class="info-wrap">
+    <el-card class="info-wrap" style="background: #F2F4F6">
       <el-row>
         <el-col :span="4">
           <div class="name-wrap">
@@ -84,8 +84,11 @@
       <el-table-column
         align="center"
         prop="remark"
-        label="备注(新增/停用)"
-        width="130">
+        label="新增/在用/停用"
+        :filters="[{ text: '新增', value: '新增' }, { text: '在用', value: '在用' }, { text: '停用', value: '停用' }]"
+        :filter-method="filterTag"
+        filter-placement="bottom-end"
+        width="150">
       </el-table-column>
     </el-table>
   </div>
@@ -162,7 +165,10 @@ export default {
           }
         }
       })
-    }
+    },
+    filterTag(value, row) {
+      return row.remark === value;
+    },
   }
 }
 </script>

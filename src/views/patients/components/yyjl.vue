@@ -80,8 +80,11 @@
       <el-table-column
         align="center"
         prop="remark"
-        label="备注(新增/停用)"
-        width="130">
+        label="新增/在用/停用"
+        :filters="[{ text: '新增', value: '新增' }, { text: '在用', value: '在用' }, { text: '停用', value: '停用' }]"
+        :filter-method="filterTag"
+        filter-placement="bottom-end"
+        width="150">
       </el-table-column>
       <el-table-column
         align="center"
@@ -99,7 +102,7 @@
     </el-form>
     <el-dialog title="用药记录" :visible.sync="dialogVisible">
       <div style="width: 73%;margin:0 auto;">
-        <el-form :model="form" label-position="left" label-width="130px">
+        <el-form :model="form" label-position="right" label-width="145px">
           <el-form-item label="用药时间">
             <el-date-picker
               v-model="form.dateTime"
@@ -138,7 +141,7 @@
           <el-form-item label="月用药量(盒)">
             <el-input v-model="form.dosageMonthly"></el-input>
           </el-form-item>
-          <el-form-item label="备注(新增/停用)">
+          <el-form-item label="备注(新增/在用/停用)">
             <el-radio-group v-model="form.remark">
               <el-radio v-for="item in options" :label="item" :value="item"></el-radio>
             </el-radio-group>
@@ -154,16 +157,8 @@
 </template>
 
 <script>
-import {
-  getMed
-} from '@/api/outpatient'
-import {
-  getPatientInfo,
-  saveRecord,
-  getRecord,
-  delRecord,
-  getDiseaseList, getAllergyHistory, getMedSideList
-} from '@/api/patients'
+import { getMed } from '@/api/outpatient'
+import { delRecord, getDiseaseList, getMedSideList, getPatientInfo, getRecord, saveRecord } from '@/api/patients'
 
 export default {
   props: {
@@ -330,7 +325,10 @@ export default {
     },
     saveInfo() {
       this.$emit('update:activeName', 'jyjc');
-    }
+    },
+    filterTag(value, row) {
+      return row.remark === value;
+    },
   }
 }
 </script>
