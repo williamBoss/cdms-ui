@@ -228,7 +228,7 @@ export default {
               xAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value} 万元'
+                  formatter: '{value} 元'
                 }
               },
               yAxis: {

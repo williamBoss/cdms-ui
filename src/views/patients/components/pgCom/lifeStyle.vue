@@ -41,7 +41,7 @@
               </el-col>
               <el-col class="content-item" :span="20">
                 <el-row>
-                  <el-form-item label="每日的主食量约(kg)" label-width="136px">
+                  <el-form-item label="每日的主食量约(两)" label-width="136px">
                     <el-input disabled size="mini" v-model="form.dailyBasicFoodAmount"></el-input>
                   </el-form-item>
                   <el-col class="food-item" :span="12">
@@ -147,74 +147,73 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-card>
-            <el-row>
-              <el-col class="left-item" :span="3">
-                费用
+            <el-row type="flex">
+              <el-col class="left-item" style="line-height: 10.5">
+                <p style="height: 15px;margin-top: 0">费用</p>
+                <p style="height: 15px;margin-top: 0;">（元/月）</p>
               </el-col>
-              <el-scrollbar style="height: 178px;">
-                <el-col class="content-item" :span="21" style="width: 100%">
-                  <el-row>
-                    <el-col>
-                      <label class="name-item">就诊前</label>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="每月医疗费" label-width="82px">
-                        <el-input disable size="mini" v-model="form.beforeTotal"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="药费" label-width="60px">
-                        <el-input disable size="mini" v-model="form.beforeMedicalExpenses"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <label class="name-item">就诊3个月后</label>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="每月医疗费" label-width="82px">
-                        <el-input disable size="mini" v-model="form.afterThreeTotal"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="药费" label-width="60px">
-                        <el-input disable size="mini" v-model="form.afterThreeMedicalExpenses"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <label class="name-item">就诊6个月后</label>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="每月医疗费" label-width="82px">
-                        <el-input disable size="mini" v-model="form.afterSixTotal"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="药费" label-width="60px">
-                        <el-input disable size="mini" v-model="form.afterSixMedicalExpenses"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <label class="name-item">就诊12个月后</label>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="每月医疗费" label-width="82px">
-                        <el-input disable size="mini" v-model="form.afterTwelveTotal"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item label="药费" label-width="60px">
-                        <el-input disable size="mini" v-model="form.afterTwelveMedicalExpenses"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-col>
-              </el-scrollbar>
+              <el-col class="content-item" :span="21">
+                <el-row>
+                  <el-col :span="4" style="width: 45px">
+                    <label class="name-item">就诊前</label>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="医疗费" label-width="82px">
+                      <el-input disabled size="mini" v-model="form.beforeTotal"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="药费" label-width="60px">
+                      <el-input disabled size="mini" v-model="form.beforeMedicalExpenses"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="4" style="width: 45px">
+                    <label class="name-item">3月后</label>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="医疗费" label-width="82px">
+                      <el-input disabled size="mini" v-model="form.afterThreeTotal"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="药费" label-width="60px">
+                      <el-input disabled size="mini" v-model="form.afterThreeMedicalExpenses"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="3" style="width: 45px">
+                    <label class="name-item">6月后</label>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="医疗费" label-width="82px">
+                      <el-input disabled size="mini" v-model="form.afterSixTotal"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="药费" label-width="60px">
+                      <el-input disabled size="mini" v-model="form.afterSixMedicalExpenses"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="3" style="width: 45px">
+                    <label class="name-item">1年后</label>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="医疗费" label-width="82px">
+                      <el-input disabled size="mini" v-model="form.afterTwelveTotal"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item label="药费" label-width="60px">
+                      <el-input disabled size="mini" v-model="form.afterTwelveMedicalExpenses"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </el-col>
             </el-row>
           </el-card>
         </el-col>
