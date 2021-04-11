@@ -2,32 +2,32 @@
   <div class="life-style cursym-wrap">
     <el-form ref="form" :model="form" label-width="80px">
       <el-row :gutter="20">
-        <el-col>
-          <el-card>
+        <el-col :span="12">
+          <el-card style="height: 210px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="6">
                 主述
               </el-col>
-              <el-col class="content-item" :span="21">
+              <el-col class="content-item" :span="18">
                 <el-form-item label="描述" label-width="40px">
-                  <el-input disabled type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
+                  <el-input disabled type="textarea" :rows="5" v-model="consult.mainConsult"
+                            style="height: 150px"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-card>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col>
+        <el-col :span="12">
           <el-card style="height: 210px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   诊断
                 </div>
               </el-col>
-              <el-col class="content-item" :span="21">
-                <el-tag v-for="item in diagnosisList">{{ item.diseaseName }}</el-tag>
+              <el-col class="content-item" :span="18">
+                <el-tag closable :disable-transitions="false" v-for="item in diagnosisList">{{ item.diseaseName }}
+                </el-tag>
               </el-col>
             </el-row>
           </el-card>
@@ -43,11 +43,15 @@
               <el-col class="content-item no-scroll" :span="21">
                 <el-row v-for="(item,index) in checkList">
                   <el-row style="padding: 10px">
-                    <el-col :span="4">
+                    <el-col :class="[curSym[ item.name ].length > 0?'diagnosis_choose':'diagnosis']" :span="4">
                       <div class="page-item">
                         {{ index + 1 }}<span> / {{ checkList.length }}</span>
                       </div>
                       <div class="title-item">{{ item && item.nickname }}</div>
+                      <div class="title-item" style="font-size: 14px" v-if="curSym[ item.name ].length > 0">已选择：{{
+                          curSym[ item.name ].length
+                        }}
+                      </div>
                     </el-col>
                     <el-col :span="20" style="min-height: 90px">
                       <el-checkbox-group v-model="curSym[item.name]">
@@ -185,7 +189,7 @@ export default {
       getDiagnosis(param).then((res) => {
         if (res.code === 200) {
           res.data.forEach((vv) => {
-            this.form.diagnosis.push(vv.diagnosisId)
+            this.form.diagnosis.push(vv.diseaseId)
           })
           this.diagnosisList = res.data
         }
@@ -246,7 +250,19 @@ export default {
   }
 
   .el-checkbox {
-    width: 200px;
+    width: 150px;
+  }
+
+  ::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
+  ::v-deep .el-checkbox__label {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
   }
 
   .vertical-checkbox {
@@ -302,9 +318,13 @@ export default {
     line-height: 30px;
   }
 
-  .check-input {
-    margin-left: 10px;
-    width: 200px;
+  ::v-deep .check-input .el-input__inner {
+    width: 243px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
   }
 
   .card-btn {
@@ -320,10 +340,17 @@ export default {
     margin-bottom: 10px;
   }
 
+  .diagnosis {
+    color: #1890FF;
+  }
+
+  .diagnosis_choose {
+    color: #ff4949;
+  }
+
   .page-item {
     font-size: 40px;
-    color: #1890FF;
-    padding-top: 20px;
+    padding-top: 1px;
     font-weight: normal;
 
     span {
@@ -333,8 +360,7 @@ export default {
 
   .title-item {
     margin-top: 20px;
-    color: #1890FF;
-    font-weight: normal;
+    font-size: 18px;
   }
 
   .el-pagination {

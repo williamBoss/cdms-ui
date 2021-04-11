@@ -101,6 +101,14 @@ export function saveDiagnosis(param) {
   })
 }
 
+// 删除评估诊断
+export function delDiagnosis(id) {
+  return request({
+    url: `/cdms/assessment/existing-symptoms/del-assessment-diagnosis/${ id }`,
+    method: 'delete'
+  })
+}
+
 // 查询当前症状描述
 export function getSymptom(param) {
   return request({

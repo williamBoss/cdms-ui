@@ -2,70 +2,40 @@
   <div class="life-style cursym-wrap">
     <el-form ref="form" :model="form" label-width="80px">
       <el-row :gutter="20">
-        <el-col>
-          <el-card>
+        <el-col :span="12">
+          <el-card style="height: 210px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="6">
                 主述
               </el-col>
-              <el-col class="content-item" :span="21">
+              <el-col class="content-item" :span="18">
                 <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="5" v-model="consult.mainConsult"></el-input>
-                  <el-button class="card-btn" type="primary" size="mini" @click="saveConsult">保存</el-button>
+                  <el-input type="textarea" :rows="5" v-model="consult.mainConsult" style="height: 150px"></el-input>
+                  <el-button class="card-btn" type="primary" size="mini" @click="saveConsult" style="margin-top: 9px">
+                    保存
+                  </el-button>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-card>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col>
+        <el-col :span="12">
           <el-card style="height: 210px;">
             <el-row type="flex">
-              <el-col class="left-item" :span="3">
+              <el-col class="left-item" :span="6">
                 <div class="item-wrap">
                   诊断
                   <div class="add-btn"
-                       :style="[{'background':this.zdEdit?'#DCDFE6':''},{'color':this.zdEdit?'#999':''}]"
-                       @click="editItem('zdEdit')">
-                    <i class="el-icon-plus" v-if="!this.zdEdit"></i>
-                    <i class="el-icon-close" v-else></i>
+                       @click="editItem()">
+                    <i class="el-icon-plus"></i>
                   </div>
                 </div>
-                <div v-show="zdEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!zdEdit" :span="21">
-                <el-tag v-for="item in diagnosisList">{{ item.diseaseName }}</el-tag>
-              </el-col>
-              <el-col class="content-item" v-show="zdEdit" :span="21">
-                <el-row>
-                  <el-col :span="12">
-                    <el-input
-                      placeholder="请输入病种名称"
-                      prefix-icon="el-icon-search"
-                      class="search-item"
-                      size="mini"
-                      clearable
-                      @clear="clearDiagnosis"
-                      @change="searchDiagnosis"
-                      v-model="form.diagnosisKey">
-                      <el-button slot="append" icon="el-icon-search" @click="searchDiagnosis"></el-button>
-                    </el-input>
-                  </el-col>
-                </el-row>
-                <el-scrollbar class="scrollbar" style="height: 125px;margin-bottom: 5px;">
-                  <el-checkbox-group v-model="form.diagnosis">
-                    <el-tooltip class="item" effect="dark" v-for="item in curDiseaseList" :content="item.diseaseName"
-                                placement="top-start">
-                      <el-checkbox :label="item.diseaseId" :key="item.diseaseKey"
-                                   :title="item.diseaseName"
-                                   :value="item.diseaseId">
-                        {{ item.diseaseName }}
-                      </el-checkbox>
-                    </el-tooltip>
-                  </el-checkbox-group>
-                </el-scrollbar>
-                <el-button type="primary" size="mini" @click="saveDiagnosis">保存</el-button>
+              <el-col class="content-item" :span="18">
+                <el-tag closable :disable-transitions="false" v-for="item in diagnosisList"
+                        @close="handleClose(item)"
+                >{{ item.diseaseName }}
+                </el-tag>
               </el-col>
             </el-row>
           </el-card>
@@ -81,11 +51,15 @@
               <el-col class="content-item no-scroll" :span="21">
                 <el-row v-for="(item,index) in checkList">
                   <el-row style="padding: 10px">
-                    <el-col :span="4">
+                    <el-col :class="[curSym[ item.name ].length > 0?'diagnosis_choose':'diagnosis']" :span="4">
                       <div class="page-item">
                         {{ index + 1 }}<span> / {{ checkList.length }}</span>
                       </div>
                       <div class="title-item">{{ item && item.nickname }}</div>
+                      <div class="title-item" style="font-size: 14px" v-if="curSym[ item.name ].length > 0">已选择：{{
+                          curSym[ item.name ].length
+                        }}
+                      </div>
                     </el-col>
                     <el-col :span="20" style="min-height: 90px">
                       <el-checkbox-group v-model="curSym[item.name]">
@@ -118,13 +92,48 @@
         <el-button class="btn-size" type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog title="诊断" :visible.sync="dialog.visible" :width="'70%'">
+      <el-row>
+        <el-input
+          placeholder="请输入病种名称"
+          prefix-icon="el-icon-search"
+          class="search-item"
+          size="mini"
+          clearable
+          @clear="clearDiagnosis"
+          @change="searchDiagnosis"
+          v-model="form.diagnosisKey">
+          <el-button slot="append" icon="el-icon-search" @click="searchDiagnosis"></el-button>
+        </el-input>
+        <el-checkbox-group v-model="form.diagnosis">
+          <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey"
+                       :title="item.diseaseName" :value="item.diseaseId"
+                       style="width: 210px;display: inline-block">
+            {{ item.diseaseName }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="btn-size" @click="dialog.visible = false" style="float:none">取 消</el-button>
+        <el-button class="btn-size" type="primary" @click="saveDiagnosis" style="float:none">保存
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getDisease } from '@/api/param'
 import axios from 'axios'
-import { getConsult, getDiagnosis, getSymptom, saveConsult, saveDiagnosis, saveSymptom } from '@/api/patients'
+import {
+  delDiagnosis,
+  getConsult,
+  getDiagnosis,
+  getSymptom,
+  saveConsult,
+  saveDiagnosis,
+  saveSymptom
+} from '@/api/patients'
 
 export default {
   props: {
@@ -139,6 +148,9 @@ export default {
         value: [],
         diagnosis: [],
         diagnosisKey: ''
+      },
+      dialog: {
+        visible: false
       },
       curSym: {
         cardiovascular: [],
@@ -242,13 +254,8 @@ export default {
         }
       })
     },
-    changePage(val) {
-      this.curSym[ this.checkList[ this.page.curPage - 1 ].name ] = this.curSym.list
-      this.page.curPage = val
-      this.curSym.list = this.curSym[ this.checkList[ this.page.curPage - 1 ].name ]
-    },
-    editItem(type) {
-      this[ type ] = !this[ type ]
+    editItem() {
+      this.dialog.visible = !this.dialog.visible
     },
     goNext() {
       this.$emit('update:activeName', 'lifeStyle');
@@ -287,7 +294,8 @@ export default {
       }
       saveDiagnosis(param).then((res) => {
         if (res.code === 200) {
-          this.zdEdit = false
+          this.dialog.visible = !this.dialog.visible
+          this.$message.success('保存成功')
           this.getDiagnosis()
         }
       })
@@ -307,6 +315,20 @@ export default {
     },
     clearDiagnosis() {
       this.curDiseaseList = this.diseaseList
+    },
+    handleClose(item) {
+      this.$confirm('您确定删除此条诊断记录吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delDiagnosis(item.diagnosisId).then((res) => {
+          if (res.code === 200) {
+            this.$message.success('删除成功')
+            this.getDiagnosis()
+          }
+        })
+      })
     }
   }
 }
@@ -315,6 +337,7 @@ export default {
 <style scoped lang="scss">
 .life-style.cursym-wrap {
   .left-item {
+    width: 110px;
     text-align: center;
     background: #1e3f7c;
     color: #fff;
@@ -403,7 +426,7 @@ export default {
     line-height: 30px;
   }
 
-  ::v-deep.el-input__inner {
+  ::v-deep .check-input .el-input__inner {
     width: 243px;
     border-top-width: 0;
     border-left-width: 0;
@@ -425,9 +448,16 @@ export default {
     margin-bottom: 10px;
   }
 
+  .diagnosis {
+    color: #1890FF;
+  }
+
+  .diagnosis_choose {
+    color: #ff4949;
+  }
+
   .page-item {
     font-size: 40px;
-    color: #1890FF;
     padding-top: 1px;
     font-weight: normal;
 
@@ -438,8 +468,7 @@ export default {
 
   .title-item {
     margin-top: 20px;
-    color: #1890FF;
-    font-weight: normal;
+    font-size: 18px;
   }
 
   .el-pagination {
