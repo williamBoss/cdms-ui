@@ -9,41 +9,17 @@
                 <div class="item-wrap">
                   家族病史
                   <div class="add-btn"
-                       :style="[{'background':this.jzEdit?'#DCDFE6':''},{'color':this.jzEdit?'#999':''}]"
-                       @click="editItem('jzEdit')">
-                    <i class="el-icon-plus" v-if="!this.jzEdit"></i>
-                    <i class="el-icon-close" v-else></i>
+                       @click="addHistory('jzEdit')">
+                    <i class="el-icon-plus"></i>
                   </div>
                 </div>
-                <div v-show="jzEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!jzEdit" :span="18">
+              <el-col class="content-item" :span="18">
                 <el-row>
                   <el-tag closable :disable-transitions="false" @close="handleClose(item, index, 'delFamilyHistory')"
                           v-for="(item, index) in familyHistory">{{ item.diseaseName }}
                   </el-tag>
                 </el-row>
-              </el-col>
-              <el-col class="content-item" v-show="jzEdit" :span="18">
-                <el-input
-                  placeholder="请输入病种名称"
-                  prefix-icon="el-icon-search"
-                  class="search-item"
-                  size="mini"
-                  clearable
-                  @clear="clearHistory"
-                  @change="searchHistory"
-                  v-model="form.familyHistory">
-                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
-                </el-input>
-                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
-                  <el-checkbox-group v-model="form.familyHistoryIds">
-                    <el-checkbox v-for="item in curDiseaseList" :label="item.diseaseId" :key="item.diseaseKey">
-                      {{ item.diseaseName }}
-                    </el-checkbox>
-                  </el-checkbox-group>
-                </el-scrollbar>
-                <el-button type="primary" size="mini" @click="saveHistory('saveFamilyHistory')">保存</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -55,54 +31,18 @@
                 <div class="item-wrap">
                   既往病史
                   <div class="add-btn"
-                       :style="[{'background':this.jwbEdit?'#DCDFE6':''},{'color':this.jwbEdit?'#999':''}]"
-                       @click="editItem('jwbEdit')">
-                    <i class="el-icon-plus" v-if="!this.jwbEdit"></i>
-                    <i class="el-icon-close" v-else></i>
+                       @click="addHistory('jwbEdit')">
+                    <i class="el-icon-plus"></i>
                   </div>
-                  <div v-show="jwbEdit" class="add-angle"></div>
                 </div>
               </el-col>
-              <el-col class="content-item" v-show="!jwbEdit" :span="18">
+              <el-col class="content-item" :span="18">
                 <el-row>
                   <el-tag closable :disable-transitions="false" @close="handleClose(item, index, 'delOldHistory')"
-                          v-for="(item, index) in oldHistory">{{ item.diseaseName }}{{ item.durationIllness }}年
+                          v-for="(item, index) in oldHistory">{{ item.diseaseName }}
+                    <span v-if="item.durationIllness">{{ item.durationIllness }}年</span>
                   </el-tag>
                 </el-row>
-              </el-col>
-              <el-col class="content-item" v-show="jwbEdit" :span="18">
-                <div class="add-angle"></div>
-                <el-input
-                  placeholder="请输入病种名称"
-                  prefix-icon="el-icon-search"
-                  class="search-item"
-                  size="mini"
-                  clearable
-                  @clear="clearHistory"
-                  @change="searchHistory"
-                  v-model="form.oldHistory">
-                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
-                </el-input>
-                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
-                  <el-checkbox-group v-model="form.oldHistoryIds">
-                    <el-row :gutter="20" v-for="item in curDiseaseList">
-                      <el-col :span="18">
-                        <el-tooltip class="item" effect="dark" :content="item.diseaseName" placement="top-start">
-                          <el-checkbox :label="item.diseaseId" :key="item.diseaseKey" :title="item.diseaseName">
-                            {{ item.diseaseName }}
-                          </el-checkbox>
-                        </el-tooltip>
-                      </el-col>
-                      <el-col :span="6">
-                        <el-input placeholder="请输入年限" class="check-input" size="mini" type="primary" v-model="item.year"
-                                  @change="changeYear(item)">
-                          <i slot="suffix" style="font-style:normal;line-height: 28px">年</i>
-                        </el-input>
-                      </el-col>
-                    </el-row>
-                  </el-checkbox-group>
-                </el-scrollbar>
-                <el-button type="primary" size="mini" @click="saveHistory('saveOldHistory')">保存</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -116,40 +56,15 @@
                 <div class="item-wrap">
                   既往手术史
                   <div class="add-btn"
-                       :style="[{'background':this.jwssEdit?'#DCDFE6':''},{'color':this.jwssEdit?'#999':''}]"
-                       @click="editItem('jwssEdit')">
-                    <i class="el-icon-plus" v-if="!this.jwssEdit"></i>
-                    <i class="el-icon-close" v-else></i>
+                       @click="addHistory('jwssEdit')">
+                    <i class="el-icon-plus"></i>
                   </div>
                 </div>
-                <div v-show="jwssEdit" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!jwssEdit" :span="18">
+              <el-col class="content-item" :span="18">
                 <el-tag closable :disable-transitions="false" @close="handleClose(item, index, 'delSurgicalHistory')"
                         v-for="(item, index) in surgicalHistory">{{ item.surgeryName }}
                 </el-tag>
-              </el-col>
-              <el-col class="content-item" v-show="jwssEdit" :span="18">
-                <div class="add-angle"></div>
-                <el-input
-                  placeholder="请输入手术名称"
-                  prefix-icon="el-icon-search"
-                  class="search-item"
-                  size="mini"
-                  clearable
-                  @clear="clearHistory"
-                  @change="searchHistory"
-                  v-model="form.surgical">
-                  <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
-                </el-input>
-                <el-scrollbar class="scrollbar" style="height: 105px;margin-bottom: 5px;">
-                  <el-checkbox-group v-model="form.surgicalIds">
-                    <el-checkbox v-for="item in curSurgicalList" :label="item.surgicalId" :key="item.surgicalId">
-                      {{ item.surgeryName }}
-                    </el-checkbox>
-                  </el-checkbox-group>
-                </el-scrollbar>
-                <el-button type="primary" size="mini" @click="saveHistory('saveSurgicalHistory')">保存</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -426,6 +341,80 @@
         <el-button class="btn-size" type="primary" @click="goNext">下一步</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog :title="dialog.title" :visible.sync="dialog.visible" :width="'70%'">
+      <el-row class="disease" v-show="jzEdit">
+        <el-input
+          placeholder="请输入病种名称"
+          prefix-icon="el-icon-search"
+          class="search-item"
+          size="mini"
+          clearable
+          @clear="clearHistory"
+          @change="searchHistory"
+          v-model="form.familyHistory">
+          <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
+        </el-input>
+        <el-checkbox-group v-model="form.familyHistoryIds">
+          <el-checkbox v-for="item in curDiseaseList" :title="item.diseaseName" :label="item.diseaseId"
+                       :key="item.diseaseKey"
+                       style="width: 210px;display: inline-block">
+            {{ item.diseaseName }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-row>
+      <el-row class="disease" v-show="jwbEdit">
+        <el-input
+          placeholder="请输入病种名称"
+          prefix-icon="el-icon-search"
+          class="search-item"
+          size="mini"
+          clearable
+          @clear="clearHistory"
+          @change="searchHistory"
+          v-model="form.oldHistory">
+          <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
+        </el-input>
+        <el-checkbox-group v-model="form.oldHistoryIds">
+          <el-row :gutter="20" v-for="item in curDiseaseList"
+                  style="width: 300px;display: inline-block;margin-right: 10px;">
+            <el-col :span="17">
+              <el-checkbox :label="item.diseaseId" :key="item.diseaseKey" :title="item.diseaseName">
+                {{ item.diseaseName }}
+              </el-checkbox>
+            </el-col>
+            <el-col :span="7">
+              <el-input class="check-input" size="mini" type="primary" v-model="item.year" @change="changeYear(item)">
+                <i slot="suffix" style="font-style:normal;line-height: 28px">年</i>
+              </el-input>
+            </el-col>
+          </el-row>
+        </el-checkbox-group>
+      </el-row>
+      <el-row v-show="jwssEdit">
+        <el-input
+          placeholder="请输入手术名称"
+          prefix-icon="el-icon-search"
+          class="search-item"
+          size="mini"
+          clearable
+          @clear="clearHistory"
+          @change="searchHistory"
+          v-model="form.surgical">
+          <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
+        </el-input>
+        <el-checkbox-group v-model="form.surgicalIds">
+          <el-checkbox v-for="item in curSurgicalList" :label="item.surgicalId" :key="item.surgicalId"
+                       style="width: 210px;display: inline-block">
+            {{ item.surgeryName }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="btn-size" @click="dialog.visible = false" style="float:none">取 消</el-button>
+        <el-button class="btn-size" type="primary" @click="saveHistory(dialog.type)" style="float:none">保存
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -516,7 +505,12 @@ export default {
       allergenHistory: [],
       medList: [],
       medSideList: [],
-      searchName: ''
+      searchName: '',
+      dialog: {
+        visible: false,
+        title: '',
+        type: ''
+      }
     }
   },
   created() {
@@ -550,6 +544,7 @@ export default {
       }
       getFamilyHistory(param).then((res) => {
         if (res.code === 200 && res.data) {
+          this.form.familyHistoryIds = []
           this.familyHistory = res.data
           res.data.forEach((vv) => {
             this.form.familyHistoryIds.push(vv.diseaseId)
@@ -558,6 +553,7 @@ export default {
       })
       getOldHistory(param).then((res) => {
         if (res.code === 200 && res.data) {
+          this.form.oldHistoryIds = []
           res.data.forEach((vv) => {
             vv.year = vv.durationIllness
             this.form.oldHistoryIds.push(vv.diseaseId)
@@ -567,9 +563,10 @@ export default {
       })
       getSurgicalHistory(param).then((res) => {
         if (res.code === 200 && res.data) {
+          this.form.surgicalIds = []
           this.surgicalHistory = res.data
           res.data.forEach((vv) => {
-            this.form.surgicalIds.push(vv.pastSurgicalHistoryId)
+            this.form.surgicalIds.push(vv.surgicalId)
           })
         }
       })
@@ -721,6 +718,7 @@ export default {
           saveFamilyHistory(param).then((res) => {
             if (res.code === 200) {
               this.jzEdit = false
+              this.dialog.visible = !this.dialog.visible
               this.$message.success('保存成功')
               this.getHistory()
             }
@@ -748,6 +746,7 @@ export default {
             saveOldHistory(param).then((res) => {
               if (res.code === 200) {
                 this.jwbEdit = false
+                this.dialog.visible = !this.dialog.visible
                 this.$message.success('保存成功')
                 this.getHistory()
               }
@@ -760,6 +759,7 @@ export default {
           saveSurgicalHistory(param).then((res) => {
             if (res.code === 200) {
               this.jwssEdit = false
+              this.dialog.visible = !this.dialog.visible
               this.$message.success('保存成功')
               this.getHistory()
             }
@@ -867,6 +867,7 @@ export default {
           case 'delFamilyHistory': {
             delFamilyHistory(item.familyHistoryId).then((res) => {
               if (res.code === 200) {
+                this.form.familyHistoryIds.splice(index, 1)
                 this.familyHistory.splice(index, 1);
               }
             })
@@ -875,14 +876,16 @@ export default {
           case 'delOldHistory': {
             delOldHistory(item.pastHistoryId).then((res) => {
               if (res.code === 200) {
+                this.form.oldHistoryIds.splice(index, 1)
                 this.oldHistory.splice(index, 1);
               }
             })
             break;
           }
           case 'delSurgicalHistory': {
-            delOldHistory(item.pastSurgicalHistoryId).then((res) => {
+            delSurgicalHistory(item.pastSurgicalHistoryId).then((res) => {
               if (res.code === 200) {
+                this.form.surgicalIds.splice(index, 1)
                 this.surgicalHistory.splice(index, 1);
               }
             })
@@ -898,6 +901,39 @@ export default {
           }
         }
       })
+    },
+    addHistory(type) {
+      this.jzEdit = false
+      this.jwbEdit = false
+      this.jwssEdit = false
+      this[ type ] = true
+      this.dialog.visible = !this.dialog.visible
+      this.curDiseaseList = this.diseaseList
+      switch (type) {
+        case 'jzEdit':
+          this.dialog.title = '家族病史'
+          this.dialog.type = 'saveFamilyHistory'
+          break
+        case 'jwbEdit':
+          this.dialog.title = '既往病史'
+          this.dialog.type = 'saveOldHistory'
+          break
+        case 'jwssEdit':
+          this.dialog.title = '既往手术史'
+          this.dialog.type = 'saveSurgicalHistory'
+          break
+        default:
+          break
+      }
+      if (type === 'jwbEdit') {
+        this.oldHistory.forEach((vv) => {
+          this.curDiseaseList.forEach((cc) => {
+            if (vv.diseaseId === cc.diseaseId) {
+              cc.year = vv.durationIllness
+            }
+          })
+        })
+      }
     },
     editItem(type) {
       this[ type ] = !this[ type ]
@@ -1105,8 +1141,8 @@ export default {
   }
 }
 
-::v-deep .el-checkbox__label {
-  width: 100%;
+::v-deep .disease .el-checkbox__label {
+  width: 200px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
