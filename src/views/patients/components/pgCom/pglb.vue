@@ -232,7 +232,7 @@
            :style="rr.color">
         {{ curList.nickName }}得分：{{ score }}  {{ rr.name }}
       </div>
-      <div class="result-wrap" v-if="curList.rule.length === 0">
+      <div class="result-wrap" v-if="curList.rule&&curList.rule.length === 0">
         {{ curList.nickName }}得分：{{ score }}
       </div>
     </div>

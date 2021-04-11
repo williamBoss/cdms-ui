@@ -374,21 +374,20 @@
           v-model="form.oldHistory">
           <el-button slot="append" icon="el-icon-search" @click="searchHistory"></el-button>
         </el-input>
-        <el-checkbox-group v-model="form.oldHistoryIds">
-          <el-row :gutter="20" v-for="item in curDiseaseList"
-                  style="width: 300px;display: inline-block;margin-right: 10px;">
-            <el-col :span="17">
-              <el-checkbox :label="item.diseaseId" :key="item.diseaseKey" :title="item.diseaseName">
-                {{ item.diseaseName }}
-              </el-checkbox>
-            </el-col>
-            <el-col :span="7">
-              <el-input class="check-input" size="mini" type="primary" v-model="item.year" @change="changeYear(item)">
-                <i slot="suffix" style="font-style:normal;line-height: 28px">年</i>
-              </el-input>
-            </el-col>
-          </el-row>
-        </el-checkbox-group>
+        <el-row :gutter="20" v-for="item in curDiseaseList"
+                style="width: 300px;display: inline-block;margin-right: 10px;">
+          <el-col :span="17">
+            <el-checkbox :label="item.diseaseId" :key="item.diseaseKey" :title="item.diseaseName"
+                         v-model="form.oldHistoryIds">
+              {{ item.diseaseName }}
+            </el-checkbox>
+          </el-col>
+          <el-col :span="7">
+            <el-input class="check-input" size="mini" type="primary" v-model="item.year">
+              <i slot="suffix" style="font-style:normal;line-height: 28px">年</i>
+            </el-input>
+          </el-col>
+        </el-row>
       </el-row>
       <el-row v-show="jwssEdit">
         <el-input
@@ -522,6 +521,9 @@ export default {
         if (res.code === 200 && res.data) {
           this.diseaseList = res.data
           this.curDiseaseList = res.data
+          this.curDiseaseList.forEach(v => {
+            this.$set(v, 'year', '')
+          })
           this.getHistory()
         }
       })
@@ -840,13 +842,6 @@ export default {
         }
       }
     },
-    changeYear(item) {
-      this.diseaseList.forEach((vv) => {
-        if (vv.diseaseId === item.diseaseId) {
-          vv.year = item.year
-        }
-      })
-    },
     delItem(item, index) {
       delMedSideList({id: item.medicationSideEffectId}).then((res) => {
         if (res.code === 200) {
@@ -917,6 +912,13 @@ export default {
         case 'jwbEdit':
           this.dialog.title = '既往病史'
           this.dialog.type = 'saveOldHistory'
+          this.oldHistory.forEach((vv) => {
+            this.curDiseaseList.forEach((cc) => {
+              if (vv.diseaseId === cc.diseaseId) {
+                cc.year = vv.durationIllness
+              }
+            })
+          })
           break
         case 'jwssEdit':
           this.dialog.title = '既往手术史'
@@ -925,28 +927,10 @@ export default {
         default:
           break
       }
-      if (type === 'jwbEdit') {
-        this.oldHistory.forEach((vv) => {
-          this.curDiseaseList.forEach((cc) => {
-            if (vv.diseaseId === cc.diseaseId) {
-              cc.year = vv.durationIllness
-            }
-          })
-        })
-      }
     },
     editItem(type) {
       this[ type ] = !this[ type ]
       this.curDiseaseList = this.diseaseList
-      if (type === 'jwbEdit') {
-        this.oldHistory.forEach((vv) => {
-          this.curDiseaseList.forEach((cc) => {
-            if (vv.diseaseId === cc.diseaseId) {
-              cc.year = vv.durationIllness
-            }
-          })
-        })
-      }
       if (type === 'gmEdit') {
         this.form.allergyId = ''
         this.form.allergen = ''
