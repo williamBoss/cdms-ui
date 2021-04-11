@@ -97,6 +97,7 @@
                   <el-input placeholder="其他" size="mini" type="primary" v-model="form.compSymptom"></el-input>
                 </div>
                 <el-button type="primary" size="mini" @click="saveHistory('saveDiabetesHistory')">保存</el-button>
+                <el-button size="mini" @click="editItem('tnbEdit')" style="margin-right: 10px">取消</el-button>
               </el-col>
             </el-row>
           </el-card>
@@ -125,7 +126,8 @@
               <el-col class="content-item" v-show="gssEdit" :span="18">
                 <el-form-item label="描述" label-width="40px">
                   <el-input type="textarea" :rows="5" v-model="form.liverInfo"></el-input>
-                  <el-button class="card-btn" type="primary" @click="saveHistory('saveLiverInfo')">保存</el-button>
+                  <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveLiverInfo')">保存
+                  </el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -153,7 +155,8 @@
               <el-col class="content-item" v-show="sssEdit" :span="18">
                 <el-form-item label="描述" label-width="40px">
                   <el-input type="textarea" :rows="5" v-model="form.kidneyInfo"></el-input>
-                  <el-button class="card-btn" type="primary" @click="saveHistory('saveKidneyInfo')">保存</el-button>
+                  <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveKidneyInfo')">保存
+                  </el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -237,6 +240,8 @@
                   <el-input type="textarea" :rows="6" size="mini" v-model="form.allergySymptoms"></el-input>
                 </el-form-item>
                 <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveAllergyHistory')">保存
+                </el-button>
+                <el-button class="card-btn" size="mini" @click="editItem('gmEdit')" style="margin-right: 10px">取消
                 </el-button>
               </el-col>
             </el-row>
@@ -331,6 +336,8 @@
                 </el-form-item>
                 <el-button class="card-btn" size="mini" type="primary" :loading="form.medSide.saveVisible"
                            @click="handleClick(form.medSide)">保存
+                </el-button>
+                <el-button class="card-btn" size="mini" @click="editItem('ywfyEdit')" style="margin-right: 10px">取消
                 </el-button>
               </el-col>
             </el-row>
@@ -1025,6 +1032,10 @@ export default {
       }
     }
   }
+}
+
+.el-tooltip__popper {
+  max-width: 700px;
 }
 </style>
 <style scoped lang="scss">

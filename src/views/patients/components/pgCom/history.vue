@@ -133,6 +133,16 @@
                             :height="210"
                             :header-cell-style="{background:'#1e3f7c',color:'white'}"
                             style="width: 100%">
+                    <el-table-column
+                      prop="index"
+                      label="序号"
+                      width="70"
+                      align="center"
+                      fixed>
+                      <template slot-scope="scope">
+                        {{ scope.$index + 1 }}
+                      </template>
+                    </el-table-column>
                     <el-table-column fixed prop="allergen" align="center" label="过敏原">
                     </el-table-column>
                     <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
@@ -182,6 +192,16 @@
                             :height="210"
                             :header-cell-style="{background:'#1e3f7c',color:'white'}"
                             style="width: 100%">
+                    <el-table-column
+                      prop="index"
+                      label="序号"
+                      width="70"
+                      align="center"
+                      fixed>
+                      <template slot-scope="scope">
+                        {{ scope.$index + 1 }}
+                      </template>
+                    </el-table-column>
                     <el-table-column fixed prop="medName" align="center" label="药品名称" show-overflow-tooltip>
                     </el-table-column>
                     <el-table-column prop="adverseReactionsSymptoms" label="不良反应症状" show-overflow-tooltip>
@@ -440,6 +460,10 @@ export default {
       }
     }
   }
+}
+
+.el-tooltip__popper {
+  max-width: 700px;
 }
 </style>
 <style scoped lang="scss">
