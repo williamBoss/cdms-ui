@@ -311,6 +311,7 @@
 
 <script>
 import { getReportInfo, getReportProblem, getReportSequelae } from '@/api/patients'
+import axios from 'axios';
 
 export default {
   props: {
