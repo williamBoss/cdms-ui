@@ -3,7 +3,7 @@
     {
       "type": "form",
       "name": "yyycx",
-      "nickName": "用药依从性问卷",
+      "nickName": "用药依从性",
       "rule": [
         {
           "name": "依从性差",

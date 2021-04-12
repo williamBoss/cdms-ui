@@ -125,12 +125,15 @@
               border
               style="width: 100%">
               <el-table-column
-                label="Date"
+                label="量表名称"
                 prop="key">
               </el-table-column>
               <el-table-column
-                label="Name"
+                label="得分"
                 prop="value">
+                <template slot-scope="scope">
+                  <span :style="scope.row.color">{{ scope.row.value }} {{ scope.row.name }}</span>
+                </template>
               </el-table-column>
             </el-table>
           </el-col>
@@ -337,7 +340,8 @@ export default {
       },
       tableData: [],
       obj1: {},
-      obj2: {}
+      obj2: {},
+      scales: []
     }
   },
   watch: {
@@ -352,12 +356,21 @@ export default {
     this.getReportInfo()
   },
   methods: {
-    getReportInfo() {
+    async getReportInfo() {
       let param = {
         'assessmentId': this.assessmentId,
         'patientId': this.$route.params.id
       }
-      getReportInfo(param).then((res) => {
+      let _this = this
+      await axios({
+        method: 'get',
+        url: '/question.json'
+      }).then(function(response) {
+        _this.scales = response.data.data
+      }).catch(function(error) {
+        console.log(error);
+      });
+      await getReportInfo(param).then((res) => {
         if (res.code === 200) {
           // this.form = res.data
           this.hanldeData(res.data)
@@ -365,14 +378,14 @@ export default {
           this.$message.error(res.errorMessage)
         }
       })
-      getReportProblem(param).then((res) => {
+      await getReportProblem(param).then((res) => {
         if (res.code === 200) {
           this.obj1 = res.data ? res.data : {}
         } else {
           this.$message.error(res.errorMessage)
         }
       })
-      getReportSequelae(param).then((res) => {
+      await getReportSequelae(param).then((res) => {
         if (res.code === 200) {
           this.obj2 = res.data ? res.data : {}
         } else {
@@ -515,7 +528,7 @@ export default {
           name: '吸烟',
           value1: '吸烟量' + data.lifestyleVO.smokingNum + '支/天',
           value2: '吸烟年限' + data.lifestyleVO.smokingYear + '年',
-          value3: '戒烟年限' + data.lifestyleVO.smokingYear + '年'
+          value3: '戒烟年限' + data.lifestyleVO.quitSmokingTime + '年'
         })
         this.form.smokeList = newList
         let otherList = []
@@ -539,24 +552,32 @@ export default {
           value1: data.lifestyleVO.lifestyleSummary
         })
         this.form.drinkList = otherList
-        // Object.keys(data.lifestyleVO).forEach((vv) => {
-        //   newList.push({
-        //     name: '吸烟',
-        //     value1: '吸烟量<br>' + data.
-        //   })
-        // })
       }
       if (data.medSideEffectVOList) {
         this.form.medSideEffectVOList = data.medSideEffectVOList
       }
       if (data.scale) {
         let newList = []
-        Object.keys(data.scale).forEach((vv) => {
-          newList.push({
-            key: vv,
-            value: data.scale[ vv ]
+        for (let [ key, value ] of Object.entries(data.scale)) {
+          let scale = {
+            key: key,
+            value: value,
+            name: '',
+            color: ''
+          }
+          this.scales.forEach(v => {
+            if (v.nickName === key) {
+              v.rule.forEach(r => {
+                if ((value > r.min || value == r.min) &&
+                  (r.max === 'null' ? !(value < r.max) : value < r.max || value == r.max)) {
+                  scale.name = r.name
+                  scale.color = r.color
+                }
+              });
+            }
           })
-        })
+          newList.push(scale)
+        }
         this.form.scaleList = newList
       }
       if (data.medProblemsVOList) {
@@ -573,25 +594,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .life-style {
-//   .left-item {
-//     text-align: center;
-//     background: #1e3f7c;
-//     color: #fff;
-//     font-size: 14px;
-//   }
-// }
 .ywp-wrap {
   .el-table__header-wrapper {
     display: none;
   }
 
-  // .el-table::before, .el-table--group::after, .el-table--border::after{
-  //    width: 0;
-  // }
-  // .el-table--border{
-  //   border: 0;
-  // }
   .info-wrap {
     height: 70px;
     min-height: 70px;
