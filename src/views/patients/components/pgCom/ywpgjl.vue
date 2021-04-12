@@ -489,7 +489,7 @@ export default {
         })
         newList.push({
           name1: 'BMI',
-          value1: data.patientInfoVO.bmi + 'cm',
+          value1: data.patientInfoVO.bmi,
           name2: '过去一年体重变化',
           value2: data.lifestyleVO && (data.lifestyleVO.weightLossValue
             ? data.lifestyleVO.weightLossValue + 'kg'

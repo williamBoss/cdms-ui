@@ -39,11 +39,15 @@
               <el-col class="left-item" :span="3">
                 饮食
               </el-col>
-              <el-col class="content-item" :span="20">
-                <el-row>
-                  <el-form-item label="每日的主食量约(两)" label-width="136px">
-                    <el-input disabled size="mini" v-model="form.dailyBasicFoodAmount"></el-input>
-                  </el-form-item>
+              <el-col class="content-item" :span="20" style="padding-right: 0">
+                <el-row :gutter="10">
+                  <el-col :span="12">
+                    <el-form-item label="每日主食量约" label-width="96px">
+                      <el-input disabled size="mini" v-model="form.dailyBasicFoodAmount">
+                        <i slot="suffix">两</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
                   <el-col class="food-item" :span="12">
                     <el-form-item label="摄盐量:" label-width="60px">
                       <el-radio-group disabled v-model="form.dailySaltAmount">
@@ -52,34 +56,81 @@
                         <el-radio label="3">多</el-radio>
                       </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="吸烟:" label-width="60px">
-                      <el-radio-group disabled v-model="form.isSmoke">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
-                        <el-radio label="3">已戒</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                    <el-form-item label="饮酒:" label-width="60px">
-                      <el-radio-group disabled v-model="form.isDrinking">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
                   </el-col>
+                </el-row>
+                <el-row :gutter="10">
                   <el-col class="food-item" :span="12">
-                    <el-form-item label="油脂:" label-width="60px">
+                    <el-form-item label="油脂:" label-width="46px">
                       <el-radio-group disabled v-model="form.dailyFatAmount">
                         <el-radio label="1">少</el-radio>
                         <el-radio label="2">中</el-radio>
                         <el-radio label="3">多</el-radio>
                       </el-radio-group>
                     </el-form-item>
+                  </el-col>
+                  <el-col class="food-item" :span="12">
                     <el-form-item label="蔬/果:" label-width="60px">
                       <el-radio-group disabled v-model="form.dailyVegetableFruitAmount">
                         <el-radio label="1">少</el-radio>
                         <el-radio label="2">中</el-radio>
                         <el-radio label="3">多</el-radio>
                       </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                  <el-col class="food-item" :span="10">
+                    <el-form-item label="吸烟:" label-width="46px">
+                      <el-radio-group disabled v-model="form.isSmoke">
+                        <el-radio label="1">是</el-radio>
+                        <el-radio label="2">否</el-radio>
+                        <el-radio label="3">已戒</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                  <el-col v-show="form.isSmoke === '1'" class="food-item" :span="7">
+                    <el-form-item label="吸烟量:" label-width="60px">
+                      <el-input disabled size="mini" v-model="form.smokingNum">
+                        <i slot="suffix">支/天</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col v-show="form.isSmoke === '1'" class="food-item" :span="7">
+                    <el-form-item label="吸烟年限:" label-width="73px">
+                      <el-input disabled size="mini" v-model="form.smokingYear">
+                        <i slot="suffix">年</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col v-show="form.isSmoke === '3'" class="food-item" :span="8">
+                    <el-form-item label="戒烟年限:" label-width="83px">
+                      <el-input disabled size="mini" v-model="form.quitSmokingTime">
+                        <i slot="suffix">年</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                  <el-col class="food-item" :span="8">
+                    <el-form-item label="饮酒:" label-width="46px">
+                      <el-radio-group v-model="form.isDrinking">
+                        <el-radio label="1">是</el-radio>
+                        <el-radio label="2">否</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                  <el-col v-show="form.isDrinking === '1'" class="food-item" :span="8">
+                    <el-form-item label="饮酒量:" label-width="60px">
+                      <el-input size="mini" v-model="form.drinkingNum">
+                        <i slot="suffix">两/天</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col v-show="form.isDrinking === '1'" class="food-item" :span="8">
+                    <el-form-item label="饮酒年限:" label-width="73px">
+                      <el-input size="mini" v-model="form.drinkingYear">
+                        <i slot="suffix">年</i>
+                      </el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -96,17 +147,29 @@
                 运动
               </el-col>
               <el-col class="content-item" :span="20">
-                <el-form-item label="通常运动项目" label-width="96px">
-                  <el-input disabled size="mini" v-model="form.usualSports"></el-input>
+                <el-form-item label="通常运动项目" label-width="98px">
+                  <el-checkbox-group disabled v-model="form.usualSportsArr">
+                    <el-checkbox label="跑步"></el-checkbox>
+                    <el-checkbox label="走路"></el-checkbox>
+                    <el-checkbox label="跳舞"></el-checkbox>
+                    <el-checkbox label="骑车"></el-checkbox>
+                    <el-checkbox label="其他"></el-checkbox>
+                  </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="每次的运动时间约(分)" label-width="150px">
-                  <el-input disabled size="mini" v-model="form.eachExerciseTime"></el-input>
+                <el-form-item label="每次的运动时间约" label-width="125px">
+                  <el-input disabled size="mini" v-model="form.eachExerciseTime" style="width: 50%">
+                    <i slot="suffix">分</i>
+                  </el-input>
                 </el-form-item>
-                <el-form-item label="每周的运动频率是(次/周)" label-width="167px">
-                  <el-input disabled size="mini" v-model="form.weeklyExerciseFrequency"></el-input>
+                <el-form-item label="每周的运动频率是" label-width="125px">
+                  <el-input disabled size="mini" v-model="form.weeklyExerciseFrequency" style="width: 50%">
+                    <i slot="suffix">次/周</i>
+                  </el-input>
                 </el-form-item>
-                <el-form-item label="每周的运动时间是(小时)" label-width="163px">
-                  <el-input disabled size="mini" v-model="form.weeklyExerciseTime"></el-input>
+                <el-form-item label="每周的运动时间是" label-width="125px">
+                  <el-input disabled size="mini" v-model="form.weeklyExerciseTime" style="width: 50%">
+                    <i slot="suffix">小时</i>
+                  </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -132,7 +195,7 @@
                 </el-form-item>
                 <el-form-item label="有过跌倒么？" label-width="96px">
                   <el-radio-group disabled v-model="form.isFall">
-                    <el-radio label="0">否</el-radio>
+                    <el-radio label="2">否</el-radio>
                     <el-radio label="1">是</el-radio>
                   </el-radio-group>
                 </el-form-item>
@@ -252,7 +315,9 @@ export default {
   },
   data() {
     return {
-      form: {},
+      form: {
+        usualSportsArr: []
+      },
       checkList: [],
       userInfo: {}
     }
@@ -288,6 +353,7 @@ export default {
             res.data.isSleepDisorder = res.data.isSleepDisorder.toString()
             res.data.isSmoke = res.data.isSmoke.toString()
             this.form = res.data
+            this.form.usualSportsArr = res.data.usualSports.split(',')
           }
         } else {
           this.$message.error(res.errorMessage)
