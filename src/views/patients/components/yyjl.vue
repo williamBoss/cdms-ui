@@ -292,6 +292,7 @@ export default {
           this.getRecord()
           this.curDisease = {}
           this.curMed = {}
+          this.form = {}
           this.dialogVisible = false
         } else {
           this.$message.error(res.errorMessage)
@@ -321,6 +322,7 @@ export default {
       console.log(val)
     },
     addMed() {
+      this.form = {}
       this.dialogVisible = true
     },
     saveInfo() {
@@ -328,7 +330,7 @@ export default {
     },
     filterTag(value, row) {
       return row.remark === value;
-    },
+    }
   }
 }
 </script>

@@ -124,8 +124,8 @@
                 {{ liverInfo.liverDamageDesc }}
               </el-col>
               <el-col class="content-item" v-show="gssEdit" :span="18">
-                <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="5" v-model="form.liverInfo"></el-input>
+                <el-form-item label="" label-width="0">
+                  <el-input type="textarea" placeholder="请输入肝损害描述" :rows="5" v-model="form.liverInfo"></el-input>
                   <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveLiverInfo')">保存
                   </el-button>
                 </el-form-item>
@@ -153,8 +153,8 @@
                 {{ kidneyInfo.kidneyDamageDesc }}
               </el-col>
               <el-col class="content-item" v-show="sssEdit" :span="18">
-                <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="5" v-model="form.kidneyInfo"></el-input>
+                <el-form-item label="" label-width="0">
+                  <el-input type="textarea" placeholder="请输入肾损害描述" :rows="5" v-model="form.kidneyInfo"></el-input>
                   <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveKidneyInfo')">保存
                   </el-button>
                 </el-form-item>

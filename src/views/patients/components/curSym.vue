@@ -9,8 +9,9 @@
                 主述
               </el-col>
               <el-col class="content-item" :span="18">
-                <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="5" v-model="consult.mainConsult" style="height: 150px"></el-input>
+                <el-form-item label="" label-width="0">
+                  <el-input type="textarea" placeholder="请输入描述" :rows="5" v-model="consult.mainConsult"
+                            style="height: 150px"></el-input>
                   <el-button class="card-btn" type="primary" size="mini" @click="saveConsult" style="margin-top: 9px">
                     保存
                   </el-button>

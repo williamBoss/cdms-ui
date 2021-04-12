@@ -567,10 +567,9 @@ export default {
             color: ''
           }
           this.scales.forEach(v => {
-            if (v.nickName === key) {
+            if (v.nickName === key && value !== '') {
               v.rule.forEach(r => {
-                if ((value > r.min || value == r.min) &&
-                  (r.max === 'null' ? !(value < r.max) : value < r.max || value == r.max)) {
+                if ((value > r.min || value == r.min) && (value < r.max || value == r.max)) {
                   scale.name = r.name
                   scale.color = r.color
                 }

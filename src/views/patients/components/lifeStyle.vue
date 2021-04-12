@@ -19,12 +19,12 @@
                     <div>1年内体重(kg)</div>
                     <el-form-item label="减少" label-width="40px">
                       <el-input clearable :disabled="weightLossVisible" size="mini" v-model="form.weightLossValue">
-                        <i slot="suffix">kg</i>
+                        <i slot="suffix" class="unit_suffix">kg</i>
                       </el-input>
                     </el-form-item>
                     <el-form-item label="增加" label-width="40px">
                       <el-input clearable :disabled="weightGainVisible" size="mini" v-model="form.weightGainValue">
-                        <i slot="suffix">kg</i>
+                        <i slot="suffix" class="unit_suffix">kg</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -44,7 +44,7 @@
                   <el-col :span="12">
                     <el-form-item label="每日主食量约" label-width="96px">
                       <el-input size="mini" v-model="form.dailyBasicFoodAmount">
-                        <i slot="suffix">两</i>
+                        <i slot="suffix" class="unit_suffix">两</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -91,27 +91,27 @@
                   <el-col v-show="form.isSmoke === '1'" class="food-item" :span="7">
                     <el-form-item label="吸烟量:" label-width="60px">
                       <el-input size="mini" v-model="form.smokingNum">
-                        <i slot="suffix">支/天</i>
+                        <i slot="suffix" class="unit_suffix">支/天</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
                   <el-col v-show="form.isSmoke === '1'" class="food-item" :span="7">
-                    <el-form-item label="吸烟年限:" label-width="73px">
+                    <el-form-item label="年限:" label-width="45px">
                       <el-input size="mini" v-model="form.smokingYear">
-                        <i slot="suffix">年</i>
+                        <i slot="suffix" class="unit_suffix">年</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
                   <el-col v-show="form.isSmoke === '3'" class="food-item" :span="8">
                     <el-form-item label="戒烟年限:" label-width="83px">
                       <el-input size="mini" v-model="form.quitSmokingTime">
-                        <i slot="suffix">年</i>
+                        <i slot="suffix" class="unit_suffix">年</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row :gutter="10">
-                  <el-col class="food-item" :span="8">
+                  <el-col class="food-item" :span="9">
                     <el-form-item label="饮酒:" label-width="46px">
                       <el-radio-group v-model="form.isDrinking">
                         <el-radio label="1">是</el-radio>
@@ -122,14 +122,14 @@
                   <el-col v-show="form.isDrinking === '1'" class="food-item" :span="8">
                     <el-form-item label="饮酒量:" label-width="60px">
                       <el-input size="mini" v-model="form.drinkingNum">
-                        <i slot="suffix">两/天</i>
+                        <i slot="suffix" class="unit_suffix">两/天</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col v-show="form.isDrinking === '1'" class="food-item" :span="8">
-                    <el-form-item label="饮酒年限:" label-width="73px">
+                  <el-col v-show="form.isDrinking === '1'" class="food-item" :span="7">
+                    <el-form-item label="年限:" label-width="45px">
                       <el-input size="mini" v-model="form.drinkingYear">
-                        <i slot="suffix">年</i>
+                        <i slot="suffix" class="unit_suffix">年</i>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -158,17 +158,17 @@
                 </el-form-item>
                 <el-form-item label="每次的运动时间约" label-width="125px">
                   <el-input size="mini" v-model="form.eachExerciseTime" style="width: 50%">
-                    <i slot="suffix">分</i>
+                    <i slot="suffix" class="unit_suffix">分</i>
                   </el-input>
                 </el-form-item>
                 <el-form-item label="每周的运动频率是" label-width="125px">
                   <el-input size="mini" v-model="form.weeklyExerciseFrequency" style="width: 50%">
-                    <i slot="suffix">次/周</i>
+                    <i slot="suffix" class="unit_suffix">次/周</i>
                   </el-input>
                 </el-form-item>
                 <el-form-item label="每周的运动时间是" label-width="125px">
                   <el-input size="mini" v-model="form.weeklyExerciseTime" style="width: 50%">
-                    <i slot="suffix">小时</i>
+                    <i slot="suffix" class="unit_suffix">小时</i>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -287,8 +287,8 @@
                 总结
               </el-col>
               <el-col class="content-item" :span="20">
-                <el-form-item label="描述" label-width="40px">
-                  <el-input type="textarea" :rows="7" v-model="form.lifestyleSummary"></el-input>
+                <el-form-item label="" label-width="0">
+                  <el-input type="textarea" placeholder="请输入总结描述" :rows="7" v-model="form.lifestyleSummary"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -475,6 +475,10 @@ export default {
 .set-item {
   line-height: 44px;
   padding: 0 20px;
+}
+
+.unit_suffix {
+  font-style: normal;
 }
 </style>
 <style lang="scss">

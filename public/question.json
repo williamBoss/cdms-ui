@@ -265,7 +265,7 @@
           "name": "轻度焦虑",
           "max": 60,
           "min": 50,
-          "color": ""
+          "color": "background: #eaf1fd;color: #1890FF;"
         },
         {
           "name": "中度焦虑",
@@ -739,7 +739,7 @@
           "name": "有抑郁症状",
           "max": 52,
           "min": 50,
-          "color": ""
+          "color": "background: #eaf1fd;color: #1890FF;"
         },
         {
           "name": "您有轻度抑郁，但是请别担心，请适当调整",
@@ -1606,7 +1606,7 @@
           "name": "有轻微的疼痛，能忍受",
           "max": 3,
           "min": 1,
-          "color": ""
+          "color": "background: #eaf1fd;color: #1890FF;"
         },
         {
           "name": "患者疼痛并影响到睡眠，尚能忍受",
@@ -2079,7 +2079,7 @@
           "name": "中等影响",
           "max": 20,
           "min": 11,
-          "color": ""
+          "color": "background: #eaf1fd;color: #1890FF;"
         },
         {
           "name": "严重影响",
@@ -2126,7 +2126,7 @@
           "question": "",
           "value": "catQ4",
           "startName": "当我爬坡或爬一层楼时，我并不感到喘不过气来",
-          "endName": "当我爬坡或爬一层楼时，我感觉非常喘不过气来",
+          "endName": "我感觉非常喘不过气来",
           "min": 1,
           "max": 5,
           "step": 1

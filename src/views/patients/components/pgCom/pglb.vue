@@ -531,21 +531,22 @@ export default {
 
 .slider-wrap {
   .el-slider__runway, .el-slider__bar {
-    height: 30px;
+    height: 15px;
     border-radius: 25px;
   }
 
   .el-slider__stop {
-    display: none;
+    height: 15px;
+    width: 15px;
   }
 
   .el-slider__button-wrapper {
-    top: -6px;
+    top: -10px;
   }
 
   .el-slider__button {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
 
   .el-slider__marks-text {

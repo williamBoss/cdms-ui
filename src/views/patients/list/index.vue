@@ -136,7 +136,15 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
-                  <el-button @click="delPatient(scope.row, scope.$index)" type="text">删除</el-button>
+                  <el-popconfirm
+                    confirm-button-text='好的'
+                    cancel-button-text='不用了'
+                    icon="el-icon-info"
+                    title="确定删除吗？"
+                    @confirm="delPatient(scope.row, scope.$index)"
+                  >
+                    <el-button slot="reference" type="text">删除</el-button>
+                  </el-popconfirm>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button @click="" type="text">转诊</el-button>
