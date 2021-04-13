@@ -202,10 +202,6 @@ export default {
 
 <style scoped lang="scss">
 .yyjl-wrap {
-  .el-table__header-wrapper {
-    display: none;
-  }
-
   .right-btn {
     margin-bottom: 20px;
   }
@@ -285,10 +281,6 @@ export default {
 </style>
 <style lang="scss">
 .ywp-wrap {
-  .el-table__header-wrapper {
-    display: none;
-  }
-
   .el-textarea__inner {
     height: 144px;
     padding-bottom: 35px;
