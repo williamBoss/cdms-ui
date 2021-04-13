@@ -337,8 +337,9 @@ export default {
 
 <style scoped lang="scss">
 .yyjl-wrap {
-  .el-table__header-wrapper {
-    display: none;
+  ::v-deep .el-table__column-filter-trigger i{
+    font-weight: bold;
+    color: #FFFFFF;
   }
 
   .el-button {
@@ -412,18 +413,6 @@ export default {
       border-right: 0;
       padding-right: 20px;
     }
-  }
-}
-</style>
-<style lang="scss">
-.ywp-wrap {
-  .el-table__header-wrapper {
-    display: none;
-  }
-
-  .el-textarea__inner {
-    height: 144px;
-    padding-bottom: 35px;
   }
 }
 </style>
