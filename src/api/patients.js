@@ -345,6 +345,15 @@ export function saveKidneyInfo(param) {
   })
 }
 
+// 删除肾损害
+export function delKidneyInfo(param) {
+  return request({
+    url: '/cdms/assessment/patient-condition/del-kidney-damage',
+    method: 'delete',
+    data: param
+  })
+}
+
 // 获取肝损害
 export function getLiverInfo(param) {
   return request({
@@ -359,6 +368,15 @@ export function saveLiverInfo(param) {
   return request({
     url: '/cdms/assessment/patient-condition/add-liver-damage',
     method: 'post',
+    data: param
+  })
+}
+
+// 删除肝损害
+export function deleteLiverInfo(param) {
+  return request({
+    url: '/cdms/assessment/patient-condition/del-liver-damage',
+    method: 'delete',
     data: param
   })
 }

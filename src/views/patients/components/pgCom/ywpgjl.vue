@@ -38,6 +38,7 @@
             <div class="table-title">既往病史</div>
             <el-table
               :data="form.pastHistoryVO"
+              :show-header="false"
               stripe
               border
               style="width: 100%">
@@ -62,6 +63,7 @@
             <div class="table-title">现有症状</div>
             <el-table
               :data="form.curSysVO"
+              :show-header="false"
               stripe
               border
               style="width: 100%">
@@ -74,30 +76,36 @@
                 label="Name"
                 prop="list">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.list && scope.row.list.length > 0">
-                      <el-tag v-for="item in scope.row.list">{{ item.diseaseName }}</el-tag>
-                    </span>
                   <span v-if="scope.row.data">{{ scope.row.data }}</span>
+                  <span v-if="scope.row.list && scope.row.list.length > 0">
+                    <el-row v-for="item in scope.row.list">
+                      {{ `${item.nickName}:` }}
+                      <el-tag v-for="desc in item.chooseDesc">
+                        {{ desc }}
+                      </el-tag>
+                    </el-row>
+                  </span>
                 </template>
               </el-table-column>
             </el-table>
           </el-col>
           <el-col>
-            <div class="table-title">费用</div>
+            <div class="table-title">费用（元/月）</div>
             <el-table
               :data="form.costVO"
-              stripe
+              :show-header="false"
               border
               style="width: 100%">
               <el-table-column
                 label="Date"
-                prop="name">
+                prop="name"
+                class-name="col-stripe">
               </el-table-column>
               <el-table-column
                 label="Name"
                 prop="name">
                 <template slot-scope="scope">
-                  每月医疗总花费（元）：
+                  医疗费：
                   {{
                     scope.row.beforeTotal || scope.row.afterSixTotal || scope.row.afterThreeTotal ||
                     scope.row.afterTwelveTotal
@@ -108,7 +116,7 @@
                 label="Name"
                 prop="name">
                 <template slot-scope="scope">
-                  每月药费（元）：
+                  药费：
                   {{
                     scope.row.afterSixMedicalExpenses || scope.row.afterThreeMedicalExpenses ||
                     scope.row.afterTwelveMedicalExpenses || scope.row.beforeMedicalExpenses
@@ -121,6 +129,7 @@
             <div class="table-title">生存质量分析</div>
             <el-table
               :data="form.scaleList"
+              :show-header="false"
               stripe
               border
               style="width: 100%">
@@ -149,11 +158,11 @@
               border
               style="width: 100%">
               <el-table-column
-                label="Date"
+                label="药物名称"
                 prop="medName">
               </el-table-column>
               <el-table-column
-                label="Name"
+                label="不良反应"
                 prop="adverseReactionsSymptoms">
               </el-table-column>
             </el-table>
@@ -162,13 +171,14 @@
             <div class="table-title">生活方式</div>
             <el-table
               :data="form.lifestyleVO"
-              stripe
+              :show-header="false"
               border
               style="width: 100%">
               <el-table-column
                 label="Date"
                 width="100px"
-                prop="name1">
+                prop="name1"
+                class-name="col-stripe">
               </el-table-column>
               <el-table-column
                 label="Name"
@@ -186,7 +196,8 @@
               </el-table-column>
               <el-table-column
                 label="Date"
-                prop="name2">
+                prop="name2"
+                class-name="col-stripe">
               </el-table-column>
               <el-table-column
                 label="Name"
@@ -205,13 +216,14 @@
             </el-table>
             <el-table
               :data="form.smokeList"
-              stripe
+              :show-header="false"
               border
               style="width: 100%">
               <el-table-column
                 label="Date"
                 width="100px"
-                prop="name">
+                prop="name"
+                class-name="col-stripe">
               </el-table-column>
               <el-table-column
                 label="Name"
@@ -229,13 +241,14 @@
             <el-table
               :data="form.drinkList"
               :span-method="objectSpanMethod"
-              stripe
+              :show-header="false"
               border
               style="width: 100%">
               <el-table-column
                 label="Date"
                 width="100px"
-                prop="name">
+                prop="name"
+                class-name="col-stripe">
               </el-table-column>
               <el-table-column
                 label="Name"
@@ -264,27 +277,44 @@
           </el-table-column>
           <el-table-column
             label="相关疾病"
-            prop="diseaseName">
+            prop="diseaseName"
+            show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             label="相关药物"
-            prop="medName">
+            prop="medName"
+            show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             label="适应性"
-            prop="questionType">
+            prop="questionType"
+            show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             label="具体问题"
-            prop="problem">
+            prop="problem"
+            show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             label="处理建议"
-            prop="treatmentSuggestion">
+            prop="treatmentSuggestion"
+            show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             label="改善详情"
-            prop="improvementDetails">
+            prop="improvementDetails"
+            show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column
+            prop="isResolved"
+            label="是否解决"
+            align="center"
+            width="150">
+            <template slot-scope="scope">
+              <span v-if="scope.row.isResolved === 1">本次就诊解决</span>
+              <span v-if="scope.row.isResolved === 2">未解决</span>
+              <span v-if="scope.row.isResolved === 3">待解决</span>
+            </template>
           </el-table-column>
         </el-table>
       </el-col>
@@ -342,7 +372,8 @@ export default {
       tableData: [],
       obj1: {},
       obj2: {},
-      scales: []
+      scales: [],
+      diagnose: []
     }
   },
   watch: {
@@ -368,6 +399,7 @@ export default {
         url: '/question.json'
       }).then(function(response) {
         _this.scales = response.data.data
+        _this.diagnose = response.data.diagnose
       }).catch(function(error) {
         console.log(error);
       });
@@ -460,10 +492,35 @@ export default {
           value: 'assessmentDiagnosisVO',
           list: data.assessmentDiagnosisVO
         })
+        let map = new Map(Object.entries(data.symptomDescriptionVO));
+        let symptomDescription = []
+        for (let [ k, v ] of map) {
+          this.diagnose.forEach(arr => {
+            if (k === arr.name) {
+              let choose = []
+              v.forEach(value => {
+                arr.list.forEach(vv => {
+                  if (value === vv.value) {
+                    choose.push(vv.name)
+                  }
+                })
+              })
+              if (map.get(`${ k }OtherDesc`)) {
+                choose.push(map.get(`${ k }OtherDesc`))
+              }
+              if (choose.length > 0) {
+                symptomDescription.push({
+                  nickName: arr.nickname,
+                  chooseDesc: choose
+                })
+              }
+            }
+          })
+        }
         newList.push({
           name: '当前症状描述',
           value: 'symptomDescriptionVO',
-          list: data.symptomDescriptionVO
+          list: symptomDescription
         })
         this.form.curSysVO = newList
         // console.log(data.symptomDescriptionVO)
@@ -476,19 +533,19 @@ export default {
           'beforeTotal': data.lifestyleVO.beforeTotal
         })
         newList.push({
-          name: '就诊3个月后',
+          name: '3个月后',
           'afterThreeMedicalExpenses': data.lifestyleVO.afterThreeMedicalExpenses,
           'afterThreeTotal': data.lifestyleVO.afterThreeTotal
         })
         newList.push({
-          name: '就诊6个月后',
-          'afterSixMedicalExpenses': data.lifestyleVO.afterThreeMedicalExpenses,
-          'afterSixTotal': data.lifestyleVO.afterThreeTotal
+          name: '6个月后',
+          'afterSixMedicalExpenses': data.lifestyleVO.afterSixMedicalExpenses,
+          'afterSixTotal': data.lifestyleVO.afterSixTotal
         })
         newList.push({
-          name: '就诊12个月后',
-          'afterTwelveMedicalExpenses': data.lifestyleVO.afterThreeMedicalExpenses,
-          'afterTwelveTotal': data.lifestyleVO.afterThreeTotal
+          name: '1年后',
+          'afterTwelveMedicalExpenses': data.lifestyleVO.afterTwelveMedicalExpenses,
+          'afterTwelveTotal': data.lifestyleVO.afterTwelveTotal
         })
         this.form.costVO = newList
       }
@@ -595,8 +652,8 @@ export default {
 
 <style scoped lang="scss">
 .ywp-wrap {
-  .el-table__header-wrapper {
-    display: none;
+  ::v-deep .col-stripe {
+    background: #FAFAFA;
   }
 
   .info-wrap {
@@ -659,10 +716,11 @@ export default {
     line-height: 30px;
     padding: 0 20px;
     background: #1e3f7c;
-    color: #dde3eb;
+    color: #FFFFFF;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     font-size: 14px;
+    font-weight: bold;
   }
 
   .table-wrap {
@@ -713,16 +771,6 @@ export default {
 </style>
 <style lang="scss">
 .ywp-wrap {
-  .el-table__header-wrapper {
-    display: none;
-  }
-
-  .big-table {
-    .el-table__header-wrapper {
-      display: block;
-    }
-  }
-
   .el-textarea__inner {
     height: 144px;
     padding-bottom: 35px;
