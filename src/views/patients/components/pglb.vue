@@ -44,7 +44,9 @@
             <el-select v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
               <el-option v-for="item in scope.row.options" :label="item.name" :value="item.value"></el-option>
             </el-select>
-            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
+            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]">
+              <i slot="suffix" style="font-style:normal;line-height: 36px;color:#000000">%</i>
+            </el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -64,7 +66,9 @@
             <el-select v-if="scope.row.type === 'select'" v-model="form[scope.row.value]">
               <el-option v-for="item in scope.row.options" :label="item.name" :value="item.value"></el-option>
             </el-select>
-            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]"></el-input>
+            <el-input v-if="scope.row.type === 'input'" type="primary" v-model="form[scope.row.value]">
+              <i slot="suffix" style="font-style:normal;line-height: 36px;color:#000000">%</i>
+            </el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -164,7 +168,7 @@
           prop="question">
           <template slot-scope="scope">
             <span v-if="!scope.row.input">{{ scope.row.question }}</span>
-            <el-input v-if="scope.row.input" v-model="form[scope.row.value]"></el-input>
+            <el-input v-if="scope.row.input" placeholder="其他事件" v-model="form[scope.row.value]"></el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -800,15 +804,17 @@ export default {
 }
 
 .table-title {
-  height: 30px;
-  line-height: 30px;
+  height: 44px;
+  line-height: 44px;
   padding: 0 20px;
   background: #1e3f7c;
-  color: #dde3eb;
+  color: #FFFFFF;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   font-size: 14px;
+  font-weight: bold;
   margin-top: 20px;
+  text-align: center;
 
   .small {
     font-size: 12px;
