@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="life-style jyjc-wrap">
     <div>
       <el-row :gutter="24">
@@ -68,7 +68,9 @@
                       v-if="chart.insert">
                       <template slot-scope="scope" v-if="!scope.row.id">
                         <div>
-                          <el-button :disabled="saveBtn" @click="saveData(chartIndex, scope.$index)" type="text"
+                          <el-button :disabled="scope.row.saveBtn"
+                                     @click="saveData(chartIndex, scope.$index)"
+                                     type="text"
                                      size="small"
                                      style="float: none">保存
                           </el-button>
@@ -114,7 +116,6 @@ export default {
   },
   data() {
     return {
-      saveBtn: false,
       chartList: chartList,
       tableData: [],
       lineGrid: {
@@ -138,7 +139,6 @@ export default {
     },
     // 保存数据
     saveTableData(url, params) {
-      console.log(url, params)
       return request({
         url: url,
         method: 'post',
@@ -155,12 +155,17 @@ export default {
     },
     // 插入数据
     pushData(chartIndex) {
-      let pushData = {}
-      this.chartList[ chartIndex ].insert = true
-      this.chartList[ chartIndex ].tableProps.forEach(item => {
-        pushData[ item.key ] = ''
-      })
-      this.chartList[ chartIndex ].tableData.unshift(pushData)
+      if (this.chartList[ chartIndex ].insert) {
+        this.$message.warning('请填写检测检验值，或者取消填写')
+      } else {
+        let pushData = {}
+        this.chartList[ chartIndex ].insert = true
+        this.chartList[ chartIndex ].tableProps.forEach(item => {
+          pushData[ item.key ] = ''
+          pushData.saveBtn = false
+        })
+        this.chartList[ chartIndex ].tableData.unshift(pushData)
+      }
     },
     // 取消数据
     cancelData(chartIndex, delindex) {
@@ -169,7 +174,7 @@ export default {
     },
     // 保存数据
     saveData(chartIndex, saveIndex) {
-      this.saveBtn = !this.saveBtn
+      this.chartList[ chartIndex ].tableData[ saveIndex ].saveBtn = !this.chartList[ chartIndex ].tableData[ saveIndex ].saveBtn
       let url = this.chartList[ chartIndex ].saveTableUrl
       let params = this.chartList[ chartIndex ].tableData[ saveIndex ]
       let morningValue = params.morningValue.split('-')
@@ -185,7 +190,6 @@ export default {
       this.saveTableData(url, params).then(res => {
         if (res.code === 200 && res.success) {
           this.getAllTableData()
-          this.saveBtn = !this.saveBtn
           this.$message.success('保存成功')
           this.chartList[ chartIndex ].insert = false
         }
