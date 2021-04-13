@@ -558,7 +558,7 @@ export default {
   .img-marks {
     .el-slider__marks-text {
       left: 20%;
-      margin-top: -40px;
+      margin-top: -50px;
       margin-left: 5px;
     }
   }
