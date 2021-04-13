@@ -79,7 +79,7 @@
                   <span v-if="scope.row.data">{{ scope.row.data }}</span>
                   <span v-if="scope.row.list && scope.row.list.length > 0">
                     <el-row v-for="item in scope.row.list">
-                      {{ `${item.nickName}:` }}
+                      {{ `${ item.nickName }:` }}
                       <el-tag v-for="desc in item.chooseDesc">
                         {{ desc }}
                       </el-tag>
@@ -492,30 +492,32 @@ export default {
           value: 'assessmentDiagnosisVO',
           list: data.assessmentDiagnosisVO
         })
-        let map = new Map(Object.entries(data.symptomDescriptionVO));
         let symptomDescription = []
-        for (let [ k, v ] of map) {
-          this.diagnose.forEach(arr => {
-            if (k === arr.name) {
-              let choose = []
-              v.forEach(value => {
-                arr.list.forEach(vv => {
-                  if (value === vv.value) {
-                    choose.push(vv.name)
-                  }
+        if (data.symptomDescriptionVO) {
+          let map = new Map(Object.entries(data.symptomDescriptionVO));
+          for (let [ k, v ] of map) {
+            this.diagnose.forEach(arr => {
+              if (k === arr.name) {
+                let choose = []
+                v.forEach(value => {
+                  arr.list.forEach(vv => {
+                    if (value === vv.value) {
+                      choose.push(vv.name)
+                    }
+                  })
                 })
-              })
-              if (map.get(`${ k }OtherDesc`)) {
-                choose.push(map.get(`${ k }OtherDesc`))
+                if (map.get(`${ k }OtherDesc`)) {
+                  choose.push(map.get(`${ k }OtherDesc`))
+                }
+                if (choose.length > 0) {
+                  symptomDescription.push({
+                    nickName: arr.nickname,
+                    chooseDesc: choose
+                  })
+                }
               }
-              if (choose.length > 0) {
-                symptomDescription.push({
-                  nickName: arr.nickname,
-                  chooseDesc: choose
-                })
-              }
-            }
-          })
+            })
+          }
         }
         newList.push({
           name: '当前症状描述',
