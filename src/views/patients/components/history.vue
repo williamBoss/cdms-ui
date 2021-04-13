@@ -113,17 +113,20 @@
                   <div class="switch-wrap">
                     <el-switch
                       active-text="有"
+                      active-value="1"
                       inactive-text="无"
-                      v-model="gssEdit">
+                      inactive-value="0"
+                      v-model="gssEdit"
+                      @change="delLiverInfo">
                     </el-switch>
                   </div>
                 </div>
-                <div v-show="gssEdit" class="add-angle"></div>
+                <div v-show="gssEdit==='1'" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!gssEdit" :span="18">
+              <el-col class="content-item" v-show="gssEdit==='0'" :span="18">
                 {{ liverInfo.liverDamageDesc }}
               </el-col>
-              <el-col class="content-item" v-show="gssEdit" :span="18">
+              <el-col class="content-item" v-show="gssEdit==='1'" :span="18">
                 <el-form-item label="" label-width="0">
                   <el-input type="textarea" placeholder="请输入肝损害描述" :rows="5" v-model="form.liverInfo"></el-input>
                   <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveLiverInfo')">保存
@@ -142,17 +145,20 @@
                   <div class="switch-wrap">
                     <el-switch
                       active-text="有"
+                      active-value="1"
                       inactive-text="无"
-                      v-model="sssEdit">
+                      inactive-value="0"
+                      v-model="sssEdit"
+                      @change="delKidneyInfo">
                     </el-switch>
                   </div>
                 </div>
-                <div v-show="sssEdit" class="add-angle"></div>
+                <div v-show="sssEdit==='1'" class="add-angle"></div>
               </el-col>
-              <el-col class="content-item" v-show="!sssEdit" :span="18">
+              <el-col class="content-item" v-show="sssEdit==='0'" :span="18">
                 {{ kidneyInfo.kidneyDamageDesc }}
               </el-col>
-              <el-col class="content-item" v-show="sssEdit" :span="18">
+              <el-col class="content-item" v-show="sssEdit==='1'" :span="18">
                 <el-form-item label="" label-width="0">
                   <el-input type="textarea" placeholder="请输入肾损害描述" :rows="5" v-model="form.kidneyInfo"></el-input>
                   <el-button class="card-btn" size="mini" type="primary" @click="saveHistory('saveKidneyInfo')">保存
@@ -194,7 +200,7 @@
                       {{ scope.$index + 1 }}
                     </template>
                   </el-table-column>
-                  <el-table-column fixed prop="allergen" align="center" label="过敏原">
+                  <el-table-column fixed prop="allergen" align="center" label="过敏源">
                   </el-table-column>
                   <el-table-column prop="allergySymptoms" label="过敏症状" show-overflow-tooltip>
                   </el-table-column>
@@ -430,7 +436,9 @@ import { getMed } from '@/api/outpatient'
 import {
   delDiabetesHistory,
   deleteAllergyHistory,
+  deleteLiverInfo,
   delFamilyHistory,
+  delKidneyInfo,
   delMedSideList,
   delOldHistory,
   delSurgicalHistory,
@@ -473,6 +481,8 @@ export default {
         allergen: '',
         allergyDatetime: '',
         allergySymptoms: '',
+        liverInfo: '',
+        kidneyInfo: '',
         medSide: {
           medicationSideEffectId: '',
           medId: '',
@@ -596,15 +606,23 @@ export default {
       getLiverInfo(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.liverInfo = res.data
-          this.gssEdit = !!this.liverInfo.liverDamageDesc
-          this.form.liverInfo = res.data.liverDamageDesc
+          this.form.liverInfo = res.data.liverDamageDesc;
+          if (this.liverInfo.liverDamageDesc) {
+            this.gssEdit = '1'
+          } else {
+            this.gssEdit = '0'
+          }
         }
       })
       getKidneyInfo(param).then((res) => {
         if (res.code === 200 && res.data) {
           this.kidneyInfo = res.data
-          this.sssEdit = !!this.kidneyInfo.kidneyDamageDesc
           this.form.kidneyInfo = res.data.kidneyDamageDesc
+          if (this.kidneyInfo.kidneyDamageDesc) {
+            this.sssEdit = '1'
+          } else {
+            this.sssEdit = '0'
+          }
         }
       })
       param.pageNum = 1
@@ -810,8 +828,8 @@ export default {
           break;
         }
         case 'saveAllergyHistory': {
-          if (this.form.allergen) {
-            this.$message.warning('请输入过敏原')
+          if (this.form.allergySymptoms === '') {
+            this.$message.warning('请输入过敏源')
             return false
           }
           param.allergen = this.form.allergen;
@@ -998,6 +1016,40 @@ export default {
         }
       })
       this.form.medSide.otherAdverseReactionsSymptoms = otherAdverseReactionsSymptoms.join(',')
+    },
+    delLiverInfo: function(val) {
+      this.form.liverInfo = ''
+      this.liverInfo = ''
+      if (val === '0') {
+        let param = {
+          'assessmentId': this.$route.params.assessmentId,
+          'patientId': this.$route.params.id
+        }
+        deleteLiverInfo(param).then((res) => {
+          if (res.code === 200) {
+            this.gssEdit = false
+            this.$message.success('删除成功')
+            this.getHistory()
+          }
+        })
+      }
+    },
+    delKidneyInfo: function(val) {
+      this.form.kidneyInfo = ''
+      this.kidneyInfo = ''
+      if (val === '0') {
+        let param = {
+          'assessmentId': this.$route.params.assessmentId,
+          'patientId': this.$route.params.id
+        }
+        delKidneyInfo(param).then((res) => {
+          if (res.code === 200) {
+            this.sssEdit = false
+            this.$message.success('删除成功')
+            this.getHistory()
+          }
+        })
+      }
     }
   }
 }
