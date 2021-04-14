@@ -692,6 +692,24 @@ export function saveCaprini(param) {
   })
 }
 
+//das28查询
+export function getDas28(param) {
+  return request({
+    url: '/cdms/assessment/questionnaire-das28/',
+    method: 'get',
+    params: param
+  })
+}
+
+//保存Das28
+export function saveDas28(param) {
+  return request({
+    url: '/cdms/assessment/questionnaire-das28/',
+    method: 'post',
+    data: param
+  })
+}
+
 //查询已选量表
 export function getAssessmentTable(param) {
   return request({

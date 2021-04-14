@@ -16,7 +16,31 @@
         {{ item.questionnaireName }}
       </el-tag>
     </div>
-    <div class="form-wrap" v-if="curList.type === 'form'">
+    <div class="form-wrap" v-if="curList.type === 'form' && curList.name === 'das28'">
+      <img src="../../../assets/images/das28.png" alt="" />
+      <div class="question-item" v-for="(item, index) in curList.list">
+        <div style="line-height: 3">
+          {{ index + 1 }}.{{ item.name }}
+          <span v-if="item.type === 'ruler'">得分：{{ form[ item.value ] }}</span>
+        </div>
+        <div class="optins-item">
+          <el-input v-if="item.type === 'input'" v-model="form[item.value]" placeholder="请输入内容" style="width: 200px;">
+            <i slot="suffix" style="font-style:normal;line-height: 36px">{{ item.unit }}</i>
+          </el-input>
+          <div v-if="item.type === 'ruler'" class="text-wrap">
+            <span>{{ item.startName }}</span>
+            <span style="float: right;">{{ item.endName }}</span>
+          </div>
+          <el-slider v-if="item.type === 'ruler'"
+                     v-model="form[item.value]"
+                     :step="item.step"
+                     :min="item.min"
+                     :max="item.max">
+          </el-slider>
+        </div>
+      </div>
+    </div>
+    <div class="form-wrap" v-else-if="curList.type === 'form'">
       <div class="question-item" v-for="(item, index) in curList.list">
         <div class="title">{{ index + 1 }}.{{ item.question }}</div>
         <div class="optins-item">
@@ -258,7 +282,7 @@ import {
   getAssessmentTable,
   getCaprini,
   getCat,
-  getChads,
+  getChads, getDas28,
   getEq5d3l,
   getEq5d5l,
   getEssen,
@@ -272,7 +296,7 @@ import {
   saveAf,
   saveCaprini,
   saveCat,
-  saveChads,
+  saveChads, saveDas28,
   saveEq5d3l,
   saveEq5d5l,
   saveEssen,
@@ -321,13 +345,6 @@ export default {
   },
   methods: {
     objectSpanMethod({row, column, rowIndex, columnIndex}) {
-      // if (rowIndex % 2 === 0) {
-      //           if (columnIndex === 0) {
-      //             return [1, 2];
-      //           } else if (columnIndex === 1) {
-      //             return [0, 0];
-      //           }
-      //         }
       if (columnIndex === 0) {
         if (rowIndex % 6 === 0) {
           return {
@@ -507,6 +524,14 @@ export default {
           }
         })
       }
+      if (this.curList.name === 'das28') {
+        getDas28(param).then((res) => {
+          if (res.code === 200 && res.data) {
+            this.form = res.data
+            this.score = parseFloat(res.data.das28Score)
+          }
+        })
+      }
     },
     getTable(item, index) {
       this.chooseTag = index
@@ -672,6 +697,17 @@ export default {
           if (res.code === 200) {
             this.form = res.data
             this.score = parseFloat(res.data.capriniScore)
+            this.$message.success('保存成功')
+          } else {
+            this.$message.error(res.errorMessage)
+          }
+        })
+      }
+      if (this.curList.name === 'das28') {
+        saveDas28(this.form).then((res) => {
+          if (res.code === 200) {
+            this.form = res.data
+            this.score = parseFloat(res.data.das28Score)
             this.$message.success('保存成功')
           } else {
             this.$message.error(res.errorMessage)
