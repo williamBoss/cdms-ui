@@ -217,7 +217,7 @@ export default {
         if (data) {
           data.forEach(el => {
             res_arr.push({
-              value: el.medName,
+              value: `${ el.medName } - ${ el.medSpec } -${ el.vendor } `,
               medId: el.medId
             })
           });

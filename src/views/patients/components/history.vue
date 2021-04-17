@@ -646,18 +646,18 @@ export default {
       })
     },
     querySearch(queryString, cb) {
-      this.searchMed(cb)
+      this.searchMed(queryString, cb)
     },
-    async searchMed(cb) {
+    async searchMed(queryString, cb) {
       let result = []
       const res = await getMed({
-        medName: this.searchName
+        medName: queryString
       })
       let {data} = res
       if (data) {
         data.forEach(el => {
           result.push({
-            value: el.medName,
+            value: `${ el.medName } - ${ el.medSpec } -${ el.vendor } `,
             medId: el.medId
           })
         });

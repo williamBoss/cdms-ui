@@ -241,7 +241,7 @@ export default {
       if (data) {
         data.forEach(el => {
           result.push({
-            value: el.medName,
+            value: `${ el.medName } - ${ el.medSpec } -${ el.vendor } `,
             medId: el.medId
           })
         });
@@ -337,7 +337,7 @@ export default {
 
 <style scoped lang="scss">
 .yyjl-wrap {
-  ::v-deep .el-table__column-filter-trigger i{
+  ::v-deep .el-table__column-filter-trigger i {
     font-weight: bold;
     color: #FFFFFF;
   }
