@@ -64,11 +64,7 @@
 </template>
 
 <script>
-import {
-  getMed,
-  getProb,
-  saveOut
-} from '@/api/outpatient'
+import { getMed, getProb, saveOut } from '@/api/outpatient'
 import PatientDrawer from '@/layout/components/PatientDrawer';
 
 export default {
@@ -111,7 +107,7 @@ export default {
       if (data) {
         data.forEach(el => {
           result.push({
-            value: el.medName,
+            value: `${ el.medName } - ${ el.medSpec } -${ el.vendor }`,
             medId: el.medId
           })
         });
