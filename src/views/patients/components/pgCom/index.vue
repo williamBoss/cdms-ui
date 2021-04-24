@@ -138,6 +138,10 @@ export default {
   padding: 30px 100px 30px 70px;
 }
 
+.el-drawer__body {
+  overflow: auto;
+}
+
 .flex {
   display: -webkit-box;
   display: -ms-flexbox;

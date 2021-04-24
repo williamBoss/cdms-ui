@@ -338,6 +338,7 @@
       <el-form-item>
         <el-button class="btn-size" type="primary" @click="saveInfo">完成</el-button>
         <el-button class="btn-size" type="primary" style="margin-right: 10px;" @click="goNext">上一步</el-button>
+        <el-button class="btn-size" type="primary" @click="goPlan">制定方案</el-button>
         <el-button class="btn-size" type="info">导出PDF</el-button>
       </el-form-item>
     </el-form>
@@ -676,6 +677,9 @@ export default {
     },
     goNext() {
       this.$emit('update:activeName', 'pglb');
+    },
+    goPlan() {
+      this.$emit('update:activeName', 'plan');
     },
     saveInfo() {
       this.$router.push({name: 'patients'})
