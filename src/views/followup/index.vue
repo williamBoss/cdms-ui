@@ -34,6 +34,8 @@
 
     <el-row style="margin-bottom: 20px">
       <el-button class="btn-size" type="primary">新建随访</el-button>
+      <el-button class="btn-size" type="primary">新建提醒</el-button>
+      <el-button type="text" style="float: right">随访统计</el-button>
     </el-row>
 
     <el-table :data="followupList"

@@ -11,6 +11,7 @@
     <ywzlwt :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
     <pglb :activeName.sync="activeName" v-if="activeName === 'pglb'"></pglb>
     <jyjc :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
+    <plan :activeName.sync="activeName" v-if="activeName === 'plan'"></plan>
     <PatientAssessmentDrawer ref="patientDrawer"
                              :visible="visible"
                              :modal="false"
@@ -28,9 +29,6 @@
 </template>
 
 <script>
-import {
-  getReportInfo
-} from '@/api/patients'
 import lifeStyle from '../components/lifeStyle'
 import history from '../components/history'
 import curSym from '../components/curSym'
@@ -41,10 +39,12 @@ import pglb from '../components/pglb'
 import jyjc from '../components/jyjc'
 import tabPage from '../components/pgCom/index.vue'
 import PatientAssessmentDrawer from '@/views/patients/components/PatientAssessmentDrawer';
+import Plan from '@/views/patients/components/plan';
 
 export default {
   name: 'patientsDetail', // 患者管理详情
   components: {
+    Plan,
     PatientAssessmentDrawer,
     lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc, tabPage
   },
@@ -78,6 +78,9 @@ export default {
         }, {
           name: '药物重整报告',
           key: 'ywpgjl'
+        }, {
+          name: '制定方案',
+          key: 'plan'
         } ],
       tabList: [
         {
@@ -104,6 +107,9 @@ export default {
         }, {
           name: '评估量表',
           key: 'pglb'
+        }, {
+          name: '制定方案',
+          key: 'plan'
         } ],
       curTabList: [],
       activeName: 'ywpgjl',

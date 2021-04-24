@@ -12,6 +12,7 @@
     <ywzlwt :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'ywzlwt'"></ywzlwt>
     <pglb :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'pglb'"></pglb>
     <jyjc :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'jyjc'"></jyjc>
+    <plan :assessmentId="assessmentId" :activeName.sync="activeName" v-if="activeName === 'plan'"></plan>
   </div>
 </template>
 
@@ -24,10 +25,11 @@ import yyjl from './yyjl'
 import ywzlwt from './ywzlwt'
 import pglb from './pglb'
 import jyjc from './jyjc'
+import Plan from './plan';
 
 export default {
   name: 'patientsDetail', // 患者管理详情
-  components: {lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc},
+  components: {Plan, lifeStyle, history, curSym, ywpgjl, yyjl, ywzlwt, pglb, jyjc},
   data() {
     return {
       canEdit: true,
@@ -56,6 +58,9 @@ export default {
         }, {
           name: '药物重整报告',
           key: 'ywpgjl'
+        }, {
+          name: '制定方案',
+          key: 'plan'
         } ],
       tabList: [
         {
@@ -82,6 +87,9 @@ export default {
         }, {
           name: '评估量表',
           key: 'pglb'
+        }, {
+          name: '制定方案',
+          key: 'plan'
         } ],
       curTabList: [],
       activeName: 'ywpgjl',

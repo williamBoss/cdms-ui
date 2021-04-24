@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-Vue.use(Router)
-
 /* Layout */
 import Layout from '@/layout'
-import ParentView from '@/components/ParentView';
+
+Vue.use(Router)
 
 /**
  * Note: 路由配置项
@@ -166,10 +164,30 @@ export const constantRoutes = [
         meta: {title: '随访管理', icon: require('@/assets/icons/menu/sfgl.png')}
       },
       {
+        path: 'hierarchicCare',
+        component: (resolve) => require([ '@/views/hierarchiccare/index' ],
+          resolve),
+        name: 'hierarchicCare',
+        meta: {
+          title: '分级诊疗',
+          icon: require('@/assets/icons/menu/hierarchic_care.png')
+        }
+      },
+      {
         path: 'analysis',
         component: (resolve) => require([ '@/views/analysis/index' ], resolve),
         name: 'analysis',
         meta: {title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png')}
+      },
+      {
+        path: 'synergetic',
+        component: (resolve) => require([ '@/views/synergetic/index' ],
+          resolve),
+        name: 'synergetic',
+        meta: {
+          title: '协同群组',
+          icon: require('@/assets/icons/menu/synergetic.png')
+        }
       },
       {
         path: 'knowledge',
