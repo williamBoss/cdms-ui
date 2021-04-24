@@ -119,6 +119,13 @@ export const constantRoutes = [
         meta: {title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png')}
       },
       {
+        path: 'anticoagulationClinic ',
+        component: (resolve) => require([ '@/views/outpatient/list/index' ],
+          resolve),
+        name: 'anticoagulationClinic ',
+        meta: {title: '抗凝门诊', icon: require('@/assets/icons/menu/yxmz.png')}
+      },
+      {
         path: 'patients',
         component: (resolve) => require([ '@/views/patients/list/index' ],
           resolve),
