@@ -8,7 +8,7 @@
       <el-input
         type="textarea"
         :autosize="{ minRows: 6}"
-        placeholder="通过合理的药物治疗及风险因素控制防止卒中再次发生。如：高血压、糖尿病、慢阻肺等相关的急性并发症、慢性并发症。"
+        :placeholder="placeholder"
         style="padding: 7px">
       </el-input>
     </el-row>
@@ -159,6 +159,7 @@ export default {
   name: 'plan',
   data() {
     return {
+      placeholder: '如：通过合理的药物治疗及风险因素控制防止卒中再次发生。\n如：高血压、糖尿病、慢阻肺等相关的急性并发症、慢性并发症。',
       diseaseList: [
         {
           diseaseId: 10,

@@ -119,10 +119,11 @@ export const constantRoutes = [
         meta: {title: '药学门诊', icon: require('@/assets/icons/menu/yxmz.png')}
       },
       {
-        path: 'anticoagulationClinic ',
-        component: (resolve) => require([ '@/views/outpatient/list/index' ],
+        path: 'anticoagulationClinic',
+        component: (resolve) => require(
+          [ '@/views/anticoagulationclinic/anticoagulationClinic' ],
           resolve),
-        name: 'anticoagulationClinic ',
+        name: 'anticoagulationClinic',
         meta: {title: '抗凝门诊', icon: require('@/assets/icons/menu/yxmz.png')}
       },
       {
@@ -181,20 +182,20 @@ export const constantRoutes = [
         }
       },
       {
-        path: 'analysis',
-        component: (resolve) => require([ '@/views/analysis/index' ], resolve),
-        name: 'analysis',
-        meta: {title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png')}
-      },
-      {
         path: 'synergetic',
         component: (resolve) => require([ '@/views/synergetic/index' ],
           resolve),
         name: 'synergetic',
         meta: {
-          title: '协同群组',
+          title: '协同管理',
           icon: require('@/assets/icons/menu/synergetic.png')
         }
+      },
+      {
+        path: 'analysis',
+        component: (resolve) => require([ '@/views/analysis/index' ], resolve),
+        name: 'analysis',
+        meta: {title: '数据分析', icon: require('@/assets/icons/menu/sjfx.png')}
       },
       {
         path: 'knowledge',
