@@ -449,7 +449,7 @@ export default {
   data() {
     return {
       visible: true,
-      anticoagulationClinicDrawer: true,
+      anticoagulationClinicDrawer: false,
       dialogVisible: false,
       title: '',
       formContent: '',
