@@ -51,12 +51,15 @@
                 width="300"
                 trigger="hover">
                 <div v-for="medicine in acMedicine.medicineList">
-                  <p>{{ medicine.vendor }}</p>
+                  <p style="font-weight: bold">{{ medicine.vendor }}</p>
                   <p>
                     用药量：{{ medicine.dosage.chip }}片 / {{ medicine.dosage.day }}天
                   </p>
                   <p>
                     用药时间：{{ medicine.medicationTime }}
+                  </p>
+                  <p>
+                    用药提醒：{{ medicine.remind === 1 ? '是' : '否' }}
                   </p>
                 </div>
                 <el-tag slot="reference" style="cursor: pointer">{{ acMedicine.medicineName }}</el-tag>
@@ -119,6 +122,12 @@
                 <el-col :span="8">
                   <el-input v-model="inrForm.targetLower" placeholder="INR目标下限"></el-input>
                 </el-col>
+              </el-form-item>
+              <el-form-item label="验血提醒">
+                <el-radio-group v-model="inrForm.remind">
+                  <el-radio :label="1">是</el-radio>
+                  <el-radio :label="0">否</el-radio>
+                </el-radio-group>
               </el-form-item>
             </el-form>
           </el-row>
@@ -186,7 +195,7 @@
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
-      width="60%">
+      width="70%">
       <el-tree class="ac" v-if="formContent === 'acDiseaseType'"
                ref="acDiseaseTypeTree"
                :data="diseaseTypeList"
@@ -224,7 +233,7 @@
                show-checkbox>
         <div slot-scope="{ node, data }">
           <el-row :gutter="20">
-            <el-col style="width: 200px">
+            <el-col :span="4" style="width: 200px">
               <span>{{ node.label }}</span>
             </el-col>
             <el-col :span="8" v-if="data.key && data.dosage !== undefined">
@@ -240,15 +249,23 @@
                 </el-input>
               </el-col>
             </el-col>
-            <el-col :span="8" v-if="data.key && data.medicationTime !== undefined">
+            <el-col :span="4" v-if="data.key && data.medicationTime !== undefined">
               <el-time-picker
                 arrow-control
                 size="mini"
                 v-model="data.medicationTime"
                 format='HH:mm'
                 value-format="HH:mm"
-                placeholder="服药时间">
+                placeholder="服药时间"
+                style="width: 100%">
               </el-time-picker>
+            </el-col>
+            <el-col :span="5" v-if="data.key && data.remind !== undefined">
+              用药提醒：
+              <el-radio-group v-model="data.remind">
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
+              </el-radio-group>
             </el-col>
           </el-row>
         </div>
@@ -578,6 +595,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 1
             }, {
               label: '河南中杰（2.5mg）',
@@ -587,6 +605,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 1
             }, {
               label: '齐鲁制药（2.5mg）',
@@ -596,6 +615,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 1
             }, {
               label: '上海信谊药厂（2.5mg）',
@@ -605,6 +625,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 1
             }
           ]
@@ -622,6 +643,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 2
             }, {
               label: '泰毕全（150mg）',
@@ -631,6 +653,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 2
             }
           ]
@@ -648,6 +671,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 3
             }, {
               label: '拜瑞妥（15mg）',
@@ -657,6 +681,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 3
             }, {
               label: '拜瑞妥（20mg）',
@@ -666,6 +691,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 3
             }
           ]
@@ -683,6 +709,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 4
             }
           ]
@@ -700,6 +727,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 5
             }, {
               label: '里先安（30mg）',
@@ -709,6 +737,7 @@ export default {
                 day: ''
               },
               medicationTime: '',
+              remind: '',
               key: 5
             }
           ]
@@ -798,6 +827,7 @@ export default {
                   'vendor': '芬兰OrionCorporation（3mg）',
                   'dosage': {'chip': '1', 'day': '2'},
                   'medicationTime': '16:04',
+                  'remind': 0,
                   'key': 1
                 } ],
               'isRootInsert': false,
@@ -832,6 +862,7 @@ export default {
             'frequency': '1次/2周',
             'targetCap': '1',
             'targetLower': '2',
+            'remind': '1',
             'isRootInsert': false,
             'elm': '[object Text]'
           },
