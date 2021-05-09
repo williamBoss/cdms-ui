@@ -128,6 +128,9 @@
                   <el-radio :label="1">是</el-radio>
                   <el-radio :label="0">否</el-radio>
                 </el-radio-group>
+                <el-date-picker v-show="inrForm.remind === 1" type="date" value-format="yyyy/MM/dd" placeholder="验血提醒时间"
+                                style="margin-left: 40px"
+                                v-model="inrForm.remindDate"></el-date-picker>
               </el-form-item>
             </el-form>
           </el-row>
@@ -863,6 +866,7 @@ export default {
             'targetCap': '1',
             'targetLower': '2',
             'remind': '1',
+            'remindDate': '2021/05/10',
             'isRootInsert': false,
             'elm': '[object Text]'
           },
