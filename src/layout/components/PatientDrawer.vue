@@ -65,10 +65,7 @@
 </template>
 
 <script>
-import {
-  getPatientPhone,
-  savePatient
-} from '@/api/outpatient'
+import { getPatientPhone, savePatient } from '@/api/outpatient'
 import Drawer from '@/layout/components/Drawer';
 import { getPatientInfo, getPatientsByPhone } from '@/api/patients';
 
@@ -164,22 +161,26 @@ export default {
     },
     async savePatient() {
       console.log('保存用户信息!');
-      this.$refs.patientForm.validate((valid) => {
+      await this.$refs.patientForm.validate((valid) => {
         if (valid) {
-          let res = savePatient(this.patientForm);
-          let {data} = res
-          if (data) {
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-            this.fillPatientInfo(data);
-          } else {
-            this.patientForm = {bmi: 0}
-            this.patientInfoVO = {
-              patientId: ''
+          savePatient(this.patientForm).then(res => {
+            let {data} = res
+            if (data) {
+              this.$message.success('保存成功');
+              getPatientInfo(data).then(res => {
+                console.log('用户信息：', res);
+                let {data} = res;
+                if (data) {
+                  this.fillPatientInfo(data);
+                }
+              })
+            } else {
+              this.patientForm = {bmi: 0}
+              this.patientInfoVO = {
+                patientId: ''
+              }
             }
-          }
+          })
           this.$emit('setPatientInfo', this.patientInfoVO)
         } else {
           console.log('error submit!!');
