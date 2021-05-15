@@ -57,19 +57,21 @@
         border
         stripe>
         <el-table-column
-          fixed
+          fixed="left"
           prop="index"
           label="序号"
           align="center"
           width="60">
         </el-table-column>
         <el-table-column
+          fixed="left"
           prop="clinicConsultDate"
           label="日期"
           align="center"
           width="100">
         </el-table-column>
         <el-table-column
+          fixed="left"
           prop="patientName"
           label="姓名"
           align="center"
@@ -84,17 +86,19 @@
         <el-table-column
           prop="medNames"
           label="咨询药物"
-          show-overflow-tooltip
-          width="200">
+          width="200"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="consultContext"
           label="问题"
+          width="200"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="consultReply"
           label="解答"
+          width="200"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
